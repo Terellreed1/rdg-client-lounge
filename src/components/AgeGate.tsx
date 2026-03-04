@@ -135,11 +135,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                   <img src={heroLogo} alt="Luxury Courier Club" className="mx-auto w-28 h-28 sm:w-36 sm:h-36 object-contain" />
                 </motion.div>
 
-                <motion.div className="flex items-center justify-center gap-3 mb-10" {...stagger(1)}>
-                  <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(90deg, transparent, #B8972E)" }} />
-                  <div className="w-2 h-2 rotate-45" style={{ background: "#B8972E" }} />
-                  <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(270deg, transparent, #B8972E)" }} />
-                </motion.div>
+                <motion.div className="mx-auto mb-10 h-px w-48" style={{ background: "linear-gradient(90deg, transparent, #B8972E, transparent)" }} {...stagger(1)} />
 
                 <motion.h1
                   className="text-2xl sm:text-3xl md:text-4xl font-light uppercase mb-4"

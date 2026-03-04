@@ -159,12 +159,12 @@ html {
 .dual-range-input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: hsl(var(--foreground));
+  background: #C9A84C;
   border: 2px solid hsl(var(--background));
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 6px rgba(201,168,76,0.3);
   cursor: pointer;
   pointer-events: all;
   position: relative;
@@ -172,12 +172,12 @@ html {
 }
 
 .dual-range-input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: hsl(var(--foreground));
+  background: #C9A84C;
   border: 2px solid hsl(var(--background));
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 6px rgba(201,168,76,0.3);
   cursor: pointer;
   pointer-events: all;
 }
