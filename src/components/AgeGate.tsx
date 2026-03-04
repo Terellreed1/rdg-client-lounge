@@ -136,7 +136,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <LCCCrest size={90} />
+                  <img src={heroLogo} alt="Luxury Courier Club" className="w-24 h-24 sm:w-28 sm:h-28 object-contain" />
                 </motion.div>
 
                 {/* Gold rule */}
