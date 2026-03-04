@@ -50,7 +50,6 @@ const SocialProof = () => {
     setCurrent((prev) => (prev + 1) % reviews.length);
   }, [reviews.length]);
 
-  // Auto-advance
   useEffect(() => {
     if (reviews.length <= 1) return;
     const timer = setInterval(next, DURATION);
@@ -66,13 +65,22 @@ const SocialProof = () => {
   };
 
   return (
-    <section className="py-10 sm:py-14 lg:py-20 px-4 sm:px-6 bg-secondary/30">
+    <section className="py-14 sm:py-20 px-4 sm:px-6" style={{ background: "#0D110E" }}>
       <div className="max-w-xl mx-auto text-center">
-        <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3">
-          <GoogleLogo />
-          <p className="text-sm font-medium text-muted-foreground">Verified Reviews</p>
+        {/* Google badge */}
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-sm" style={{ background: "#161A14", border: "1px solid rgba(201,168,76,0.15)" }}>
+            <GoogleLogo />
+            <p className="text-xs font-sans font-medium" style={{ color: "rgba(201,168,76,0.6)" }}>Verified Reviews</p>
+          </div>
         </div>
-        <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl text-foreground mb-8">What Our Customers Say</h2>
+
+        <h2
+          className="text-xl sm:text-3xl lg:text-4xl font-light mb-10"
+          style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif", color: "#e8dcc8" }}
+        >
+          What Our Customers Say
+        </h2>
 
         <div className="relative overflow-hidden min-h-[140px] flex items-center justify-center">
           <AnimatePresence mode="wait" custom={direction}>
@@ -88,27 +96,29 @@ const SocialProof = () => {
             >
               <div className="flex items-center justify-center gap-0.5 mb-4">
                 {Array.from({ length: review.rating }).map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <Star key={j} className="w-4 h-4" style={{ fill: "#C9A84C", color: "#C9A84C" }} />
                 ))}
               </div>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4 italic">
+              <p className="text-sm sm:text-base leading-relaxed mb-4 italic font-light" style={{ color: "rgba(232,220,200,0.6)" }}>
                 "{review.body}"
               </p>
-              <p className="text-sm font-semibold text-foreground">{review.author_name}</p>
+              <p className="text-sm font-semibold" style={{ color: "#e8dcc8" }}>{review.author_name}</p>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Dots */}
         {reviews.length > 1 && (
           <div className="flex items-center justify-center gap-2 mt-6">
             {reviews.map((_, i) => (
               <button
                 key={i}
                 onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                  i === current ? "bg-foreground w-4" : "bg-foreground/20"
-                }`}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: i === current ? 16 : 6,
+                  height: 6,
+                  background: i === current ? "#C9A84C" : "rgba(201,168,76,0.2)",
+                }}
                 aria-label={`Review ${i + 1}`}
               />
             ))}
