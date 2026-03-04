@@ -40,7 +40,7 @@ const AccessDenied = () => (
   <DarkShell>
     <div className="relative z-10 w-[92vw] max-w-md text-center px-6 flex-1 flex flex-col items-center justify-center">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-        <LCCCrest size={80} />
+        <img src={heroLogo} alt="Luxury Courier Club" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
       </motion.div>
 
       <motion.div
