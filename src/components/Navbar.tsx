@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Instagram } from "lucide-react";
+import { Menu, X, Instagram, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavCartIcon from "@/components/NavCartIcon";
 import ReferralDialog from "@/components/ReferralDialog";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/contexts/CartContext";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/hero-logo.png";
 
 const navLinks = [
@@ -20,6 +21,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [inHero, setInHero] = useState(false);
   const [referralOpen, setReferralOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation();
   const { totalItems, justAdded } = useCart();
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -47,6 +49,14 @@ const Navbar = () => {
   }, [isHome, location.pathname]);
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setLoggedIn(!!session);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => setLoggedIn(!!session));
+    return () => subscription.unsubscribe();
+  }, []);
 
   const transparent = isHome && inHero;
 
@@ -91,6 +101,14 @@ const Navbar = () => {
 
           {/* Right side */}
           <div className="flex items-center gap-1.5">
+            <Link
+              to={loggedIn ? "/account" : "/auth"}
+              className="p-2 transition-colors"
+              style={{ color: "rgba(201,168,76,0.6)" }}
+              aria-label={loggedIn ? "My account" : "Sign in"}
+            >
+              <User size={20} />
+            </Link>
             <button
               onClick={() => setReferralOpen(true)}
               className="hidden sm:block px-3 py-1.5 text-[10px] font-sans uppercase transition-all duration-300"

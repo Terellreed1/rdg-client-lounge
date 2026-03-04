@@ -17,29 +17,28 @@ import hb from "@/assets/brands/hb.png";
 import julatoNyc from "@/assets/brands/julato-nyc.png";
 import painNetwork from "@/assets/brands/pain-network.png";
 import highMonkey from "@/assets/brands/high-monkey.png";
-import zourZop from "@/assets/brands/zour-zop.png";
 import donMerfos from "@/assets/brands/don-merfos.png";
 
 const brands = [
-  { name: "Always Faded", slug: "always-faded", logo: alwaysFaded },
-  { name: "Mameys", slug: "mameys", logo: mameys },
-  { name: "Fumi", slug: "fumi", logo: fumi },
-  { name: "Kandy Depo", slug: "kandy-depo", logo: kandyDepo },
-  { name: "ESPN", slug: "espn", logo: espn },
-  { name: "High Mart", slug: "high-mart", logo: highMart },
-  { name: "Super Candy Bros", slug: "super-candy-bros", logo: superCandyBros },
-  { name: "Highflix", slug: "highflix", logo: highflix },
-  { name: "Frutaz", slug: "frutaz", logo: frutaz },
-  { name: "Cups Strainz", slug: "cups-strainz", logo: cupsStrainz },
-  { name: "Backpackboyz", slug: "backpackboyz", logo: backpackboyz },
   { name: "The Candy Shop", slug: "the-candy-shop", logo: theCandyShop },
-  { name: "Grumpus", slug: "grumpus", logo: grumpus },
-  { name: "HB", slug: "hb", logo: hb },
-  { name: "Julato NYC", slug: "julato-nyc", logo: julatoNyc },
   { name: "Pain Network", slug: "pain-network", logo: painNetwork },
+  { name: "Grumpus", slug: "grumpus", logo: grumpus },
+  { name: "Cupz Strainz", slug: "cupz-strainz", logo: cupsStrainz },
+  { name: "Julato NYC", slug: "julato-nyc", logo: julatoNyc },
+  { name: "High Mart", slug: "high-mart", logo: highMart },
+  { name: "Highflix", slug: "highflix", logo: highflix },
   { name: "High Monkey", slug: "high-monkey", logo: highMonkey },
-  { name: "Zour Zop", slug: "zour-zop", logo: zourZop },
+  { name: "Mameys", slug: "mameys", logo: mameys },
+  { name: "ESPN", slug: "espn", logo: espn },
+  { name: "MB", slug: "mb", logo: hb },
+  { name: "Fumi", slug: "fumi", logo: fumi },
+  { name: "Frutaz LA", slug: "frutaz-la", logo: frutaz },
   { name: "Don Merfos", slug: "don-merfos", logo: donMerfos },
+  { name: "Kandy Depo", slug: "kandy-depo", logo: kandyDepo },
+  { name: "Always Faded", slug: "always-faded", logo: alwaysFaded },
+  { name: "FS", slug: "fs", logo: superCandyBros },
+  { name: "Super Candy Bros", slug: "super-candy-bros", logo: superCandyBros },
+  { name: "Backpack Boyz", slug: "backpack-boyz", logo: backpackboyz },
 ];
 
 const BrandCarousel = () => {

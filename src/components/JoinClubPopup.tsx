@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
-import { supabase } from "@/integrations/supabase/client";
 
 const JoinClubPopup = () => {
   const [open, setOpen] = useState(false);
-  const [birthday, setBirthday] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   // Capture ref param from URL on mount
   useEffect(() => {
@@ -33,44 +29,9 @@ const JoinClubPopup = () => {
     sessionStorage.setItem("lsc-popup-dismissed", "true");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setSubmitting(true);
-    try {
-      const refCode = localStorage.getItem("lcc_referral_ref");
-      
-      if (refCode) {
-        // Look up the referral code
-        const { data: codeRow } = await supabase
-          .from("referral_codes")
-          .select("id")
-          .eq("code", refCode)
-          .single();
-
-        if (codeRow) {
-          // Record the signup
-          await supabase.from("referral_signups").insert({
-            referral_code_id: codeRow.id,
-            referred_name: firstName || null,
-            referred_email: email,
-          });
-
-          // Increment the counter
-          await supabase.rpc("increment_referral_count" as never, { code_id: codeRow.id } as never);
-        }
-        
-        localStorage.removeItem("lcc_referral_ref");
-      }
-
-      setSuccess(true);
-      setTimeout(handleClose, 1500);
-    } catch {
-      // Still close on error
-      handleClose();
-    }
-    setSubmitting(false);
+  const handleJoin = () => {
+    handleClose();
+    navigate("/auth");
   };
 
   return (
@@ -105,52 +66,24 @@ const JoinClubPopup = () => {
                   Join the Club
                 </h2>
                 <p className="font-sans text-xs sm:text-sm text-muted-foreground leading-relaxed mb-8 uppercase tracking-wide">
-                  Sign up to receive 15% off your first order,
+                  Create an account to receive 15% off your first order,
                   <br />
                   plus exclusive drops &amp; members-only deals.
                 </p>
 
-                {success ? (
-                  <motion.p
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-foreground font-serif text-lg py-8"
-                  >
-                    Welcome to the Club ✓
-                  </motion.p>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-3">
-                    <input
-                      type="text"
-                      placeholder="MM/DD/YYYY"
-                      value={birthday}
-                      onChange={(e) => setBirthday(e.target.value)}
-                      className="w-full border border-border bg-transparent px-4 py-3 text-sm font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors"
-                    />
-                    <input
-                      type="text"
-                      placeholder="FIRST NAME (OPTIONAL)"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full border border-border bg-transparent px-4 py-3 text-sm font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors"
-                    />
-                    <input
-                      type="email"
-                      placeholder="EMAIL ADDRESS"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="w-full border border-border bg-transparent px-4 py-3 text-sm font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors"
-                    />
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full bg-foreground text-background py-3.5 text-xs font-sans uppercase tracking-[0.2em] hover:bg-foreground/90 transition-colors disabled:opacity-50"
-                    >
-                      {submitting ? "Joining…" : "Continue"}
-                    </button>
-                  </form>
-                )}
+                <button
+                  onClick={handleJoin}
+                  className="w-full bg-foreground text-background py-3.5 text-xs font-sans uppercase tracking-[0.2em] hover:bg-foreground/90 transition-colors"
+                >
+                  Create Account
+                </button>
+
+                <button
+                  onClick={() => { handleClose(); navigate("/auth"); }}
+                  className="w-full mt-3 py-3 text-xs font-sans uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Already have an account? Sign in
+                </button>
 
                 <p className="text-[10px] text-muted-foreground/50 font-sans mt-4">
                   By signing up, you agree to receive marketing emails from Luxury Courier Club.
