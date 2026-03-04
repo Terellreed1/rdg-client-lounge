@@ -462,7 +462,7 @@ const ProductCard = ({ product, onQuickView }: { product: Product; onQuickView: 
       {/* Add to Cart on hover */}
       <div className="px-3 sm:px-4 pb-3 sm:pb-4">
         <button
-          onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, image_url: product.image_url, quantity: 1 })}
+          onClick={handleAddToCart}
           className="w-full flex items-center justify-center gap-2 py-2 text-[10px] uppercase opacity-0 group-hover:opacity-100 transition-all duration-300"
           style={{ fontFamily: "'Montserrat', 'DM Sans', sans-serif", letterSpacing: "0.15em", border: "1px solid rgba(201,168,76,0.4)", color: "#C9A84C", background: "transparent" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(201,168,76,0.08)"; e.currentTarget.style.borderColor = "#C9A84C"; }}
