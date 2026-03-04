@@ -11,7 +11,7 @@ import logo from "@/assets/hero-logo.png";
 const navLinks = [
   { label: "Shop", to: "/shop" },
   { label: "About", to: "/about" },
-  { label: "Merch", to: "https://www.luxurycourier.club/", external: true },
+  { label: "Merch", to: "/merch" },
   { label: "Wholesale", to: "/wholesale" },
   { label: "Delivery", to: "/delivery" },
   { label: "FAQ", to: "/faq" },
@@ -75,35 +75,19 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) =>
-              link.external ? (
-                <a
-                  key={link.label}
-                  href={link.to}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative text-[11px] font-sans font-medium uppercase transition-colors group"
-                  style={{ letterSpacing: "0.15em", color: "rgba(160,144,112,0.6)" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(160,144,112,0.6)"; }}
-                >
-                  {link.label}
-                  <span className="absolute bottom-[-3px] left-0 w-0 h-px group-hover:w-full transition-all duration-300" style={{ background: "#C9A84C" }} />
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  to={link.to}
-                  className="relative text-[11px] font-sans font-medium uppercase transition-colors group"
-                  style={{ letterSpacing: "0.15em", color: location.pathname === link.to ? "#C9A84C" : "rgba(160,144,112,0.6)" }}
-                  onMouseEnter={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "#C9A84C"; }}
-                  onMouseLeave={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "rgba(160,144,112,0.6)"; }}
-                >
-                  {link.label}
-                  <span className="absolute bottom-[-3px] left-0 h-px transition-all duration-300" style={{ width: location.pathname === link.to ? "100%" : "0%", background: "#C9A84C" }} />
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="relative text-[11px] font-sans font-medium uppercase transition-colors group"
+                style={{ letterSpacing: "0.15em", color: location.pathname === link.to ? "#C9A84C" : "rgba(160,144,112,0.6)" }}
+                onMouseEnter={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "#C9A84C"; }}
+                onMouseLeave={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "rgba(160,144,112,0.6)"; }}
+              >
+                {link.label}
+                <span className="absolute bottom-[-3px] left-0 h-px transition-all duration-300" style={{ width: location.pathname === link.to ? "100%" : "0%", background: "#C9A84C" }} />
+              </Link>
+            ))}
           </div>
 
           {/* Right side */}
@@ -191,34 +175,20 @@ const Navbar = () => {
               </div>
 
               <div className="flex-1 px-6 py-4 flex flex-col gap-1">
-                {navLinks.map((link) =>
-                  link.external ? (
-                    <a
-                      key={link.label}
-                      href={link.to}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMobileOpen(false)}
-                      className="py-3 text-[28px]"
-                      style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif", color: "rgba(232,220,200,0.5)" }}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={link.label}
-                      to={link.to}
-                      onClick={() => setMobileOpen(false)}
-                      className="py-3 text-[28px] transition-colors"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif",
-                        color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.5)",
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                )}
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setMobileOpen(false)}
+                    className="py-3 text-[28px] transition-colors"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif",
+                      color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.5)",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
 
               <div className="px-6 py-6 flex items-center justify-between" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>

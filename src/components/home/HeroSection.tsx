@@ -114,7 +114,7 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Est. 2022 · East Coast Delivery
+            East Coast Delivery
           </motion.p>
 
           <h1
