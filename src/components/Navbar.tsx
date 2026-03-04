@@ -175,34 +175,20 @@ const Navbar = () => {
               </div>
 
               <div className="flex-1 px-6 py-4 flex flex-col gap-1">
-                {navLinks.map((link) =>
-                  link.external ? (
-                    <a
-                      key={link.label}
-                      href={link.to}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMobileOpen(false)}
-                      className="py-3 text-[28px]"
-                      style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif", color: "rgba(232,220,200,0.5)" }}
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={link.label}
-                      to={link.to}
-                      onClick={() => setMobileOpen(false)}
-                      className="py-3 text-[28px] transition-colors"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif",
-                        color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.5)",
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                )}
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setMobileOpen(false)}
+                    className="py-3 text-[28px] transition-colors"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif",
+                      color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.5)",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
 
               <div className="px-6 py-6 flex items-center justify-between" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
