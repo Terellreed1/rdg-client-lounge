@@ -376,6 +376,15 @@ const DualRangeSlider = ({
   const pctMin = ((valueMin - min) / (max - min)) * 100;
   const pctMax = ((valueMax - min) / (max - min)) * 100;
 
+  const handleMinInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseInt(e.target.value) || min;
+    if (v >= min && v <= valueMax - 5) onChangeMin(v);
+  };
+  const handleMaxInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseInt(e.target.value) || max;
+    if (v <= max && v >= valueMin + 5) onChangeMax(v);
+  };
+
   return (
     <div className="space-y-3">
       <div className="relative h-6 flex items-center">
@@ -384,10 +393,32 @@ const DualRangeSlider = ({
         <input type="range" min={min} max={max} step={5} value={valueMin} onChange={(e) => { const v = parseInt(e.target.value); if (v <= valueMax - 5) onChangeMin(v); }} className="dual-range-input absolute inset-x-0" style={{ zIndex: valueMin > max - 20 ? 5 : 3 }} />
         <input type="range" min={min} max={max} step={5} value={valueMax} onChange={(e) => { const v = parseInt(e.target.value); if (v >= valueMin + 5) onChangeMax(v); }} className="dual-range-input absolute inset-x-0" style={{ zIndex: 4 }} />
       </div>
-      <div className="flex justify-between text-xs">
-        <span style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500 }}>${valueMin}</span>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1">
+          <span style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500, fontSize: "12px" }}>$</span>
+          <input
+            type="number"
+            value={valueMin}
+            onChange={handleMinInput}
+            min={min}
+            max={valueMax - 5}
+            className="w-14 bg-transparent border border-[rgba(201,168,76,0.3)] text-center text-xs py-1 focus:outline-none focus:border-[#C9A84C] transition-colors"
+            style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500 }}
+          />
+        </div>
         <span style={{ color: "rgba(201,168,76,0.3)" }}>—</span>
-        <span style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500 }}>${valueMax}</span>
+        <div className="flex items-center gap-1">
+          <span style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500, fontSize: "12px" }}>$</span>
+          <input
+            type="number"
+            value={valueMax}
+            onChange={handleMaxInput}
+            min={valueMin + 5}
+            max={max}
+            className="w-14 bg-transparent border border-[rgba(201,168,76,0.3)] text-center text-xs py-1 focus:outline-none focus:border-[#C9A84C] transition-colors"
+            style={{ color: "#C9A84C", fontFamily: "'Montserrat', 'DM Sans', sans-serif", fontWeight: 500 }}
+          />
+        </div>
       </div>
     </div>
   );

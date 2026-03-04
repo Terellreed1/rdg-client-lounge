@@ -12,7 +12,6 @@ const navLinks = [
   { label: "Shop", to: "/shop" },
   { label: "About", to: "/about" },
   { label: "Merch", to: "/merch" },
-  { label: "Wholesale", to: "/wholesale" },
   { label: "Delivery", to: "/delivery" },
   { label: "FAQ", to: "/faq" },
 ];

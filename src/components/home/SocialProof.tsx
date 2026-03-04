@@ -11,9 +11,9 @@ interface Review {
 }
 
 const fallbackReviews: Review[] = [
-  { id: "1", author_name: "Brianna C.", rating: 5, body: "Smells exactly like cotton candy, it's wild. The smoke is so smooth too — best I've had in a long time." },
-  { id: "2", author_name: "Marcus T.", rating: 5, body: "Delivery was fast and discreet. Packaging was premium — felt like I ordered from a real luxury brand. Will be a regular customer." },
-  { id: "3", author_name: "Jasmine R.", rating: 5, body: "The Ice Cream strain was fire. These guys only carry top shelf — you can tell they're selective about what they put on the menu." },
+  { id: "1", author_name: "Brianna C.", rating: 5, body: "Smells exactly like cotton candy, it's wild. The smoke is so smooth too — best I've had in a long time. Definitely ordering again." },
+  { id: "2", author_name: "Marcus T.", rating: 4, body: "Delivery was fast and discreet. Packaging was premium. Only thing is I wish they had more edible options, but the flower quality is unmatched." },
+  { id: "3", author_name: "Jasmine R.", rating: 5, body: "The selection here is crazy. You can tell they actually curate what goes on the menu — no mid, no filler. This is my go-to now." },
 ];
 
 const GoogleLogo = () => (
@@ -125,13 +125,6 @@ const SocialProof = () => {
             </span>
           </div>
         </div>
-
-        <p
-          className="text-[11px] font-sans font-semibold uppercase mb-3"
-          style={{ letterSpacing: "0.3em", color: "#C9A84C" }}
-        >
-          What They're Saying
-        </p>
 
         <h2
           className="text-2xl sm:text-3xl lg:text-4xl mb-2"
