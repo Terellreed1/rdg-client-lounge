@@ -93,47 +93,65 @@ const ProductsPreview = () => {
           {filtered.map((product, i) => (
             <motion.div
               key={product.id}
-              className="group relative"
+              className="group"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.04, duration: 0.4 }}
             >
               <Link to={`/shop/${product.id}`} className="block">
                 <div
-                  className="relative overflow-hidden transition-all duration-300 group-hover:-translate-y-1"
+                  className="overflow-hidden transition-all duration-300 group-hover:-translate-y-1"
                   style={{
                     background: "#161A14",
-                    border: "1px solid transparent",
+                    border: "1px solid rgba(201,168,76,0)",
+                    boxShadow: "none",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)";
-                    e.currentTarget.style.boxShadow = "0 8px 24px -8px rgba(0,0,0,0.5)";
+                    e.currentTarget.style.boxShadow = "0 8px 24px -8px rgba(0,0,0,0.5), 0 0 12px -4px rgba(201,168,76,0.08)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "transparent";
+                    e.currentTarget.style.borderColor = "rgba(201,168,76,0)";
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
                   {/* Image */}
                   <div className="relative aspect-[4/5] overflow-hidden">
                     {product.image_url ? (
-                      <img
-                        src={product.image_url}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <>
+                        <img
+                          src={product.image_url}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        {/* Dark overlay to blend into card */}
+                        <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(0,0,0,0.15)" }} />
+                      </>
                     ) : (
-                      <div
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ background: "#1a1e17" }}
-                      >
+                      <div className="w-full h-full flex items-center justify-center" style={{ background: "#1a1e17" }}>
                         <img src={heroLogo} alt="" className="w-16 h-16 opacity-20" />
                       </div>
                     )}
 
-                    {/* Hover overlay with Quick View */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-end justify-center pb-4">
+                    {/* Strain badge top-left */}
+                    {product.strain && (
+                      <span
+                        className="absolute top-2 left-2 z-10 text-[9px] font-sans uppercase px-2 py-0.5"
+                        style={{
+                          letterSpacing: "0.12em",
+                          color: "#C9A84C",
+                          border: "1px solid rgba(201,168,76,0.35)",
+                          background: "rgba(13,17,14,0.8)",
+                          backdropFilter: "blur(4px)",
+                        }}
+                      >
+                        {product.strain}
+                      </span>
+                    )}
+
+                    {/* Hover Quick View */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end justify-center pb-4">
                       <button
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setQuickViewId(product.id); }}
                         className="flex items-center gap-1.5 text-[10px] font-sans uppercase px-4 py-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
@@ -150,29 +168,13 @@ const ProductsPreview = () => {
 
                   {/* Info */}
                   <div className="p-3 sm:p-4">
-                    {/* Strain badge */}
-                    {product.strain && (
-                      <span
-                        className="inline-block text-[9px] font-sans uppercase mb-2 px-2 py-0.5"
-                        style={{
-                          letterSpacing: "0.12em",
-                          color: "rgba(201,168,76,0.7)",
-                          border: "1px solid rgba(201,168,76,0.2)",
-                        }}
-                      >
-                        {product.strain}
-                      </span>
-                    )}
                     <h3
                       className="text-sm sm:text-base font-light leading-snug mb-1"
                       style={{ fontFamily: "'Cormorant Garamond', serif", color: "#e8dcc8" }}
                     >
                       {product.name}
                     </h3>
-                    <p
-                      className="text-xs font-sans font-light"
-                      style={{ color: "rgba(201,168,76,0.6)" }}
-                    >
+                    <p className="text-xs font-sans font-light" style={{ color: "rgba(201,168,76,0.6)" }}>
                       {product.price}
                     </p>
                   </div>

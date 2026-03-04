@@ -8,21 +8,7 @@ import { cn } from "@/lib/utils";
 import { useCart } from "@/contexts/CartContext";
 import logo from "@/assets/hero-logo.png";
 
-const categories = [
-  { label: "All Flower", to: "/shop" },
-  { label: "Indica", to: "/shop?strain=Indica" },
-  { label: "Sativa", to: "/shop?strain=Sativa" },
-  { label: "Hybrid", to: "/shop?strain=Hybrid" },
-  { label: "Sale", to: "/shop?sale=true" },
-];
-
-interface NavLinkType {
-  label: string;
-  to: string;
-  external?: boolean;
-}
-
-const navLinks: NavLinkType[] = [
+const navLinks = [
   { label: "Shop", to: "/shop" },
   { label: "About", to: "/about" },
   { label: "Merch", to: "https://www.luxurycourier.club/", external: true },
@@ -41,14 +27,11 @@ const Navbar = () => {
 
   const isHome = location.pathname === "/";
 
-  // IntersectionObserver for hero section
   useEffect(() => {
     if (!isHome) { setInHero(false); return; }
-
     const setupObserver = () => {
       const heroEl = window.__lccHeroEl;
       if (!heroEl) return;
-
       observerRef.current?.disconnect();
       observerRef.current = new IntersectionObserver(
         ([entry]) => setInHero(entry.isIntersecting),
@@ -56,7 +39,6 @@ const Navbar = () => {
       );
       observerRef.current.observe(heroEl);
     };
-
     setupObserver();
     window.addEventListener("lcc-hero-mounted", setupObserver);
     return () => {
@@ -65,28 +47,29 @@ const Navbar = () => {
     };
   }, [isHome, location.pathname]);
 
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
   const transparent = isHome && inHero;
 
+  // Dark nav always — transparent only over hero
+  const navBg = transparent ? "bg-transparent" : "";
+  const navStyle = transparent ? {} : { background: "#0D110E", borderBottom: "1px solid rgba(201,168,76,0.08)" };
+
   return (
     <>
-      {/* Main Nav */}
       <nav
         className={cn(
           "z-50 transition-all duration-300 w-full",
-          transparent
-            ? "absolute top-0 left-0 right-0 bg-transparent shadow-none"
-            : "sticky top-0 bg-background shadow-md"
+          transparent ? "absolute top-0 left-0 right-0" : "sticky top-0",
+          navBg
         )}
+        style={navStyle}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <img src={logo} alt="Luxury Courier Club" className="h-14 w-14 sm:h-20 sm:w-20 object-contain transition-all duration-300" />
-            <span className={cn("hidden sm:inline font-serif text-lg font-bold transition-colors duration-300", transparent ? "text-white" : "text-foreground")}>
+            <span className="hidden sm:inline font-serif text-lg font-bold transition-colors duration-300" style={{ color: "#e8dcc8" }}>
               Luxury Courier Club
             </span>
           </Link>
@@ -100,7 +83,10 @@ const Navbar = () => {
                   href={link.to}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn("text-sm font-medium transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-primary")}
+                  className="text-sm font-medium transition-colors"
+                  style={{ color: "rgba(232,220,200,0.6)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(232,220,200,0.6)"; }}
                 >
                   {link.label}
                 </a>
@@ -108,12 +94,10 @@ const Navbar = () => {
                 <Link
                   key={link.label}
                   to={link.to}
-                  className={cn(
-                    "text-sm font-medium transition-colors",
-                    transparent
-                      ? (location.pathname === link.to ? "text-white" : "text-white/80 hover:text-white")
-                      : (location.pathname === link.to ? "text-primary" : "text-muted-foreground hover:text-primary")
-                  )}
+                  className="text-sm font-medium transition-colors"
+                  style={{ color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.6)" }}
+                  onMouseEnter={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "#C9A84C"; }}
+                  onMouseLeave={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "rgba(232,220,200,0.6)"; }}
                 >
                   {link.label}
                 </Link>
@@ -125,34 +109,35 @@ const Navbar = () => {
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => setReferralOpen(true)}
-              className={cn(
-                "hidden sm:block px-3 py-1.5 text-[10px] font-sans uppercase wide-spacing border rounded-full transition-all duration-300",
-                transparent
-                  ? "text-white/80 hover:text-white border-white/30 hover:border-white"
-                  : "text-muted-foreground hover:text-foreground border-border hover:border-foreground"
-              )}
+              className="hidden sm:block px-3 py-1.5 text-[10px] font-sans uppercase transition-all duration-300"
+              style={{ letterSpacing: "0.15em", color: "rgba(201,168,76,0.6)", border: "1px solid rgba(201,168,76,0.25)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderColor = "#C9A84C"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(201,168,76,0.6)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)"; }}
               aria-label="Share referral"
             >
               Refer
             </button>
             <button
               onClick={() => setReferralOpen(true)}
-              className={cn("sm:hidden p-2 transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")}
+              className="sm:hidden p-2 transition-colors"
+              style={{ color: "rgba(201,168,76,0.6)" }}
               aria-label="Share referral"
             >
-              <span className="text-xs font-sans uppercase wide-spacing">Refer</span>
+              <span className="text-xs font-sans uppercase" style={{ letterSpacing: "0.15em" }}>Refer</span>
             </button>
 
             <Link
               to="/cart"
-              className={cn("relative p-2 transition-colors", transparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary")}
+              className="relative p-2 transition-colors"
+              style={{ color: "#e8dcc8" }}
               aria-label="Shopping cart"
             >
               <NavCartIcon size={22} />
               <AnimatePresence>
                 {totalItems > 0 && (
                   <motion.span
-                    className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center rounded-full"
+                    className="absolute -top-0.5 -right-0.5 w-5 h-5 text-[10px] font-bold flex items-center justify-center rounded-full"
+                    style={{ background: "#C9A84C", color: "#0D110E" }}
                     initial={{ scale: 0 }}
                     animate={{ scale: justAdded ? [1, 1.4, 1] : 1 }}
                     exit={{ scale: 0 }}
@@ -167,117 +152,104 @@ const Navbar = () => {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={cn("lg:hidden p-2", transparent ? "text-white" : "text-foreground")}
+              className="lg:hidden p-2"
+              style={{ color: "#e8dcc8" }}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
-
-        {/* Category bar — desktop */}
-        <div className={cn(
-          "hidden lg:block border-t transition-colors duration-300",
-          transparent ? "border-white/10 bg-transparent" : "border-border bg-background"
-        )}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-8 h-11">
-            {categories.map((cat) => (
-              <Link
-                key={cat.label}
-                to={cat.to}
-                className={cn("text-sm font-medium transition-colors", transparent ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-primary")}
-              >
-                {cat.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile Drawer */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <>
-              <motion.div
-                className="fixed inset-0 z-40 bg-foreground/60 backdrop-blur-sm lg:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setMobileOpen(false)}
-              />
-              <motion.div
-                className="fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-sm bg-background flex flex-col lg:hidden"
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                {/* Close + Logo */}
-                <div className="flex items-center justify-between px-6 pt-6 pb-4">
-                  <img src={logo} alt="Luxury Courier Club" className="h-14 w-14 object-contain" />
-                  <button onClick={() => setMobileOpen(false)} className="p-2 text-foreground" aria-label="Close menu">
-                    <X size={24} />
-                  </button>
-                </div>
-
-                {/* Nav links */}
-                <div className="flex-1 px-6 py-4 flex flex-col gap-1">
-                  {navLinks.map((link) =>
-                    link.external ? (
-                      <a
-                        key={link.label}
-                        href={link.to}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setMobileOpen(false)}
-                        className="py-3 font-serif text-[28px] text-muted-foreground"
-                        style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif" }}
-                      >
-                        {link.label}
-                      </a>
-                    ) : (
-                      <Link
-                        key={link.label}
-                        to={link.to}
-                        onClick={() => setMobileOpen(false)}
-                        className={cn(
-                          "py-3 font-serif text-[28px] transition-colors",
-                          location.pathname === link.to ? "text-primary" : "text-muted-foreground"
-                        )}
-                        style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif" }}
-                      >
-                        {link.label}
-                      </Link>
-                    )
-                  )}
-                </div>
-
-                {/* Bottom: Refer + Cart */}
-                <div className="px-6 py-6 border-t border-border flex items-center justify-between">
-                  <button
-                    onClick={() => { setMobileOpen(false); setReferralOpen(true); }}
-                    className="px-5 py-2.5 text-xs font-sans uppercase wide-spacing text-foreground border border-foreground rounded-full hover:bg-foreground hover:text-background transition-all"
-                  >
-                    Refer a Friend
-                  </button>
-                  <Link
-                    to="/cart"
-                    onClick={() => setMobileOpen(false)}
-                    className="relative p-2 text-foreground"
-                    aria-label="Shopping cart"
-                  >
-                    <NavCartIcon size={24} />
-                    {totalItems > 0 && (
-                      <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center rounded-full">
-                        {totalItems}
-                      </span>
-                    )}
-                  </Link>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
       </nav>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 lg:hidden"
+              style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              className="fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-sm flex flex-col lg:hidden"
+              style={{ background: "#0D110E", borderLeft: "1px solid rgba(201,168,76,0.1)" }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              <div className="flex items-center justify-between px-6 pt-6 pb-4">
+                <img src={logo} alt="Luxury Courier Club" className="h-14 w-14 object-contain" />
+                <button onClick={() => setMobileOpen(false)} className="p-2" style={{ color: "#e8dcc8" }} aria-label="Close menu">
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="flex-1 px-6 py-4 flex flex-col gap-1">
+                {navLinks.map((link) =>
+                  link.external ? (
+                    <a
+                      key={link.label}
+                      href={link.to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileOpen(false)}
+                      className="py-3 text-[28px]"
+                      style={{ fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif", color: "rgba(232,220,200,0.5)" }}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.label}
+                      to={link.to}
+                      onClick={() => setMobileOpen(false)}
+                      className="py-3 text-[28px] transition-colors"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', 'Bodoni Moda', serif",
+                        color: location.pathname === link.to ? "#C9A84C" : "rgba(232,220,200,0.5)",
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                )}
+              </div>
+
+              <div className="px-6 py-6 flex items-center justify-between" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+                <button
+                  onClick={() => { setMobileOpen(false); setReferralOpen(true); }}
+                  className="px-5 py-2.5 text-xs font-sans uppercase transition-all"
+                  style={{ letterSpacing: "0.15em", color: "#C9A84C", border: "1px solid rgba(201,168,76,0.3)" }}
+                >
+                  Refer a Friend
+                </button>
+                <Link
+                  to="/cart"
+                  onClick={() => setMobileOpen(false)}
+                  className="relative p-2"
+                  style={{ color: "#e8dcc8" }}
+                  aria-label="Shopping cart"
+                >
+                  <NavCartIcon size={24} />
+                  {totalItems > 0 && (
+                    <span
+                      className="absolute -top-0.5 -right-0.5 w-5 h-5 text-[10px] font-bold flex items-center justify-center rounded-full"
+                      style={{ background: "#C9A84C", color: "#0D110E" }}
+                    >
+                      {totalItems}
+                    </span>
+                  )}
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       <ReferralDialog open={referralOpen} onClose={() => setReferralOpen(false)} initialTab="share" />
     </>
   );
