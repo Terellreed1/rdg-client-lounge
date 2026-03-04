@@ -72,7 +72,7 @@ const BrandCarousel = () => {
               <motion.img
                 src={brand.logo}
                 alt={brand.name}
-                className="h-14 sm:h-20 md:h-24 w-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 brightness-0 invert"
+                className="h-14 sm:h-20 md:h-24 w-auto object-contain opacity-70 group-hover:opacity-100 transition-all duration-300"
                 whileHover={{ scale: 1.08 }}
               />
             </Link>
