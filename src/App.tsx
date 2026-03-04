@@ -21,8 +21,9 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
-import Wholesale from "./pages/Wholesale";
 import Admin from "./pages/Admin";
+import Auth from "./pages/Auth";
+import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +45,8 @@ const AnimatedRoutes = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
-        {/* Wholesale moved to FAQ page */}
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
