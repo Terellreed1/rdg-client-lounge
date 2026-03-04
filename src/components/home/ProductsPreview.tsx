@@ -182,14 +182,6 @@ const ProductsPreview = () => {
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            addToCart({
-                              id: product.id,
-                              name: product.name,
-                              brand: product.brand,
-                              price: product.price,
-                              image_url: product.image_url,
-                              strain: product.strain,
-                            });
                           }}
                           className="text-[10px] font-sans font-semibold uppercase px-3 py-1.5 transition-all duration-250 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
                           style={{
