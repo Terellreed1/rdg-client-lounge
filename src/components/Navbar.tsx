@@ -50,6 +50,14 @@ const Navbar = () => {
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setLoggedIn(!!session);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => setLoggedIn(!!session));
+    return () => subscription.unsubscribe();
+  }, []);
+
   const transparent = isHome && inHero;
 
   // Dark nav always — transparent only over hero
