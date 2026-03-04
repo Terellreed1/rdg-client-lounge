@@ -101,6 +101,14 @@ const Navbar = () => {
 
           {/* Right side */}
           <div className="flex items-center gap-1.5">
+            <Link
+              to={loggedIn ? "/account" : "/auth"}
+              className="p-2 transition-colors"
+              style={{ color: "rgba(201,168,76,0.6)" }}
+              aria-label={loggedIn ? "My account" : "Sign in"}
+            >
+              <User size={20} />
+            </Link>
             <button
               onClick={() => setReferralOpen(true)}
               className="hidden sm:block px-3 py-1.5 text-[10px] font-sans uppercase transition-all duration-300"
