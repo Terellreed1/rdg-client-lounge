@@ -109,18 +109,16 @@ const ProductsPreview = () => {
               >
                 <Link to={`/shop/${product.id}`} className="block">
                   <div
-                    className="overflow-hidden transition-all duration-350 group-hover:-translate-y-[5px]"
+                    className="overflow-hidden transition-colors duration-300"
                     style={{
                       background: "#131810",
                       border: "1px solid rgba(201,168,76,0.08)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-                      e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(201,168,76,0.05)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor = "rgba(201,168,76,0.08)";
-                      e.currentTarget.style.boxShadow = "none";
                     }}
                   >
                     {/* Image */}

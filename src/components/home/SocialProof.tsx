@@ -126,13 +126,6 @@ const SocialProof = () => {
           </div>
         </div>
 
-        <p
-          className="text-[11px] font-sans font-semibold uppercase mb-3"
-          style={{ letterSpacing: "0.3em", color: "#C9A84C" }}
-        >
-          What They're Saying
-        </p>
-
         <h2
           className="text-2xl sm:text-3xl lg:text-4xl mb-2"
           style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "#F0EBE0" }}

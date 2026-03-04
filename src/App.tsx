@@ -44,7 +44,7 @@ const AnimatedRoutes = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
-        <Route path="/wholesale" element={<Wholesale />} />
+        {/* Wholesale moved to FAQ page */}
         <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

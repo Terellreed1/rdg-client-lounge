@@ -47,7 +47,7 @@ interface Review {
 
 const STRAIN_OPTIONS = ["None", "Indica", "Sativa", "Hybrid"];
 const TYPE_OPTIONS = ["Flower", "Vapes", "Edibles", "Concentrates", "Pre-Rolls", "Accessories", "Other"];
-const BRAND_OPTIONS = ["Luxury Courier Club", "Backpack Boyz", "Cookies", "Jungle Boys", "Connected", "Alien Labs", "Kush Factory", "Friday", "Super Candy Bros", "High Tolerance", "Cali Clouds Club", "Other"];
+const DEFAULT_BRAND_OPTIONS = ["Luxury Courier Club", "The Candy Shop", "Pain Network", "Grumpus", "Cupz Strainz", "Julato NYC", "High Mart", "Highflix", "High Monkey", "Mameys", "ESPN", "MB", "Fumi", "Frutaz LA", "Don Merfos", "Kandy Depo", "Always Faded", "FS", "Super Candy Bros", "Backpack Boyz", "Kush Factory", "Friday", "High Tolerance", "Cali Clouds Club"];
 
 // ─── Sidebar Nav ─────────────────────────────────────────────────
 const navItems = [
