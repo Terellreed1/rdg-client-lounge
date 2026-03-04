@@ -15,7 +15,7 @@ const setCookie = (name: string, value: string, days: number) => {
 const stagger = (i: number) => ({
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay: 0.3 + i * 0.18, ease: [0.25, 0.4, 0.25, 1] },
+  transition: { duration: 0.7, delay: 0.3 + i * 0.18, ease: [0.25, 0.4, 0.25, 1] as const },
 });
 
 const AgeGate = ({ children }: { children: React.ReactNode }) => {
