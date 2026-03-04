@@ -402,6 +402,8 @@ const ProductCard = ({ product, onQuickView }: { product: Product; onQuickView: 
     e.stopPropagation();
     addItem({ id: parseInt(product.id) || Date.now(), name: product.name, brand: product.brand || "", price: product.price, image: product.image_url || "" });
   };
+
+  return (
     <div
       className="group transition-all duration-300 hover:-translate-y-1"
       style={{
