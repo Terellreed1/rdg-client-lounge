@@ -1,79 +1,212 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ImageOff, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import QuickView from "@/components/QuickView";
+import heroLogo from "@/assets/hero-logo.png";
 
 interface Product {
   id: string;
   name: string;
   brand: string;
   price: string;
+  strain: string | null;
   image_url: string | null;
 }
+
+const strainFilters = ["All", "Indica", "Sativa", "Hybrid"];
 
 const ProductsPreview = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [quickViewId, setQuickViewId] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState("All");
 
   useEffect(() => {
     supabase
       .from("products")
-      .select("id, name, brand, price, image_url")
+      .select("id, name, brand, price, strain, image_url")
       .eq("active", true)
       .order("sort_order")
-      .limit(2)
+      .limit(12)
       .then(({ data }) => setProducts(data || []));
   }, []);
 
+  const filtered = activeFilter === "All"
+    ? products
+    : products.filter((p) => p.strain?.toLowerCase() === activeFilter.toLowerCase());
+
   return (
-    <section className="py-10 sm:py-14 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl text-foreground">Popular Flower</h2>
-        <Link to="/shop" className="text-sm font-medium text-primary hover:underline">View All</Link>
+    <section
+      className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
+      style={{ background: "#0D110E" }}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Heading */}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-10 h-px" style={{ background: "#C9A84C" }} />
+          <h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-light"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: "#e8dcc8", letterSpacing: "0.05em" }}
+          >
+            Popular Flower
+          </h2>
+        </div>
+
+        {/* Filter pills */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
+          {strainFilters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setActiveFilter(f)}
+              className="px-4 sm:px-5 py-2 text-[10px] sm:text-xs font-sans font-medium uppercase transition-all duration-300"
+              style={{
+                letterSpacing: "0.15em",
+                border: "1px solid",
+                borderColor: activeFilter === f ? "#C9A84C" : "rgba(201,168,76,0.3)",
+                background: activeFilter === f ? "#C9A84C" : "transparent",
+                color: activeFilter === f ? "#0D110E" : "#C9A84C",
+              }}
+              onMouseEnter={(e) => {
+                if (activeFilter !== f) {
+                  e.currentTarget.style.background = "rgba(201,168,76,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(201,168,76,0.6)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeFilter !== f) {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.borderColor = "rgba(201,168,76,0.3)";
+                }
+              }}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {/* Gold divider */}
+        <div className="h-px w-full mb-8" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.4), transparent)" }} />
+
+        {/* Product grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          {filtered.map((product, i) => (
+            <motion.div
+              key={product.id}
+              className="group relative"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04, duration: 0.4 }}
+            >
+              <Link to={`/shop/${product.id}`} className="block">
+                <div
+                  className="relative overflow-hidden transition-all duration-300 group-hover:-translate-y-1"
+                  style={{
+                    background: "#161A14",
+                    border: "1px solid transparent",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)";
+                    e.currentTarget.style.boxShadow = "0 8px 24px -8px rgba(0,0,0,0.5)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "transparent";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    {product.image_url ? (
+                      <img
+                        src={product.image_url}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ background: "#1a1e17" }}
+                      >
+                        <img src={heroLogo} alt="" className="w-16 h-16 opacity-20" />
+                      </div>
+                    )}
+
+                    {/* Hover overlay with Quick View */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-end justify-center pb-4">
+                      <button
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setQuickViewId(product.id); }}
+                        className="flex items-center gap-1.5 text-[10px] font-sans uppercase px-4 py-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                        style={{
+                          letterSpacing: "0.15em",
+                          background: "rgba(201,168,76,0.9)",
+                          color: "#0a0a0a",
+                        }}
+                      >
+                        <Eye size={12} /> Quick View
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-3 sm:p-4">
+                    {/* Strain badge */}
+                    {product.strain && (
+                      <span
+                        className="inline-block text-[9px] font-sans uppercase mb-2 px-2 py-0.5"
+                        style={{
+                          letterSpacing: "0.12em",
+                          color: "rgba(201,168,76,0.7)",
+                          border: "1px solid rgba(201,168,76,0.2)",
+                        }}
+                      >
+                        {product.strain}
+                      </span>
+                    )}
+                    <h3
+                      className="text-sm sm:text-base font-light leading-snug mb-1"
+                      style={{ fontFamily: "'Cormorant Garamond', serif", color: "#e8dcc8" }}
+                    >
+                      {product.name}
+                    </h3>
+                    <p
+                      className="text-xs font-sans font-light"
+                      style={{ color: "rgba(201,168,76,0.6)" }}
+                    >
+                      {product.price}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Browse Full Menu CTA */}
+        <div className="flex justify-center mt-10 sm:mt-14">
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-2 px-8 py-3.5 text-xs font-sans font-medium uppercase transition-all duration-300"
+            style={{
+              letterSpacing: "0.15em",
+              border: "1px solid rgba(201,168,76,0.4)",
+              color: "#C9A84C",
+              background: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(201,168,76,0.08)";
+              e.currentTarget.style.borderColor = "#C9A84C";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
+            }}
+          >
+            Browse Full Menu →
+          </Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        {products.map((product, i) => (
-          <motion.div
-            key={product.id}
-            className="group"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.06, duration: 0.4 }}
-          >
-            <Link to={`/shop/${product.id}`} className="block group">
-              <div className="relative">
-                {product.image_url ? (
-                  <motion.img
-                    src={product.image_url}
-                    alt={product.name}
-                    className="w-full aspect-square object-contain mb-3"
-                    whileHover={{ scale: 1.04 }}
-                    transition={{ duration: 0.4 }}
-                  />
-                ) : (
-                  <div className="w-full aspect-square mb-3 flex flex-col items-center justify-center text-muted-foreground/30">
-                    <ImageOff size={32} strokeWidth={1} />
-                  </div>
-                )}
-                <button
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setQuickViewId(product.id); }}
-                  className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] font-sans uppercase editorial-spacing bg-background/90 backdrop-blur-sm text-foreground px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-foreground hover:text-background shadow-sm"
-                >
-                  <Eye size={12} /> Quick View
-                </button>
-              </div>
-              <div className="text-center">
-                <h3 className="font-serif text-sm text-foreground">{product.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{product.price}</p>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
       <QuickView productId={quickViewId} onClose={() => setQuickViewId(null)} />
     </section>
   );
