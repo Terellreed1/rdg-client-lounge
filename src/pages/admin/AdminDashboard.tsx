@@ -234,11 +234,25 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                   <input className={inputCls} value={form.name} onChange={(e) => f("name", e.target.value)} placeholder="Product name" />
                 </Field>
                 <Field label="Brand">
-                  <div className="relative">
-                    <select className={selectCls} value={form.brand} onChange={(e) => f("brand", e.target.value)}>
-                      {BRAND_OPTIONS.map((b) => <option key={b}>{b}</option>)}
-                    </select>
-                    <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <select className={selectCls} value={DEFAULT_BRAND_OPTIONS.includes(form.brand) ? form.brand : "__custom__"} onChange={(e) => {
+                        if (e.target.value === "__custom__") {
+                          setCustomBrand(form.brand === "__custom__" ? "" : "");
+                          f("brand", "");
+                        } else {
+                          f("brand", e.target.value);
+                          setCustomBrand("");
+                        }
+                      }}>
+                        {DEFAULT_BRAND_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                        <option value="__custom__">+ Custom Brand</option>
+                      </select>
+                      <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                    </div>
+                    {(!DEFAULT_BRAND_OPTIONS.includes(form.brand) || form.brand === "") && (
+                      <input className={inputCls} value={form.brand} onChange={(e) => f("brand", e.target.value)} placeholder="Enter custom brand name" />
+                    )}
                   </div>
                 </Field>
               </div>
