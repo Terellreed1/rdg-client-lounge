@@ -8,7 +8,6 @@ const footerLinks = [
   { label: "Delivery", to: "/delivery" },
   { label: "FAQ", to: "/faq" },
   { label: "Merch", to: "https://www.luxurycourier.club/", external: true },
-  { label: "Wholesale", to: "/wholesale" },
   { label: "Privacy", to: "/privacy" },
   { label: "Terms", to: "/terms" },
 ];
