@@ -44,39 +44,35 @@ const brands = [
 const BrandCarousel = () => {
   return (
     <section
-      className="py-12 overflow-hidden"
-      style={{
-        background: "#090C09",
-        borderTop: "1px solid rgba(201,168,76,0.1)",
-        borderBottom: "1px solid rgba(201,168,76,0.1)",
-      }}
+      className="py-14 overflow-hidden"
+      style={{ background: "#0A0D09" }}
     >
-      {/* Heading */}
-      <div className="text-center mb-8">
+      {/* Minimal heading */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <p
-          className="text-[11px] font-sans font-semibold uppercase"
-          style={{ letterSpacing: "0.35em", color: "#C9A84C" }}
+          className="text-[9px] uppercase tracking-[0.3em]"
+          style={{ color: "rgba(201,168,76,0.35)", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
         >
-          Top Brands
+          Our Brands
         </p>
       </div>
 
       <div className="relative">
         {/* Gradient fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none" style={{ background: "linear-gradient(90deg, #090C09, transparent)" }} />
-        <div className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none" style={{ background: "linear-gradient(270deg, #090C09, transparent)" }} />
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
 
         <div className="flex animate-scroll items-center">
           {[...brands, ...brands].map((brand, i) => (
             <Link
               key={`${brand.slug}-${i}`}
               to={`/shop?brand=${brand.slug}`}
-              className="flex-shrink-0 px-6 sm:px-10 md:px-14 flex items-center justify-center group"
+              className="flex-shrink-0 px-6 sm:px-10 md:px-12 flex items-center justify-center group"
             >
               <img
                 src={brand.logo}
                 alt={brand.name}
-                className="h-14 sm:h-20 md:h-24 w-auto object-contain opacity-50 group-hover:opacity-100 transition-all duration-300"
+                className="h-10 sm:h-14 md:h-16 w-auto object-contain opacity-30 group-hover:opacity-70 transition-opacity duration-500"
               />
             </Link>
           ))}
