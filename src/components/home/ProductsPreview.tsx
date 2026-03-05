@@ -1,16 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useCart } from "@/contexts/CartContext";
 import heroLogo from "@/assets/hero-logo.png";
-
-import flowerImg from "@/assets/products/big-bag-buds.png";
-import vapeImg from "@/assets/products/blue-guava-pops.png";
-import prerollImg from "@/assets/products/el-jefe.png";
-import concentrateImg from "@/assets/products/black-label.png";
-import edibleImg from "@/assets/products/marshmallow-milk.png";
 
 interface Product {
   id: string;
@@ -23,16 +15,15 @@ interface Product {
 }
 
 const categories = [
-  { name: "Flower", image: flowerImg, to: "/shop?category=Flower" },
-  { name: "Pre-Rolls", image: prerollImg, to: "/shop?category=Pre-Roll" },
-  { name: "Vapes", image: vapeImg, to: "/shop?category=Vape" },
-  { name: "Edibles", image: edibleImg, to: "/shop?category=Edible" },
-  { name: "Concentrates", image: concentrateImg, to: "/shop?category=Concentrate" },
+  { name: "Flower", to: "/shop?category=Flower" },
+  { name: "Pre-Rolls", to: "/shop?category=Pre-Roll" },
+  { name: "Vapes", to: "/shop?category=Vape" },
+  { name: "Edibles", to: "/shop?category=Edible" },
+  { name: "Concentrates", to: "/shop?category=Concentrate" },
 ];
 
 const ProductsPreview = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const { addItem } = useCart();
 
   useEffect(() => {
     supabase
@@ -48,7 +39,7 @@ const ProductsPreview = () => {
     <section style={{ background: "#0A0D09" }}>
       <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent)" }} />
 
-      {/* ─── SHOP BY CATEGORY — Culta style ─── */}
+      {/* ─── SHOP BY CATEGORY ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-16 sm:pb-20">
         <div className="text-center mb-10 sm:mb-14">
           <h2
@@ -121,17 +112,11 @@ const ProductsPreview = () => {
         </div>
       </div>
 
-      {/* ─── FEATURED PRODUCTS — grid like Culta ─── */}
+      {/* ─── FEATURED PRODUCTS ─── */}
       <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.08), transparent)" }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="text-center mb-10 sm:mb-14">
-          <p
-            className="text-[10px] uppercase mb-3"
-            style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.35)", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
-          >
-            Featured
-          </p>
           <h3
             className="text-2xl sm:text-3xl lg:text-4xl uppercase"
             style={{
@@ -156,8 +141,8 @@ const ProductsPreview = () => {
               transition={{ delay: i * 0.04, duration: 0.45 }}
             >
               <Link to={`/shop/${product.id}`} className="block">
-                {/* Image */}
-                <div className="relative aspect-square overflow-hidden mb-3 sm:mb-4" style={{ background: "#111610" }}>
+                {/* Image — no container, blends with background */}
+                <div className="relative aspect-square overflow-hidden mb-3 sm:mb-4">
                   {product.image_url ? (
                     <img
                       src={product.image_url}
@@ -186,37 +171,9 @@ const ProductsPreview = () => {
                       {product.strain}
                     </span>
                   )}
-
-                  {/* Quick add overlay */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        addItem({
-                          id: parseInt(product.id) || Date.now(),
-                          name: product.name,
-                          brand: product.brand,
-                          price: product.price,
-                          image: product.image_url || "",
-                        });
-                      }}
-                      className="flex items-center gap-1.5 text-[9px] uppercase px-4 py-2 transition-all duration-200"
-                      style={{
-                        letterSpacing: "0.12em",
-                        background: "#C9A84C",
-                        color: "#0A0D09",
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontWeight: 600,
-                      }}
-                    >
-                      <ShoppingBag size={11} />
-                      Add to Cart
-                    </button>
-                  </div>
                 </div>
 
-                {/* Product info — Culta style: price first, then brand, then name */}
+                {/* Product info */}
                 <p
                   className="text-xs sm:text-sm mb-0.5"
                   style={{ color: "#C9A84C", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}

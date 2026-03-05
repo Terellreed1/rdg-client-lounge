@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import heroLogo from "@/assets/hero-logo.png";
 
@@ -14,19 +14,13 @@ const setCookie = (name: string, value: string, days: number) => {
 
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
-/* SVG Crest matching the reference */
-const LCCCrest = ({ size = 90 }: { size?: number }) => (
-  <svg viewBox="0 0 100 100" fill="none" width={size} height={size}>
-    <circle cx="50" cy="50" r="45" stroke="#C9A84C" strokeWidth="0.7" opacity="0.4" />
-    <circle cx="50" cy="50" r="38" stroke="#C9A84C" strokeWidth="0.5" opacity="0.25" />
-    <text x="50" y="48" textAnchor="middle" fontFamily="'Cormorant Garamond', serif" fontSize="16" fill="#C9A84C" fontWeight="300" letterSpacing="3">
-      LCC
-    </text>
-    <text x="50" y="62" textAnchor="middle" fontFamily="'Montserrat', sans-serif" fontSize="4" fill="#C9A84C" fontWeight="500" letterSpacing="2.5" opacity="0.7">
-      LUXURY COURIER CLUB
-    </text>
-  </svg>
-);
+const MONTHS = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
+];
+
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
 const DarkShell = ({ children }: { children: React.ReactNode }) => (
   <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden" style={{ background: "#090C09" }}>
@@ -34,6 +28,28 @@ const DarkShell = ({ children }: { children: React.ReactNode }) => (
     {children}
   </div>
 );
+
+const selectStyle: React.CSSProperties = {
+  appearance: "none",
+  background: "rgba(201,168,76,0.06)",
+  border: "1px solid rgba(201,168,76,0.2)",
+  color: "#F0EBE0",
+  fontFamily: "'Montserrat', sans-serif",
+  fontSize: "12px",
+  letterSpacing: "0.05em",
+  padding: "12px 32px 12px 14px",
+  width: "100%",
+  outline: "none",
+  cursor: "pointer",
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "right 12px center",
+};
+
+const optionStyle: React.CSSProperties = {
+  background: "#141814",
+  color: "#F0EBE0",
+};
 
 /* ── Access Denied Screen ── */
 const AccessDenied = () => (
@@ -91,6 +107,11 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
   const [denied, setDenied] = useState(false);
   const [exiting, setExiting] = useState(false);
 
+  const [month, setMonth] = useState("");
+  const [day, setDay] = useState("");
+  const [year, setYear] = useState("");
+  const [error, setError] = useState("");
+
   useEffect(() => {
     const cookie = getCookie("lcc_age_verified");
     if (cookie === "denied") {
@@ -101,15 +122,33 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const handleYes = () => {
-    setCookie("lcc_age_verified", "true", 30);
-    setExiting(true);
-    setTimeout(() => setVerified(true), 600);
-  };
+  const daysInMonth = useMemo(() => {
+    if (!month || !year) return 31;
+    return new Date(parseInt(year), parseInt(month), 0).getDate();
+  }, [month, year]);
 
-  const handleNo = () => {
-    setCookie("lcc_age_verified", "denied", 1);
-    setDenied(true);
+  const dayOptions = useMemo(() => Array.from({ length: daysInMonth }, (_, i) => i + 1), [daysInMonth]);
+
+  const handleSubmit = () => {
+    setError("");
+    if (!month || !day || !year) {
+      setError("Please enter your full date of birth.");
+      return;
+    }
+    const dob = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+
+    if (age >= 21) {
+      setCookie("lcc_age_verified", "true", 30);
+      setExiting(true);
+      setTimeout(() => setVerified(true), 600);
+    } else {
+      setCookie("lcc_age_verified", "denied", 1);
+      setDenied(true);
+    }
   };
 
   if (verified === null) return null;
@@ -130,7 +169,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
           >
             <DarkShell>
               <div className="relative z-10 w-[92vw] max-w-lg text-center px-6 flex-1 flex flex-col items-center justify-center">
-                {/* Crest */}
+                {/* Logo */}
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -161,12 +200,12 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.6 }}
                 >
-                  Are You of Legal Age?
+                  Enter Your Date of Birth
                 </motion.h1>
 
                 {/* Subtitle */}
                 <motion.p
-                  className="text-xs sm:text-sm font-light mb-10"
+                  className="text-xs sm:text-sm font-light mb-8"
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
                     color: "rgba(160,144,112,0.6)",
@@ -176,20 +215,63 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
                 >
-                  YOU MUST BE 21 OR OLDER TO ENTER LUXURY COURIER CLUB
+                  YOU MUST BE 21 OR OLDER TO ENTER
                 </motion.p>
 
-                {/* Buttons */}
+                {/* DOB Dropdowns */}
                 <motion.div
-                  className="flex flex-col sm:flex-row items-center justify-center gap-4"
+                  className="w-full max-w-sm mx-auto"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.1 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
                 >
-                  {/* Primary: filled gold */}
+                  <div className="grid grid-cols-3 gap-3 mb-5">
+                    <select
+                      value={month}
+                      onChange={(e) => setMonth(e.target.value)}
+                      style={selectStyle}
+                      aria-label="Month"
+                    >
+                      <option value="" style={optionStyle}>Month</option>
+                      {MONTHS.map((m, i) => (
+                        <option key={m} value={String(i + 1)} style={optionStyle}>{m}</option>
+                      ))}
+                    </select>
+
+                    <select
+                      value={day}
+                      onChange={(e) => setDay(e.target.value)}
+                      style={selectStyle}
+                      aria-label="Day"
+                    >
+                      <option value="" style={optionStyle}>Day</option>
+                      {dayOptions.map((d) => (
+                        <option key={d} value={String(d)} style={optionStyle}>{d}</option>
+                      ))}
+                    </select>
+
+                    <select
+                      value={year}
+                      onChange={(e) => setYear(e.target.value)}
+                      style={selectStyle}
+                      aria-label="Year"
+                    >
+                      <option value="" style={optionStyle}>Year</option>
+                      {years.map((y) => (
+                        <option key={y} value={String(y)} style={optionStyle}>{y}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {error && (
+                    <p className="text-[11px] mb-4" style={{ color: "#e55", fontFamily: "'Montserrat', sans-serif" }}>
+                      {error}
+                    </p>
+                  )}
+
                   <button
-                    onClick={handleYes}
-                    className="w-52 py-4 text-xs font-sans font-semibold uppercase transition-all duration-300 active:scale-95"
+                    onClick={handleSubmit}
+                    className="w-full py-4 text-xs font-sans font-semibold uppercase transition-all duration-300 active:scale-95"
                     style={{
                       letterSpacing: "0.2em",
                       background: "#C9A84C",
@@ -205,34 +287,12 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                       e.currentTarget.style.borderColor = "#C9A84C";
                     }}
                   >
-                    I Am 21+
-                  </button>
-
-                  {/* Secondary: outline */}
-                  <button
-                    onClick={handleNo}
-                    className="w-52 py-4 text-xs font-sans font-semibold uppercase transition-all duration-300 active:scale-95"
-                    style={{
-                      letterSpacing: "0.2em",
-                      border: "1px solid rgba(201,168,76,0.4)",
-                      color: "rgba(201,168,76,0.6)",
-                      background: "transparent",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "rgba(201,168,76,0.1)";
-                      e.currentTarget.style.borderColor = "rgba(201,168,76,0.6)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-                    }}
-                  >
-                    I Am Under 21
+                    Enter Site
                   </button>
                 </motion.div>
               </div>
 
-              {/* Footer line + copyright */}
+              {/* Footer */}
               <div className="relative z-10 w-full max-w-2xl mx-auto px-8 pb-8">
                 <motion.div
                   className="h-px w-full mb-8"

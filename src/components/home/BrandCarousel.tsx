@@ -28,13 +28,12 @@ const brands = [
 
 const BrandCarousel = () => (
   <section className="relative">
-    {/* White-to-black gradient background */}
     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(240,235,224,0.06) 0%, #0A0D09 40%)" }} />
 
     <div className="relative py-20 sm:py-28 overflow-hidden">
       <p
-        className="text-center text-[10px] uppercase font-sans font-medium mb-14"
-        style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.35)" }}
+        className="text-center text-sm sm:text-base uppercase font-sans font-medium mb-14"
+        style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.5)", fontFamily: "'Montserrat', sans-serif" }}
       >
         Our Brands
       </p>
