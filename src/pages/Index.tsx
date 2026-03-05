@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnnouncementBar from "@/components/home/AnnouncementBar";
 import HeroSection from "@/components/home/HeroSection";
 import BrandCarousel from "@/components/home/BrandCarousel";
 import ProductsPreview from "@/components/home/ProductsPreview";
-import SocialProof from "@/components/home/SocialProof";
 import ReferralDialog from "@/components/ReferralDialog";
 
 const Index = () => {
@@ -30,7 +28,6 @@ const Index = () => {
         <HeroSection />
         <ProductsPreview />
         <BrandCarousel />
-        <SocialProof />
       </main>
       <Footer />
       <ReferralDialog open={popupOpen} onClose={handleClosePopup} initialTab="join" />

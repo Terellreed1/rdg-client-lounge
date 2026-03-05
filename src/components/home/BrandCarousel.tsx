@@ -32,9 +32,9 @@ const BrandCarousel = () => (
   <section style={{ background: "#0A0D09" }}>
     <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.1), transparent)" }} />
 
-    <div className="py-12 sm:py-16 overflow-hidden">
+    <div className="py-16 sm:py-20 overflow-hidden">
       <p
-        className="text-center text-[10px] uppercase font-sans font-medium mb-8"
+        className="text-center text-[10px] uppercase font-sans font-medium mb-10"
         style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.35)" }}
       >
         Our Brands
@@ -43,18 +43,18 @@ const BrandCarousel = () => (
       <div className="relative">
         <div className="flex animate-scroll" style={{ width: "max-content" }}>
           {[...brands, ...brands].map((b, i) => (
-            <div key={i} className="flex-shrink-0 px-6 sm:px-10">
+            <div key={i} className="flex-shrink-0 px-8 sm:px-14">
               <img
                 src={b.src}
                 alt={b.alt}
-                className="h-8 sm:h-10 w-auto object-contain transition-opacity duration-300 opacity-25 hover:opacity-60"
+                className="h-14 sm:h-20 w-auto object-contain transition-opacity duration-300 opacity-40 hover:opacity-80"
                 loading="lazy"
               />
             </div>
           ))}
         </div>
-        <div className="absolute inset-y-0 left-0 w-24 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
-        <div className="absolute inset-y-0 right-0 w-24 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
+        <div className="absolute inset-y-0 left-0 w-32 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
+        <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
       </div>
     </div>
   </section>
