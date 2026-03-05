@@ -31,92 +31,68 @@ const ProductsPreview = () => {
   }, []);
 
   return (
-    <section
-      className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8"
-      style={{ background: "#0D110E" }}
-    >
-      <div className="max-w-7xl mx-auto">
-        {/* Section header — minimal */}
-        <div className="flex items-end justify-between mb-10 sm:mb-14">
-          <div>
-            <p
-              className="text-[10px] uppercase tracking-[0.3em] mb-3"
-              style={{ color: "rgba(201,168,76,0.5)", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
-            >
-              Menu
-            </p>
-            <h2
-              className="text-3xl sm:text-4xl lg:text-5xl"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 300,
-                color: "#F0EBE0",
-                lineHeight: 1.1,
-              }}
-            >
-              Popular Flower
-            </h2>
-          </div>
-          <Link
-            to="/shop"
-            className="hidden sm:block text-[10px] uppercase tracking-[0.2em] pb-1 transition-colors duration-200"
+    <section style={{ background: "#0A0D09" }}>
+      {/* Thin gold divider */}
+      <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent)" }} />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        {/* Section header — centered, bold like Culta */}
+        <div className="text-center mb-14 sm:mb-20">
+          <h2
+            className="text-3xl sm:text-4xl lg:text-5xl uppercase mb-4"
             style={{
-              color: "rgba(201,168,76,0.5)",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 500,
-              borderBottom: "1px solid rgba(201,168,76,0.2)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#C9A84C";
-              e.currentTarget.style.borderBottomColor = "#C9A84C";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "rgba(201,168,76,0.5)";
-              e.currentTarget.style.borderBottomColor = "rgba(201,168,76,0.2)";
+              color: "#F0EBE0",
+              letterSpacing: "0.06em",
             }}
           >
-            View All
-          </Link>
+            Shop Online
+          </h2>
+          <p
+            className="text-sm font-sans font-light max-w-md mx-auto"
+            style={{ color: "rgba(160,144,112,0.5)", letterSpacing: "0.04em" }}
+          >
+            Browse our curated selection. Place an order for delivery.
+          </p>
         </div>
 
-        {/* Thin divider */}
-        <div className="h-px w-full mb-10 sm:mb-14" style={{ background: "rgba(201,168,76,0.1)" }} />
-
-        {/* Product grid — clean, no containers */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-14 lg:gap-x-8 lg:gap-y-16">
+        {/* Product grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-12 lg:gap-x-6 lg:gap-y-14">
           {products.map((product, i) => (
             <motion.div
               key={product.id}
               className="group"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: i * 0.05, duration: 0.5 }}
+              transition={{ delay: i * 0.04, duration: 0.45 }}
             >
               <Link to={`/shop/${product.id}`} className="block">
-                {/* Image — no border, no container, clean */}
-                <div className="relative aspect-square overflow-hidden mb-4 bg-[#131810]">
+                {/* Image */}
+                <div className="relative aspect-square overflow-hidden mb-3 sm:mb-4" style={{ background: "#111610" }}>
                   {product.image_url ? (
                     <img
                       src={product.image_url}
                       alt={product.name}
-                      className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <img src={heroLogo} alt="" className="w-12 h-12 opacity-10" />
+                      <img src={heroLogo} alt="" className="w-10 h-10 opacity-10" />
                     </div>
                   )}
 
-                  {/* Strain — minimal pill */}
+                  {/* Strain badge */}
                   {product.strain && (
                     <span
-                      className="absolute top-3 left-3 text-[8px] uppercase tracking-[0.15em] px-2 py-0.5"
+                      className="absolute top-2.5 left-2.5 text-[7px] sm:text-[8px] uppercase px-2 py-0.5"
                       style={{
-                        color: "rgba(201,168,76,0.7)",
-                        background: "rgba(13,17,14,0.85)",
-                        backdropFilter: "blur(8px)",
-                        fontFamily: "'Montserrat', sans-serif",
+                        letterSpacing: "0.12em",
+                        color: "#C9A84C",
+                        background: "rgba(10,13,9,0.85)",
+                        fontFamily: "'DM Sans', sans-serif",
                         fontWeight: 500,
                       }}
                     >
@@ -124,8 +100,8 @@ const ProductsPreview = () => {
                     </span>
                   )}
 
-                  {/* Add to cart overlay — appears on hover */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {/* Quick add overlay */}
+                  <div className="absolute inset-0 flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       onClick={(e) => {
                         e.preventDefault();
@@ -138,83 +114,75 @@ const ProductsPreview = () => {
                           image: product.image_url || "",
                         });
                       }}
-                      className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.15em] px-4 py-2 transition-all duration-200"
+                      className="flex items-center gap-1.5 text-[9px] uppercase px-4 py-2 transition-all duration-200"
                       style={{
-                        background: "rgba(201,168,76,0.95)",
-                        color: "#0D110E",
-                        fontFamily: "'Montserrat', sans-serif",
+                        letterSpacing: "0.12em",
+                        background: "#C9A84C",
+                        color: "#0A0D09",
+                        fontFamily: "'DM Sans', sans-serif",
                         fontWeight: 600,
                       }}
                     >
                       <ShoppingBag size={11} />
-                      Add to Cart
+                      Add
                     </button>
                   </div>
                 </div>
 
-                {/* Text — clean typography, no containers */}
-                <div>
-                  <p
-                    className="text-[9px] uppercase tracking-[0.15em] mb-1"
-                    style={{
-                      color: "rgba(160,144,112,0.4)",
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {product.brand}
-                  </p>
-                  <h3
-                    className="text-sm sm:text-base mb-1.5"
-                    style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontWeight: 400,
-                      color: "#F0EBE0",
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {product.name}
-                  </h3>
-                  <p
-                    className="text-xs"
-                    style={{
-                      color: "#C9A84C",
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontWeight: 400,
-                      letterSpacing: "0.03em",
-                    }}
-                  >
-                    {product.price}
-                  </p>
-                </div>
+                {/* Text */}
+                <p
+                  className="text-[9px] uppercase mb-0.5"
+                  style={{
+                    letterSpacing: "0.12em",
+                    color: "rgba(160,144,112,0.35)",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 500,
+                  }}
+                >
+                  {product.brand}
+                </p>
+                <h3
+                  className="text-sm sm:text-[15px] mb-1"
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 400,
+                    color: "#F0EBE0",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {product.name}
+                </h3>
+                <p
+                  className="text-xs"
+                  style={{ color: "#C9A84C", fontFamily: "'DM Sans', sans-serif", fontWeight: 400 }}
+                >
+                  {product.price}
+                </p>
               </Link>
             </motion.div>
           ))}
         </div>
 
-        {/* Browse full menu — minimal */}
-        <div className="flex justify-center mt-16 sm:mt-20">
+        {/* View all */}
+        <div className="flex justify-center mt-14 sm:mt-20">
           <Link
             to="/shop"
-            className="text-[10px] uppercase tracking-[0.2em] px-10 py-4 transition-all duration-300"
+            className="text-[10px] uppercase px-10 py-4 font-sans font-medium transition-all duration-300"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontWeight: 500,
+              letterSpacing: "0.2em",
               border: "1px solid rgba(201,168,76,0.3)",
               color: "#C9A84C",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#C9A84C";
-              e.currentTarget.style.color = "#0D110E";
-              e.currentTarget.style.borderColor = "#C9A84C";
+              e.currentTarget.style.color = "#0A0D09";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
               e.currentTarget.style.color = "#C9A84C";
-              e.currentTarget.style.borderColor = "rgba(201,168,76,0.3)";
             }}
           >
-            Browse Full Menu
+            Shop All
           </Link>
         </div>
       </div>

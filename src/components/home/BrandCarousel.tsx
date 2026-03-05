@@ -1,85 +1,63 @@
-import { Link } from "react-router-dom";
-
-import alwaysFaded from "@/assets/brands/always-faded.png";
-import mameys from "@/assets/brands/mameys.png";
-import fumi from "@/assets/brands/fumi.png";
-import kandyDepo from "@/assets/brands/kandy-depo.png";
-import espn from "@/assets/brands/espn.png";
-import highMart from "@/assets/brands/high-mart.png";
-import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
-import highflix from "@/assets/brands/highflix.png";
-import frutaz from "@/assets/brands/frutaz.png";
-import cupsStrainz from "@/assets/brands/cups-strainz.png";
 import backpackboyz from "@/assets/brands/backpackboyz-new.png";
-import theCandyShop from "@/assets/brands/the-candy-shop.png";
-import grumpus from "@/assets/brands/grumpus.png";
-import hb from "@/assets/brands/hb.png";
-import julatoNyc from "@/assets/brands/julato-nyc.png";
+import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
+import alwaysFaded from "@/assets/brands/always-faded.png";
 import painNetwork from "@/assets/brands/pain-network.png";
-import highMonkey from "@/assets/brands/high-monkey.png";
+import kushFactory from "@/assets/brands/kush-factory.png";
+import highTolerance from "@/assets/brands/high-tolerance.png";
+import zourZop from "@/assets/brands/zour-zop.png";
+import frutaz from "@/assets/brands/frutaz.png";
 import donMerfos from "@/assets/brands/don-merfos.png";
+import fumi from "@/assets/brands/fumi.png";
+import caliCloudsClub from "@/assets/brands/cali-clouds-club.png";
+import cupsStrainz from "@/assets/brands/cups-strainz.png";
+import julatoNyc from "@/assets/brands/julato-nyc.png";
 
 const brands = [
-  { name: "The Candy Shop", slug: "the-candy-shop", logo: theCandyShop },
-  { name: "Pain Network", slug: "pain-network", logo: painNetwork },
-  { name: "Grumpus", slug: "grumpus", logo: grumpus },
-  { name: "Cupz Strainz", slug: "cupz-strainz", logo: cupsStrainz },
-  { name: "Julato NYC", slug: "julato-nyc", logo: julatoNyc },
-  { name: "High Mart", slug: "high-mart", logo: highMart },
-  { name: "Highflix", slug: "highflix", logo: highflix },
-  { name: "High Monkey", slug: "high-monkey", logo: highMonkey },
-  { name: "Mameys", slug: "mameys", logo: mameys },
-  { name: "ESPN", slug: "espn", logo: espn },
-  { name: "MB", slug: "mb", logo: hb },
-  { name: "Fumi", slug: "fumi", logo: fumi },
-  { name: "Frutaz LA", slug: "frutaz-la", logo: frutaz },
-  { name: "Don Merfos", slug: "don-merfos", logo: donMerfos },
-  { name: "Kandy Depo", slug: "kandy-depo", logo: kandyDepo },
-  { name: "Always Faded", slug: "always-faded", logo: alwaysFaded },
-  { name: "FS", slug: "fs", logo: superCandyBros },
-  { name: "Super Candy Bros", slug: "super-candy-bros", logo: superCandyBros },
-  { name: "Backpack Boyz", slug: "backpack-boyz", logo: backpackboyz },
+  { src: backpackboyz, alt: "BackPackBoyz" },
+  { src: superCandyBros, alt: "Super Candy Bros" },
+  { src: alwaysFaded, alt: "Always Faded" },
+  { src: painNetwork, alt: "Pain Network" },
+  { src: kushFactory, alt: "Kush Factory" },
+  { src: highTolerance, alt: "High Tolerance" },
+  { src: zourZop, alt: "Zour Zop" },
+  { src: frutaz, alt: "Frutaz" },
+  { src: donMerfos, alt: "Don Merfos" },
+  { src: fumi, alt: "Fumi" },
+  { src: caliCloudsClub, alt: "Cali Clouds Club" },
+  { src: cupsStrainz, alt: "Cups Strainz" },
+  { src: julatoNyc, alt: "Julato NYC" },
 ];
 
-const BrandCarousel = () => {
-  return (
-    <section
-      className="py-14 overflow-hidden"
-      style={{ background: "#0A0D09" }}
-    >
-      {/* Minimal heading */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        <p
-          className="text-[9px] uppercase tracking-[0.3em]"
-          style={{ color: "rgba(201,168,76,0.35)", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
-        >
-          Our Brands
-        </p>
-      </div>
+const BrandCarousel = () => (
+  <section style={{ background: "#0A0D09" }}>
+    <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.1), transparent)" }} />
+
+    <div className="py-12 sm:py-16 overflow-hidden">
+      <p
+        className="text-center text-[10px] uppercase font-sans font-medium mb-8"
+        style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.35)" }}
+      >
+        Our Brands
+      </p>
 
       <div className="relative">
-        {/* Gradient fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
-        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
-
-        <div className="flex animate-scroll items-center">
-          {[...brands, ...brands].map((brand, i) => (
-            <Link
-              key={`${brand.slug}-${i}`}
-              to={`/shop?brand=${brand.slug}`}
-              className="flex-shrink-0 px-6 sm:px-10 md:px-12 flex items-center justify-center group"
-            >
+        <div className="flex animate-scroll" style={{ width: "max-content" }}>
+          {[...brands, ...brands].map((b, i) => (
+            <div key={i} className="flex-shrink-0 px-6 sm:px-10">
               <img
-                src={brand.logo}
-                alt={brand.name}
-                className="h-10 sm:h-14 md:h-16 w-auto object-contain opacity-30 group-hover:opacity-70 transition-opacity duration-500"
+                src={b.src}
+                alt={b.alt}
+                className="h-8 sm:h-10 w-auto object-contain transition-opacity duration-300 opacity-25 hover:opacity-60"
+                loading="lazy"
               />
-            </Link>
+            </div>
           ))}
         </div>
+        <div className="absolute inset-y-0 left-0 w-24 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
+        <div className="absolute inset-y-0 right-0 w-24 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default BrandCarousel;
