@@ -1,7 +1,6 @@
 import backpackboyz from "@/assets/brands/backpackboyz-new.png";
 import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
 import alwaysFaded from "@/assets/brands/always-faded.png";
-import painNetwork from "@/assets/brands/pain-network.png";
 import kushFactory from "@/assets/brands/kush-factory.png";
 import highTolerance from "@/assets/brands/high-tolerance.png";
 import zourZop from "@/assets/brands/zour-zop.png";
@@ -16,7 +15,6 @@ const brands = [
   { src: backpackboyz, alt: "BackPackBoyz" },
   { src: superCandyBros, alt: "Super Candy Bros" },
   { src: alwaysFaded, alt: "Always Faded" },
-  { src: painNetwork, alt: "Pain Network" },
   { src: kushFactory, alt: "Kush Factory" },
   { src: highTolerance, alt: "High Tolerance" },
   { src: zourZop, alt: "Zour Zop" },
@@ -29,10 +27,11 @@ const brands = [
 ];
 
 const BrandCarousel = () => (
-  <section style={{ background: "#0A0D09" }}>
-    <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.1), transparent)" }} />
+  <section className="relative">
+    {/* White-to-black gradient background */}
+    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(240,235,224,0.06) 0%, #0A0D09 40%)" }} />
 
-    <div className="py-20 sm:py-28 overflow-hidden">
+    <div className="relative py-20 sm:py-28 overflow-hidden">
       <p
         className="text-center text-[10px] uppercase font-sans font-medium mb-14"
         style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.35)" }}
