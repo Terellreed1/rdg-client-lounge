@@ -70,40 +70,29 @@ const ProductsPreview = () => {
           </p>
         </div>
 
-        {/* Category grid — round images with labels like Culta */}
-        <div className="flex justify-center gap-6 sm:gap-8 lg:gap-12 flex-wrap mb-0">
+        {/* Category links — clean text only */}
+        <div className="flex justify-center gap-6 sm:gap-10 lg:gap-14 flex-wrap mb-0">
           {categories.map((cat, i) => (
             <motion.div
               key={cat.name}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.4 }}
+              transition={{ delay: i * 0.05, duration: 0.4 }}
             >
-              <Link to={cat.to} className="group flex flex-col items-center">
-                <div
-                  className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden mb-3 sm:mb-4 transition-transform duration-500 group-hover:scale-105"
-                  style={{ background: "#131810" }}
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    className="w-full h-full object-contain p-5 sm:p-6"
-                    loading="lazy"
-                  />
-                </div>
-                <span
-                  className="text-[10px] sm:text-xs uppercase tracking-[0.15em] transition-colors duration-300"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontWeight: 500,
-                    color: "rgba(232,220,200,0.5)",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(232,220,200,0.5)"; }}
-                >
-                  Shop {cat.name}
-                </span>
+              <Link
+                to={cat.to}
+                className="text-[11px] sm:text-xs uppercase tracking-[0.2em] transition-colors duration-300 pb-1"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 500,
+                  color: "rgba(232,220,200,0.45)",
+                  borderBottom: "1px solid transparent",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderBottomColor = "rgba(201,168,76,0.4)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(232,220,200,0.45)"; e.currentTarget.style.borderBottomColor = "transparent"; }}
+              >
+                Shop {cat.name}
               </Link>
             </motion.div>
           ))}
