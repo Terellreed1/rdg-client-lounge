@@ -32,7 +32,7 @@ const BrandCarousel = () => (
     <div 
       className="absolute inset-0" 
       style={{ 
-        background: "linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.03) 60%, transparent 100%)" 
+        background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.12) 80%, transparent 100%)" 
       }} 
     />
 
