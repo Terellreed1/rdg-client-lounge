@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, Loader2, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -33,7 +34,7 @@ interface MerchQuickViewProps {
   onClose: () => void;
 }
 
-const MerchQuickView = ({ product, shopId, onClose }: MerchQuickViewProps) => {
+const MerchQuickViewContent = ({ product, shopId, onClose }: MerchQuickViewProps) => {
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, number>>({});
   const [quantity, setQuantity] = useState(1);
