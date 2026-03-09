@@ -26,8 +26,8 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <ProductsPreview />
         <BrandCarousel />
+        <ProductsPreview />
       </main>
       <Footer />
       <ReferralDialog open={popupOpen} onClose={handleClosePopup} initialTab="join" />
