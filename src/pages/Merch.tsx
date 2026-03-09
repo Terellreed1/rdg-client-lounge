@@ -78,7 +78,7 @@ const Merch = () => {
       
       if (result.products?.data) {
         setProducts(result.products.data);
-        setShopId(result.shop_id);
+        setShopId(String(result.shop_id));
       } else if (result.data) {
         setProducts(result.data);
       }
