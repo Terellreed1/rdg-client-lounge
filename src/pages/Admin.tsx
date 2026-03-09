@@ -1,30 +1,23 @@
-import { useState, useEffect } from "react";
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
-
-const TOKEN_KEY = "lc_admin_token";
+import { useAdmin } from "@/hooks/useAdmin";
 
 const Admin = () => {
-  const [authed, setAuthed] = useState<boolean | null>(null);
+  const { isAdmin, logout } = useAdmin();
 
-  useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    setAuthed(!!token);
-  }, []);
-
-  if (authed === null) {
+  if (isAdmin === null) {
     return (
-      <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" />
       </div>
     );
   }
 
-  if (!authed) {
-    return <AdminLogin onSuccess={() => setAuthed(true)} />;
+  if (!isAdmin) {
+    return <AdminLogin onSuccess={() => window.location.reload()} />;
   }
 
-  return <AdminDashboard onLogout={() => setAuthed(false)} />;
+  return <AdminDashboard onLogout={async () => { await logout(); window.location.reload(); }} />;
 };
 
 export default Admin;
