@@ -358,4 +358,14 @@ const MerchQuickViewContent = ({ product, shopId, onClose }: MerchQuickViewProps
   );
 };
 
+// Portal wrapper to ensure modal renders at document root level
+const MerchQuickView = (props: MerchQuickViewProps) => {
+  if (!props.product) return null;
+  
+  return createPortal(
+    <MerchQuickViewContent {...props} />,
+    document.body
+  );
+};
+
 export default MerchQuickView;
