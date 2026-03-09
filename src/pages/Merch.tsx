@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { ExternalLink, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
-import { supabase } from "@/integrations/supabase/client";
+import MerchQuickView from "@/components/MerchQuickView";
 
 // Fallback images for local display
 import hatImg from "@/assets/merch/hat.png";
@@ -19,12 +19,19 @@ interface PrintifyProduct {
   id: string;
   title: string;
   description: string;
-  images: { src: string }[];
+  images: { src: string; variant_ids: number[]; is_default: boolean }[];
   variants: {
     id: number;
     title: string;
     price: number;
     is_enabled: boolean;
+    options: number[];
+  }[];
+  options: {
+    id: number;
+    title: string;
+    type: string;
+    values: { id: number; title: string; colors?: string[] }[];
   }[];
 }
 
@@ -46,6 +53,7 @@ const Merch = () => {
   const [shopId, setShopId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<PrintifyProduct | null>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -53,12 +61,6 @@ const Merch = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('printify', {
-        body: null,
-        method: 'GET',
-      });
-
-      // Use URL params approach
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/printify?action=products`,
         {
@@ -85,6 +87,29 @@ const Merch = () => {
       setError('Unable to load products from store');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleProductClick = async (product: PrintifyProduct) => {
+    // Fetch full product details with variants
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/printify?action=product&shop_id=${shopId}&product_id=${product.id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+        }
+      );
+      
+      if (response.ok) {
+        const fullProduct = await response.json();
+        setSelectedProduct(fullProduct);
+      } else {
+        setSelectedProduct(product);
+      }
+    } catch {
+      setSelectedProduct(product);
     }
   };
 
@@ -141,64 +166,47 @@ const Merch = () => {
               {products.map((product, i) => (
                 <motion.div
                   key={product.id}
-                  className="group"
+                  className="group cursor-pointer"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ delay: i * 0.05, duration: 0.45 }}
+                  onClick={() => handleProductClick(product)}
                 >
-                  <a
-                    href="https://www.luxurysmokersclub.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <div
-                      className="relative aspect-square overflow-hidden mb-3 sm:mb-4 rounded-sm"
-                      style={{
-                        background: "radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 40%, rgba(201,168,76,0.02) 70%, transparent 100%)",
-                      }}
-                    >
-                      {getProductImage(product) ? (
-                        <img
-                          src={getProductImage(product)!}
-                          alt={product.title}
-                          className="w-full h-full object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                          No image
-                        </div>
-                      )}
-                      <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{
-                          background: "radial-gradient(ellipse at center, transparent 30%, rgba(10,13,9,0.3) 100%)",
-                        }}
+                  <div className="relative aspect-square overflow-hidden mb-3 sm:mb-4">
+                    {getProductImage(product) ? (
+                      <img
+                        src={getProductImage(product)!}
+                        alt={product.title}
+                        className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                        loading="lazy"
                       />
-                    </div>
-
-                    {getProductPrice(product) && (
-                      <p
-                        className="text-xs sm:text-sm mb-1"
-                        style={{ color: "#C9A84C", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
-                      >
-                        {getProductPrice(product)}
-                      </p>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        No image
+                      </div>
                     )}
-                    <h3
-                      className="text-sm sm:text-[15px] group-hover:text-gold transition-colors"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontWeight: 500,
-                        color: "#F0EBE0",
-                        lineHeight: 1.3,
-                      }}
+                  </div>
+
+                  {getProductPrice(product) && (
+                    <p
+                      className="text-xs sm:text-sm mb-1"
+                      style={{ color: "#C9A84C", fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
                     >
-                      {product.title}
-                    </h3>
-                  </a>
+                      {getProductPrice(product)}
+                    </p>
+                  )}
+                  <h3
+                    className="text-sm sm:text-[15px] group-hover:text-gold transition-colors"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 500,
+                      color: "#F0EBE0",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {product.title}
+                  </h3>
                 </motion.div>
               ))}
             </div>
@@ -210,96 +218,59 @@ const Merch = () => {
               {fallbackItems.map((item, i) => (
                 <motion.div
                   key={item.name}
-                  className="group"
+                  className="group cursor-pointer"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ delay: i * 0.05, duration: 0.45 }}
                 >
-                  <a
-                    href="https://www.luxurysmokersclub.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <div
-                      className="relative aspect-square overflow-hidden mb-3 sm:mb-4 rounded-sm"
-                      style={{
-                        background: "radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 40%, rgba(201,168,76,0.02) 70%, transparent 100%)",
-                      }}
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-105"
-                        loading="lazy"
-                        style={{
-                          mixBlendMode: "multiply",
-                          filter: "contrast(1.02)",
-                        }}
-                      />
-                      <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{
-                          background: "radial-gradient(ellipse at center, transparent 30%, rgba(10,13,9,0.3) 100%)",
-                        }}
-                      />
-                    </div>
+                  <div className="relative aspect-square overflow-hidden mb-3 sm:mb-4">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
 
-                    <p
-                      className="text-[9px] uppercase mb-1"
-                      style={{
-                        letterSpacing: "0.12em",
-                        color: "rgba(160,144,112,0.4)",
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {item.category}
-                    </p>
-                    <h3
-                      className="text-sm sm:text-[15px] group-hover:text-gold transition-colors"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontWeight: 500,
-                        color: "#F0EBE0",
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {item.name}
-                    </h3>
-                  </a>
+                  <p
+                    className="text-[9px] uppercase mb-1"
+                    style={{
+                      letterSpacing: "0.12em",
+                      color: "rgba(160,144,112,0.4)",
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.category}
+                  </p>
+                  <h3
+                    className="text-sm sm:text-[15px] group-hover:text-gold transition-colors"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 500,
+                      color: "#F0EBE0",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {item.name}
+                  </h3>
                 </motion.div>
               ))}
             </div>
           )}
 
-          {/* Shop button */}
-          <div className="text-center">
-            <a
-              href="https://www.luxurysmokersclub.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[10px] uppercase px-10 py-3.5 font-sans font-medium transition-all duration-300"
-              style={{
-                letterSpacing: "0.2em",
-                border: "1px solid rgba(201,168,76,0.3)",
-                color: "#C9A84C",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#C9A84C";
-                e.currentTarget.style.color = "#0A0D09";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#C9A84C";
-              }}
-            >
-              Shop Full Collection <ExternalLink size={12} />
-            </a>
-          </div>
         </div>
       </div>
+
+      {/* Product Quick View Modal */}
+      {selectedProduct && shopId && (
+        <MerchQuickView
+          product={selectedProduct}
+          shopId={shopId}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </PageLayout>
   );
 };
