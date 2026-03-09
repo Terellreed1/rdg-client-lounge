@@ -28,7 +28,13 @@ const brands = [
 
 const BrandCarousel = () => (
   <section className="relative">
-    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(240,235,224,0.06) 0%, #0A0D09 40%)" }} />
+    {/* Faded white background that blends into site */}
+    <div 
+      className="absolute inset-0" 
+      style={{ 
+        background: "linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.03) 60%, transparent 100%)" 
+      }} 
+    />
 
     <div className="relative py-20 sm:py-28 overflow-hidden">
       <p
@@ -51,8 +57,9 @@ const BrandCarousel = () => (
             </div>
           ))}
         </div>
-        <div className="absolute inset-y-0 left-0 w-40 pointer-events-none" style={{ background: "linear-gradient(90deg, #0A0D09, transparent)" }} />
-        <div className="absolute inset-y-0 right-0 w-40 pointer-events-none" style={{ background: "linear-gradient(270deg, #0A0D09, transparent)" }} />
+        {/* Edge fades that blend with site background */}
+        <div className="absolute inset-y-0 left-0 w-40 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(10,13,9,1) 0%, transparent 100%)" }} />
+        <div className="absolute inset-y-0 right-0 w-40 pointer-events-none" style={{ background: "linear-gradient(270deg, rgba(10,13,9,1) 0%, transparent 100%)" }} />
       </div>
     </div>
   </section>
