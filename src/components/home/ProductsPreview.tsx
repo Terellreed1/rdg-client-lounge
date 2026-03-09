@@ -145,7 +145,7 @@ const ProductsPreview = () => {
                 <div 
                   className="relative aspect-square overflow-hidden mb-3 sm:mb-4 rounded-sm"
                   style={{
-                    background: "radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 50%, transparent 80%)",
+                    background: "radial-gradient(ellipse at center, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.10) 40%, rgba(201,168,76,0.03) 70%, transparent 100%)",
                   }}
                 >
                   {product.image_url ? (
