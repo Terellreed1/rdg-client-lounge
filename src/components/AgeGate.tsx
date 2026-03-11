@@ -174,11 +174,13 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
               <div className="relative z-10 w-[92vw] max-w-lg text-center px-6 flex-1 flex flex-col items-center justify-center">
                 {/* Logo */}
                 <motion.div
+                  className="relative"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <img src={heroLogo} alt="Luxury Courier Club" className="w-24 h-24 sm:w-28 sm:h-28 object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(201,168,76,0.12))" }} />
+                  <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "0 0 150px 80px rgba(197,163,85,0.10)", borderRadius: "50%" }} />
+                  <img src={heroLogo} alt="Luxury Courier Club" className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(201,168,76,0.12))" }} />
                 </motion.div>
 
                 {/* Gold rule */}
