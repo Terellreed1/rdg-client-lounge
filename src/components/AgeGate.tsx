@@ -238,6 +238,8 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                       onChange={(e) => setMonth(e.target.value)}
                       style={selectStyle}
                       aria-label="Month"
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#C9A84C"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(197,163,85,0.4)"; }}
                     >
                       <option value="" style={optionStyle}>Month</option>
                       {MONTHS.map((m, i) => (
@@ -250,6 +252,8 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                       onChange={(e) => setDay(e.target.value)}
                       style={selectStyle}
                       aria-label="Day"
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#C9A84C"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(197,163,85,0.4)"; }}
                     >
                       <option value="" style={optionStyle}>Day</option>
                       {dayOptions.map((d) => (
@@ -262,6 +266,8 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                       onChange={(e) => setYear(e.target.value)}
                       style={selectStyle}
                       aria-label="Year"
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#C9A84C"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(197,163,85,0.4)"; }}
                     >
                       <option value="" style={optionStyle}>Year</option>
                       {years.map((y) => (
