@@ -23,7 +23,8 @@ const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
 const DarkShell = ({ children }: { children: React.ReactNode }) => (
-  <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden" style={{ background: "radial-gradient(ellipse at center top, rgba(197,163,85,0.12) 0%, rgba(30,25,15,0.6) 40%, #0a0a0a 75%)" }}>
+  <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden" style={{ width: "100vw", height: "100vh", backgroundColor: "#0a0a0a" }}>
+    <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center top, rgba(197,163,85,0.12) 0%, rgba(30,25,15,0.6) 40%, transparent 75%)" }} />
     <div className="absolute inset-0 opacity-[0.025] pointer-events-none mix-blend-overlay" style={{ backgroundImage: NOISE_BG, backgroundSize: "200px" }} />
     {children}
   </div>
