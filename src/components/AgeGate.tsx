@@ -213,10 +213,10 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                 <motion.p
                   className="text-xs sm:text-sm font-light mb-8"
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontWeight: 300,
                     color: "rgba(160,144,112,0.5)",
-                    letterSpacing: "0.12em",
+                    letterSpacing: "0.06em",
                   }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
