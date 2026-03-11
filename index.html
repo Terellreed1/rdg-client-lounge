@@ -39,24 +39,43 @@
     <meta name="theme-color" content="#1a1510" />
     <meta name="msapplication-TileColor" content="#1a1510" />
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD: LocalBusiness -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Store",
+      "@type": "LocalBusiness",
       "name": "Luxury Courier Club",
-      "description": "Premium cannabis flower delivered straight to your door. Curated strains, discreet delivery.",
+      "description": "Premium cannabis delivery service offering curated top-shelf flower, edibles, and concentrates",
+      "url": "https://luxurycourier.club",
+      "image": "https://luxurycourier.club/logo.png",
+      "priceRange": "$$$",
+      "areaServed": [
+        { "@type": "State", "name": "Maryland" },
+        { "@type": "State", "name": "Virginia" },
+        { "@type": "State", "name": "District of Columbia" }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Luxury Courier Club",
+      "url": "https://luxurycourier.club"
+    }
+    </script>
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Luxury Courier Club",
       "url": "https://luxurycourier.club",
       "logo": "https://luxurycourier.club/logo.png",
-      "image": "https://luxurycourier.club/logo.png",
-      "priceRange": "$50-$80",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "US"
-      },
-      "sameAs": [
-        "https://instagram.com/luxurycourierclub"
-      ]
+      "sameAs": []
     }
     </script>
   </head>
