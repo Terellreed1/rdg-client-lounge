@@ -281,22 +281,19 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                     className="w-full py-4 text-xs font-sans font-semibold uppercase active:scale-[0.97]"
                     style={{
                       letterSpacing: "0.2em",
-                      background: "linear-gradient(135deg, #C5A355, #D4AF37)",
-                      color: "#0D110E",
-                      border: "1px solid rgba(212,175,55,0.4)",
+                      background: "linear-gradient(135deg, #B8962E, #D4AF37)",
+                      color: "#FFFFFF",
+                      border: "none",
                       borderRadius: "2px",
-                      boxShadow: "0 0 20px rgba(201,168,76,0.08)",
-                      transition: "all 0.4s ease",
+                      transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(135deg, #D4AF37, #E8C84A)";
-                      e.currentTarget.style.boxShadow = "0 0 30px rgba(201,168,76,0.2)";
-                      e.currentTarget.style.borderColor = "rgba(232,200,74,0.5)";
+                      e.currentTarget.style.background = "linear-gradient(135deg, #C9A84C, #E0C04A)";
+                      e.currentTarget.style.boxShadow = "0 0 20px rgba(212,175,55,0.3)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "linear-gradient(135deg, #C5A355, #D4AF37)";
-                      e.currentTarget.style.boxShadow = "0 0 20px rgba(201,168,76,0.08)";
-                      e.currentTarget.style.borderColor = "rgba(212,175,55,0.4)";
+                      e.currentTarget.style.background = "linear-gradient(135deg, #B8962E, #D4AF37)";
+                      e.currentTarget.style.boxShadow = "none";
                     }}
                   >
                     Enter Site
