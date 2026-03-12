@@ -137,17 +137,17 @@ const HeroSection = () => {
           </Link>
         </motion.div>
 
-        {/* Slide indicators */}
-        <div className="flex items-center gap-3 mt-14">
+        {/* Slide indicators — horizontal lines */}
+        <div className="flex items-center gap-2 mt-14">
           {SLIDES.map((_, i) => (
             <button
               key={i}
               onClick={() => { clearInterval(timerRef.current); setCurrent(i); }}
-              className="transition-all duration-300"
+              className="transition-all duration-300 rounded-none"
               style={{
-                width: i === current ? 28 : 8,
-                height: 3,
-                background: i === current ? "#C9A84C" : "rgba(201,168,76,0.25)",
+                width: i === current ? 24 : 16,
+                height: 2,
+                background: i === current ? "#D4AF37" : "rgba(255,255,255,0.3)",
               }}
               aria-label={`Slide ${i + 1}`}
             />
@@ -155,26 +155,26 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Arrow nav — desktop only */}
+      {/* Arrow nav — minimal thin arrows */}
       <button
         onClick={() => go(-1)}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center w-12 h-12 transition-colors duration-200"
-        style={{ color: "rgba(201,168,76,0.4)", border: "1px solid rgba(201,168,76,0.15)" }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(201,168,76,0.4)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.15)"; }}
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Previous slide"
       >
-        <ChevronLeft size={20} />
+        <ChevronLeft size={24} strokeWidth={2} />
       </button>
       <button
         onClick={() => go(1)}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center w-12 h-12 transition-colors duration-200"
-        style={{ color: "rgba(201,168,76,0.4)", border: "1px solid rgba(201,168,76,0.15)" }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(201,168,76,0.4)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.15)"; }}
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Next slide"
       >
-        <ChevronRight size={20} />
+        <ChevronRight size={24} strokeWidth={2} />
       </button>
     </section>
   );
