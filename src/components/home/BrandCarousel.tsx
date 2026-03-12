@@ -27,42 +27,54 @@ const brands = [
 ];
 
 const BrandCarousel = () => (
-  <section className="relative">
-    {/* Faded white background that blends into site */}
-    <div 
-      className="absolute inset-0" 
-      style={{ 
-        background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.12) 80%, transparent 100%)" 
-      }} 
-    />
+  <section className="relative bg-[#0A0D09] py-10 sm:py-14">
+    {/* Gold divider line */}
+    <div className="flex justify-center mb-6">
+      <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
+    </div>
 
-    <div className="relative py-20 sm:py-28 overflow-hidden">
-      <p
-        className="text-center text-sm sm:text-base uppercase font-sans font-medium mb-14"
-        style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.5)", fontFamily: "'Montserrat', sans-serif" }}
-      >
-        Our Brands
-      </p>
+    {/* Heading */}
+    <p
+      className="text-center font-sans font-medium mb-8 sm:mb-10"
+      style={{
+        fontSize: 14,
+        letterSpacing: "0.3em",
+        color: "#D4AF37",
+        fontFamily: "'Montserrat', sans-serif",
+        textTransform: "uppercase",
+      }}
+    >
+      Our Brands
+    </p>
 
-      <div className="relative">
-        <div className="flex animate-scroll" style={{ width: "max-content" }}>
-          {[...brands, ...brands].map((b, i) => (
-            <div key={i} className="flex-shrink-0 px-10 sm:px-16 lg:px-20">
-              <img
-                src={b.src}
-                alt={b.alt}
-                className="h-24 sm:h-40 lg:h-56 w-auto object-contain transition-opacity duration-300 opacity-50 hover:opacity-90"
-                loading="lazy"
-                width="200"
-                height="200"
-              />
-            </div>
-          ))}
+    {/* Logos row */}
+    <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 px-4 sm:px-8">
+      {brands.map((b, i) => (
+        <div
+          key={i}
+          className="flex-shrink-0"
+          style={{
+            filter: "grayscale(80%)",
+            transition: "all 0.4s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.filter = "grayscale(0%) brightness(1.1)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.filter = "grayscale(80%)";
+          }}
+        >
+          <img
+            src={b.src}
+            alt={b.alt}
+            className="object-contain"
+            style={{ height: 50, width: "auto", maxWidth: 120 }}
+            loading="lazy"
+            width="120"
+            height="50"
+          />
         </div>
-        {/* Edge fades that blend with site background */}
-        <div className="absolute inset-y-0 left-0 w-40 pointer-events-none" style={{ background: "linear-gradient(90deg, rgba(10,13,9,1) 0%, transparent 100%)" }} />
-        <div className="absolute inset-y-0 right-0 w-40 pointer-events-none" style={{ background: "linear-gradient(270deg, rgba(10,13,9,1) 0%, transparent 100%)" }} />
-      </div>
+      ))}
     </div>
   </section>
 );
