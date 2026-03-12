@@ -15,11 +15,11 @@ interface Product {
 }
 
 const categories = [
-  { name: "Flower", to: "/shop?category=Flower" },
-  { name: "Pre-Rolls", to: "/shop?category=Pre-Roll" },
-  { name: "Vapes", to: "/shop?category=Vape" },
-  { name: "Edibles", to: "/shop?category=Edible" },
-  { name: "Concentrates", to: "/shop?category=Concentrate" },
+  { name: "Flower", emoji: "🌿", to: "/shop?category=Flower" },
+  { name: "Pre-Rolls", emoji: "🔥", to: "/shop?category=Pre-Roll" },
+  { name: "Vapes", emoji: "💨", to: "/shop?category=Vape" },
+  { name: "Edibles", emoji: "🍬", to: "/shop?category=Edible" },
+  { name: "Concentrates", emoji: "💎", to: "/shop?category=Concentrate" },
 ];
 
 const ProductsPreview = () => {
@@ -41,6 +41,11 @@ const ProductsPreview = () => {
 
       {/* ─── SHOP BY CATEGORY ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-16 sm:pb-20">
+        {/* Gold divider line */}
+        <div className="flex justify-center mb-8">
+          <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
+        </div>
+
         <div className="text-center mb-10 sm:mb-14">
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl uppercase mb-3"
@@ -61,50 +66,62 @@ const ProductsPreview = () => {
           </p>
         </div>
 
-        {/* Category links — clean text only */}
-        <div className="flex justify-center gap-6 sm:gap-10 lg:gap-14 flex-wrap mb-0">
+        {/* Category cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 mb-10">
           {categories.map((cat, i) => (
             <motion.div
               key={cat.name}
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.4 }}
+              transition={{ delay: i * 0.06, duration: 0.4 }}
             >
               <Link
                 to={cat.to}
-                className="text-[11px] sm:text-xs uppercase tracking-[0.2em] transition-colors duration-300 pb-1"
+                className="flex flex-col items-center justify-center rounded-xl transition-all duration-300"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontWeight: 500,
-                  color: "rgba(232,220,200,0.45)",
-                  borderBottom: "1px solid transparent",
+                  backgroundColor: "#141414",
+                  border: "1px solid rgba(197, 163, 85, 0.15)",
+                  padding: 30,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderBottomColor = "rgba(201,168,76,0.4)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(232,220,200,0.45)"; e.currentTarget.style.borderBottomColor = "transparent"; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "#D4AF37";
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(212, 175, 55, 0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(197, 163, 85, 0.15)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
               >
-                Shop {cat.name}
+                <span style={{ fontSize: 40, lineHeight: 1 }} className="mb-3">{cat.emoji}</span>
+                <span
+                  className="uppercase font-sans"
+                  style={{ fontSize: 13, fontWeight: 500, letterSpacing: "0.1em", color: "#FFFFFF" }}
+                >
+                  {cat.name}
+                </span>
               </Link>
             </motion.div>
           ))}
         </div>
 
-        <div className="flex justify-center mt-8 sm:mt-10">
+        <div className="flex justify-center">
           <Link
             to="/shop"
-            className="text-[10px] uppercase px-10 py-3.5 font-sans font-medium transition-all duration-300"
+            className="text-[10px] uppercase px-10 py-3.5 font-sans font-semibold rounded-full transition-all duration-300"
             style={{
               letterSpacing: "0.2em",
-              border: "1px solid rgba(201,168,76,0.3)",
-              color: "#C9A84C",
+              background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",
+              color: "#FFFFFF",
+              boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#C9A84C";
-              e.currentTarget.style.color = "#0A0D09";
+              e.currentTarget.style.boxShadow = "0 0 30px rgba(212, 175, 55, 0.5)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "#C9A84C";
+              e.currentTarget.style.boxShadow = "0 0 20px rgba(212, 175, 55, 0.3)";
             }}
           >
             Shop All
