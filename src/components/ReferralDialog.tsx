@@ -103,14 +103,15 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
           />
           <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
             <motion.div
-              className="relative w-full max-w-[400px] bg-background pointer-events-auto rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-[400px] pointer-events-auto rounded-xl overflow-hidden shadow-2xl"
+              style={{ backgroundColor: "#0e0e0e", border: "1px solid rgba(197, 163, 85, 0.15)" }}
               initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.97, opacity: 0 }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Tab switcher with close */}
-              <div className="flex border-b border-border relative">
+              <div className="flex relative" style={{ borderBottom: "1px solid rgba(197, 163, 85, 0.15)" }}>
                 {(["join", "share"] as const).map((t) => (
                   <button
                     key={t}
@@ -118,8 +119,8 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                     className={cn(
                       "flex-1 py-3.5 text-[10px] font-sans uppercase tracking-[0.15em] transition-all duration-300 pr-2",
                       tab === t
-                        ? "text-foreground border-b-2 border-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-[#D4AF37] border-b-2 border-[#D4AF37]"
+                        : "text-gray-500 hover:text-gray-400"
                     )}
                   >
                     {t === "join" ? "Join the Club" : "Share the Club"}
@@ -136,39 +137,56 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                     className="px-5 pt-4 pb-4"
                   >
                     <img src={logo} alt="Luxury Courier Club" className="h-20 w-20 object-contain mx-auto mb-3" />
-                    <h2 className="font-serif text-xl text-foreground leading-tight">
-                      Join the<br /><span className="italic">Club.</span>
+                    <h2 className="font-serif text-xl leading-tight">
+                      <span className="text-white">Join the</span><br />
+                      <span className="italic text-[#D4AF37]">Club.</span>
                     </h2>
-                    <p className="text-xs text-muted-foreground mt-2 leading-relaxed mb-5">
+                    <p className="text-xs text-gray-400 mt-2 leading-relaxed mb-5">
                       15% off your first order, plus exclusive drops & members-only deals.
                     </p>
 
                     {success ? (
                       <motion.p
                         initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-                        className="text-foreground font-serif text-lg py-6 text-center"
+                        className="text-[#D4AF37] font-serif text-lg py-6 text-center"
                       >
                         Welcome to the Club ✓
                       </motion.p>
                     ) : (
                       <form onSubmit={handleSubmit} className="space-y-2.5">
                         <input type="text" placeholder="MM/DD/YYYY" value={birthday} onChange={(e) => setBirthday(e.target.value)}
-                          className="w-full border border-border bg-transparent px-4 py-2.5 text-xs font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
+                          onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
+                          onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <input type="text" placeholder="FIRST NAME (OPTIONAL)" value={firstName} onChange={(e) => setFirstName(e.target.value)}
-                          className="w-full border border-border bg-transparent px-4 py-2.5 text-xs font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
+                          onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
+                          onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <input type="email" placeholder="EMAIL ADDRESS" value={email} onChange={(e) => setEmail(e.target.value)} required
-                          className="w-full border border-border bg-transparent px-4 py-2.5 text-xs font-sans text-foreground placeholder:text-muted-foreground/50 uppercase tracking-wider focus:outline-none focus:border-foreground transition-colors rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
+                          onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
+                          onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <motion.button type="submit" disabled={submitting} whileTap={{ scale: 0.97 }}
-                          className="w-full h-9 bg-foreground text-background font-sans text-[10px] uppercase wide-spacing rounded-full hover:bg-foreground/85 transition-colors disabled:opacity-50"
+                          className="w-full h-10 font-sans text-[10px] uppercase tracking-[0.2em] text-white font-semibold rounded-full transition-all duration-300 disabled:opacity-50"
+                          style={{
+                            background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",
+                            boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)"
+                          }}
+                          whileHover={{
+                            boxShadow: "0 0 30px rgba(212, 175, 55, 0.5)"
+                          }}
                         >
                           {submitting ? "Joining…" : "Join Now"}
                         </motion.button>
                       </form>
                     )}
-                    <p className="text-[9px] text-muted-foreground/40 font-sans mt-3 text-center">
+                    <p className="text-[9px] text-gray-500 font-sans mt-3 text-center">
                       By signing up, you agree to receive marketing emails.
                     </p>
                   </motion.div>
@@ -239,7 +257,10 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
 
               <button
                 onClick={onClose}
-                className="w-full py-3 text-[10px] font-sans uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-foreground transition-colors border-t border-border"
+                className="w-full py-3 text-[10px] font-sans uppercase tracking-[0.15em] transition-colors duration-300 hover:text-[#D4AF37]"
+                style={{ color: "rgba(197, 163, 85, 0.6)", borderTop: "1px solid rgba(197, 163, 85, 0.15)" }}
+                onMouseEnter={(e) => e.currentTarget.style.color = "#D4AF37"}
+                onMouseLeave={(e) => e.currentTarget.style.color = "rgba(197, 163, 85, 0.6)"}
               >
                 Skip
               </button>
