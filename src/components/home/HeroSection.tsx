@@ -159,7 +159,7 @@ const HeroSection = () => {
       <button
         onClick={() => go(-1)}
         className="absolute left-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
-        style={{ color: "rgba(255,255,255,0.5)" }}
+        style={{ color: "rgba(255,255,255,0.5)", background: "transparent", border: "none", outline: "none", boxShadow: "none" }}
         onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
         onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Previous slide"
@@ -169,7 +169,7 @@ const HeroSection = () => {
       <button
         onClick={() => go(1)}
         className="absolute right-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
-        style={{ color: "rgba(255,255,255,0.5)" }}
+        style={{ color: "rgba(255,255,255,0.5)", background: "transparent", border: "none", outline: "none", boxShadow: "none" }}
         onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
         onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Next slide"
