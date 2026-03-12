@@ -233,18 +233,20 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                       <p className="text-[11px] text-muted-foreground leading-relaxed mb-3 italic line-clamp-2">"{shareMessage}"</p>
                       <div className="flex items-center gap-2">
                         <motion.button onClick={handleNativeShare} whileTap={{ scale: 0.97 }}
-                          className="flex-1 h-9 bg-foreground text-background font-sans text-[10px] uppercase wide-spacing rounded-full hover:bg-foreground/85 transition-colors"
+                          className="flex-1 h-10 font-sans text-[10px] uppercase tracking-[0.2em] text-white font-semibold rounded-full transition-all duration-300"
+                          style={{
+                            background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",
+                            boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)"
+                          }}
+                          whileHover={{
+                            boxShadow: "0 0 30px rgba(212, 175, 55, 0.5)"
+                          }}
                         >
                           Share Now
                         </motion.button>
                         <motion.button
                           onClick={() => handleCopy(shareMessage, "message")}
-                          className={cn(
-                            "h-9 px-4 border rounded-full font-sans text-[10px] uppercase wide-spacing transition-all duration-300",
-                            copiedField === "message"
-                              ? "border-foreground text-foreground bg-foreground/5"
-                              : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-                          )}
+                          className="h-10 px-4 rounded-full font-sans text-[10px] uppercase tracking-[0.15em] transition-all duration-300 border border-[rgba(197,163,85,0.4)] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0e0e0e]"
                           whileTap={{ scale: 0.97 }}
                         >
                           {copiedField === "message" ? "Copied" : "Copy"}
