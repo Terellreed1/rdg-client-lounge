@@ -48,7 +48,7 @@ const BrandCarousel = () => (
     </p>
 
     {/* Logos row */}
-    <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 px-4 sm:px-8">
+    <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-14 lg:gap-16 px-4 sm:px-8">
       {brands.map((b, i) => (
         <div
           key={i}
@@ -58,10 +58,10 @@ const BrandCarousel = () => (
             src={b.src}
             alt={b.alt}
             className="object-contain"
-            style={{ height: 45, width: "auto", maxWidth: 120 }}
+            style={{ height: 60, width: "auto", maxWidth: 140 }}
             loading="lazy"
-            width="120"
-            height="45"
+            width="140"
+            height="60"
           />
         </div>
       ))}
