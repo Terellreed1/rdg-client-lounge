@@ -155,26 +155,26 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Arrow nav — desktop only */}
+      {/* Arrow nav — minimal thin arrows */}
       <button
         onClick={() => go(-1)}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center w-12 h-12 transition-colors duration-200"
-        style={{ color: "rgba(201,168,76,0.4)", border: "1px solid rgba(201,168,76,0.15)" }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(201,168,76,0.4)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.15)"; }}
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Previous slide"
       >
-        <ChevronLeft size={20} />
+        <ChevronLeft size={24} strokeWidth={2} />
       </button>
       <button
         onClick={() => go(1)}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center w-12 h-12 transition-colors duration-200"
-        style={{ color: "rgba(201,168,76,0.4)", border: "1px solid rgba(201,168,76,0.15)" }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = "#C9A84C"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(201,168,76,0.4)"; e.currentTarget.style.borderColor = "rgba(201,168,76,0.15)"; }}
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 hidden lg:flex items-center justify-center transition-all duration-300"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
         aria-label="Next slide"
       >
-        <ChevronRight size={20} />
+        <ChevronRight size={24} strokeWidth={2} />
       </button>
     </section>
   );
