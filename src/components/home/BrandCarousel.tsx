@@ -27,7 +27,7 @@ const brands = [
 ];
 
 const BrandCarousel = () => (
-  <section className="relative bg-[#0A0D09] py-10 sm:py-14">
+  <section className="relative bg-white py-[60px]">
     {/* Gold divider line */}
     <div className="flex justify-center mb-6">
       <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
@@ -39,7 +39,7 @@ const BrandCarousel = () => (
       style={{
         fontSize: 14,
         letterSpacing: "0.3em",
-        color: "#D4AF37",
+        color: "#1a1a1a",
         fontFamily: "'Montserrat', sans-serif",
         textTransform: "uppercase",
       }}
@@ -52,26 +52,16 @@ const BrandCarousel = () => (
       {brands.map((b, i) => (
         <div
           key={i}
-          className="flex-shrink-0"
-          style={{
-            filter: "grayscale(80%)",
-            transition: "all 0.4s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.filter = "grayscale(0%) brightness(1.1)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.filter = "grayscale(80%)";
-          }}
+          className="flex-shrink-0 transition-transform duration-300 hover:scale-105"
         >
           <img
             src={b.src}
             alt={b.alt}
             className="object-contain"
-            style={{ height: 50, width: "auto", maxWidth: 120 }}
+            style={{ height: 45, width: "auto", maxWidth: 120 }}
             loading="lazy"
             width="120"
-            height="50"
+            height="45"
           />
         </div>
       ))}
