@@ -137,17 +137,17 @@ const HeroSection = () => {
           </Link>
         </motion.div>
 
-        {/* Slide indicators */}
-        <div className="flex items-center gap-3 mt-14">
+        {/* Slide indicators — horizontal lines */}
+        <div className="flex items-center gap-2 mt-14">
           {SLIDES.map((_, i) => (
             <button
               key={i}
               onClick={() => { clearInterval(timerRef.current); setCurrent(i); }}
-              className="transition-all duration-300"
+              className="transition-all duration-300 rounded-none"
               style={{
-                width: i === current ? 28 : 8,
-                height: 3,
-                background: i === current ? "#C9A84C" : "rgba(201,168,76,0.25)",
+                width: i === current ? 24 : 16,
+                height: 2,
+                background: i === current ? "#D4AF37" : "rgba(255,255,255,0.3)",
               }}
               aria-label={`Slide ${i + 1}`}
             />
