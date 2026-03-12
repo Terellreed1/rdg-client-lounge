@@ -103,14 +103,15 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
           />
           <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
             <motion.div
-              className="relative w-full max-w-[400px] bg-background pointer-events-auto rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-[400px] pointer-events-auto rounded-xl overflow-hidden shadow-2xl"
+              style={{ backgroundColor: "#0e0e0e", border: "1px solid rgba(197, 163, 85, 0.15)" }}
               initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.97, opacity: 0 }}
               transition={{ type: "spring", stiffness: 350, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Tab switcher with close */}
-              <div className="flex border-b border-border relative">
+              <div className="flex relative" style={{ borderBottom: "1px solid rgba(197, 163, 85, 0.15)" }}>
                 {(["join", "share"] as const).map((t) => (
                   <button
                     key={t}
@@ -118,8 +119,8 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                     className={cn(
                       "flex-1 py-3.5 text-[10px] font-sans uppercase tracking-[0.15em] transition-all duration-300 pr-2",
                       tab === t
-                        ? "text-foreground border-b-2 border-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-[#D4AF37] border-b-2 border-[#D4AF37]"
+                        : "text-gray-500 hover:text-gray-400"
                     )}
                   >
                     {t === "join" ? "Join the Club" : "Share the Club"}
