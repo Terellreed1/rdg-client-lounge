@@ -29,6 +29,9 @@ interface Review {
   product_id: string | null; show_on_homepage: boolean; active: boolean;
   products?: { name: string } | null;
 }
+interface Brand {
+  id: string; name: string; logo_url: string | null; sort_order: number; active: boolean; created_at: string;
+}
 
 const STRAIN_OPTIONS = ["None", "Indica", "Sativa", "Hybrid"];
 const TYPE_OPTIONS = ["Flower", "Vapes", "Edibles", "Concentrates", "Pre-Rolls", "Accessories", "Other"];
@@ -36,6 +39,7 @@ const DEFAULT_BRAND_OPTIONS = ["Luxury Courier Club", "The Candy Shop", "Pain Ne
 
 const navItems = [
   { id: "products", label: "Products", icon: Package },
+  { id: "brands", label: "Brands", icon: ImageIcon },
   { id: "faq", label: "FAQ", icon: HelpCircle },
   { id: "reviews", label: "Reviews", icon: Star },
   { id: "referrals", label: "Referrals", icon: Users },
@@ -690,6 +694,111 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
   );
 };
 
+// ─── Brands Section ───────────────────────────────────────────────
+const BrandsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | "PUT" | "DELETE", b?: object) => Promise<unknown> }) => {
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState<"add" | "edit" | null>(null);
+  const [editing, setEditing] = useState<Brand | null>(null);
+  const [form, setForm] = useState({ name: "", logo_url: "", active: true });
+  const [saving, setSaving] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try { setBrands((await callAdmin("brands", "GET")) as Brand[]); } catch { setBrands([]); }
+    setLoading(false);
+  }, [callAdmin]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const openAdd = () => { setForm({ name: "", logo_url: "", active: true }); setModal("add"); };
+  const openEdit = (b: Brand) => { setEditing(b); setForm({ name: b.name, logo_url: b.logo_url || "", active: b.active }); setModal("edit"); };
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = { ...form, logo_url: form.logo_url || null };
+      if (modal === "add") await callAdmin("brands", "POST", payload);
+      else await callAdmin("brands", "PUT", { id: editing!.id, ...payload });
+      await load(); setModal(null);
+    } catch (e) { alert("Save failed: " + e); }
+    setSaving(false);
+  };
+
+  const remove = async (id: string) => {
+    try { await callAdmin("brands", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
+    setDeleteId(null);
+  };
+
+  return (
+    <div>
+      <SectionHeader title="Brands" subtitle={`${brands.length} brands`}
+        actions={<>
+          <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
+          <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Brand</span><span className="sm:hidden">Add</span></button>
+        </>}
+      />
+      {loading ? (
+        <div className="flex items-center justify-center py-20"><div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" /></div>
+      ) : brands.length === 0 ? (
+        <EmptyState icon={ImageIcon} title="No brands yet" description="Add your first brand to display on the website." actionLabel="Add Brand" onAction={openAdd} />
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {brands.map((b) => (
+            <div key={b.id} className={`border p-4 transition-all group relative ${b.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
+              <div className="h-24 flex items-center justify-center mb-3">
+                {b.logo_url ? <img src={b.logo_url} alt={b.name} className="max-h-full max-w-full object-contain" /> : <ImageIcon size={32} className="text-black/10" />}
+              </div>
+              <p className="text-black text-xs font-medium text-center truncate">{b.name}</p>
+              {!b.active && <span className="absolute top-2 right-2 text-[8px] bg-black/5 text-black/40 px-1.5 py-0.5 font-medium">HIDDEN</span>}
+              <div className="absolute top-2 left-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => openEdit(b)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-black"><Pencil size={11} /></button>
+                <button onClick={() => setDeleteId(b.id)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-red-500"><Trash2 size={11} /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <AnimatePresence>
+        {modal && (
+          <Modal title={modal === "add" ? "Add Brand" : "Edit Brand"} onClose={() => setModal(null)}>
+            <div className="space-y-4">
+              <Field label="Brand Name"><input className={inputCls} value={form.name} onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))} placeholder="Brand name" /></Field>
+              <Field label="Logo URL" hint="Upload to imgbb.com → copy Direct Link → paste here">
+                <div className="space-y-2">
+                  <input className={inputCls} value={form.logo_url} onChange={(e) => setForm(prev => ({ ...prev, logo_url: e.target.value }))} placeholder="https://i.ibb.co/..." />
+                  <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] text-black/30 hover:text-black/60 transition-colors"><ExternalLink size={10} /> Open imgbb.com</a>
+                  {form.logo_url && <img src={form.logo_url} alt="Preview" className="h-16 object-contain border border-black/10 p-2 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+                </div>
+              </Field>
+              <label className="flex items-center gap-2 cursor-pointer min-h-[44px]">
+                <input type="checkbox" checked={form.active} onChange={(e) => setForm(prev => ({ ...prev, active: e.target.checked }))} className="sr-only" />
+                <div className={`w-9 h-5 rounded-full transition-colors relative ${form.active ? "bg-emerald-500" : "bg-black/10"}`}><div className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform" style={{ transform: form.active ? "translateX(1rem)" : "translateX(0.125rem)" }} /></div>
+                <span className="text-black/40 text-xs">Visible on website</span>
+              </label>
+              <div className="flex gap-2 pt-2">
+                <button onClick={() => setModal(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-2.5 text-sm bg-black text-white font-semibold disabled:opacity-40">{saving ? "Saving…" : "Save Brand"}</button>
+              </div>
+            </div>
+          </Modal>
+        )}
+        {deleteId && (
+          <Modal title="Delete Brand" onClose={() => setDeleteId(null)}>
+            <p className="text-black/40 text-sm mb-6">This will permanently remove the brand. This cannot be undone.</p>
+            <div className="flex gap-2">
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="flex-1 py-2.5 text-sm bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors">Delete</button>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // ─── Referrals Section ────────────────────────────────────────────
 interface ReferralCode {
   id: string; code: string; creator_name: string | null; creator_email: string | null;
@@ -893,6 +1002,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
           <AnimatePresence mode="wait">
             <motion.div key={section} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {section === "products" && <ProductsSection callAdmin={callAdmin} />}
+              {section === "brands" && <BrandsSection callAdmin={callAdmin} />}
               {section === "faq" && <FaqSection callAdmin={callAdmin} />}
               {section === "reviews" && <ReviewsSection callAdmin={callAdmin} />}
               {section === "referrals" && <ReferralsSection callAdmin={callAdmin} />}

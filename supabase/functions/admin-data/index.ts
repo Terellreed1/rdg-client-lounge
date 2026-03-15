@@ -196,6 +196,36 @@ Deno.serve(async (req) => {
     }
   }
 
+  // ── BRANDS ──
+  if (resource === "brands") {
+    if (action === "GET" || req.method === "GET") {
+      const { data, error } = await supabase.from("brands").select("*").order("sort_order");
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "create") {
+      const { data, error } = await supabase.from("brands").insert(body).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        status: error ? 400 : 201,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "update") {
+      const { id, ...rest } = body;
+      const { data, error } = await supabase.from("brands").update(rest).eq("id", id as string).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "delete") {
+      const { error } = await supabase.from("brands").delete().eq("id", body.id as string);
+      return new Response(JSON.stringify(error ? { error } : { ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }
+
   return new Response(JSON.stringify({ error: "Not found" }), {
     status: 404,
     headers: { ...corsHeaders, "Content-Type": "application/json" },

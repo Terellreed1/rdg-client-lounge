@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageLayout from "@/components/PageLayout";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
+// Static fallback brands
 import backpackboyz from "@/assets/brands/backpackboyz-new.png";
 import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
 import alwaysFaded from "@/assets/brands/always-faded.png";
@@ -23,7 +25,7 @@ import theCandyShop from "@/assets/brands/the-candy-shop.png";
 import grumpus from "@/assets/brands/grumpus.png";
 import hb from "@/assets/brands/hb.png";
 
-const brands = [
+const staticBrands = [
   { src: backpackboyz, alt: "BackPackBoyz" },
   { src: superCandyBros, alt: "Super Candy Bros" },
   { src: alwaysFaded, alt: "Always Faded" },
@@ -46,16 +48,32 @@ const brands = [
   { src: hb, alt: "HB" },
 ];
 
+interface BrandItem {
+  src: string;
+  alt: string;
+}
+
 const Brands = () => {
-  const [viewImage, setViewImage] = useState<{ src: string; alt: string } | null>(null);
+  const [viewImage, setViewImage] = useState<BrandItem | null>(null);
+  const [brands, setBrands] = useState<BrandItem[]>(staticBrands);
+
+  useEffect(() => {
+    supabase
+      .from("brands")
+      .select("name, logo_url")
+      .eq("active", true)
+      .order("sort_order")
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setBrands(data.filter(b => b.logo_url).map(b => ({ src: b.logo_url!, alt: b.name })));
+        }
+      });
+  }, []);
 
   return (
     <div className="min-h-screen" style={{ background: "#FFFFFF" }}>
       <PageLayout>
-        <div
-          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24"
-          style={{ background: "#FFFFFF" }}
-        >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24" style={{ background: "#FFFFFF" }}>
           <div className="flex justify-center mb-8">
             <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
           </div>
@@ -63,19 +81,11 @@ const Brands = () => {
           <div className="text-center mb-14">
             <h1
               className="text-3xl sm:text-4xl lg:text-5xl uppercase mb-3"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 500,
-                color: "#1a1a1a",
-                letterSpacing: "0.06em",
-              }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, color: "#1a1a1a", letterSpacing: "0.06em" }}
             >
               Our Brands
             </h1>
-            <p
-              className="text-sm font-sans font-light max-w-lg mx-auto"
-              style={{ color: "rgba(0,0,0,0.4)", letterSpacing: "0.04em" }}
-            >
+            <p className="text-sm font-sans font-light max-w-lg mx-auto" style={{ color: "rgba(0,0,0,0.4)", letterSpacing: "0.04em" }}>
               We partner with the best names in the industry to bring you premium quality.
             </p>
           </div>
@@ -104,7 +114,6 @@ const Brands = () => {
         </div>
       </PageLayout>
 
-      {/* Full image lightbox */}
       <AnimatePresence>
         {viewImage && (
           <>
@@ -118,11 +127,7 @@ const Brands = () => {
               initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
               onClick={() => setViewImage(null)}
             >
-              <img
-                src={viewImage.src}
-                alt={viewImage.alt}
-                className="max-w-full max-h-[80vh] object-contain"
-              />
+              <img src={viewImage.src} alt={viewImage.alt} className="max-w-full max-h-[80vh] object-contain" />
             </motion.div>
           </>
         )}
