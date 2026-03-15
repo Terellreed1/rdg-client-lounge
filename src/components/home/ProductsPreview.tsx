@@ -112,7 +112,7 @@ const ProductsPreview = () => {
         <div className="flex justify-center">
           <Link
             to="/shop"
-            className="text-[10px] uppercase px-10 py-3.5 font-sans font-semibold rounded-full transition-all duration-300"
+            className="text-[10px] uppercase px-10 py-3.5 font-sans font-semibold transition-all duration-300"
             style={{
               letterSpacing: "0.2em",
               background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",

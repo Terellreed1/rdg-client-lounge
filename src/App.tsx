@@ -22,6 +22,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import Admin from "./pages/Admin";
+import Brands from "./pages/Brands";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
 
@@ -48,6 +49,7 @@ const AnimatedRoutes = () => {
         <Route path="/auth" element={<Auth />} />
         <Route path="/account" element={<Account />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/brands" element={<Brands />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
