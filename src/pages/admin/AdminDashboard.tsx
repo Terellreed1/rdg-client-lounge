@@ -1050,17 +1050,17 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button onClick={() => toggleField(state, "can_ship")}
-                  className={`flex items-center gap-1 px-2 py-1 text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
+                  className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
                   title={state.can_ship ? "Can ship – click to disable" : "Cannot ship – click to enable"}>
-                  <Send size={10} /> Ship
+                  Ship
                 </button>
                 <button onClick={() => toggleField(state, "can_deliver")}
-                  className={`flex items-center gap-1 px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
+                  className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
                   title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
-                  <Truck size={10} /> Deliver
+                  Deliver
                 </button>
-                <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all"><Pencil size={12} /></button>
-                <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all"><Trash2 size={12} /></button>
+                <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
+                <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
               </div>
             </div>
           ))}
