@@ -268,6 +268,23 @@ Deno.serve(async (req) => {
     }
   }
 
+  // ── ORDERS ──
+  if (resource === "orders") {
+    if (action === "GET" || req.method === "GET") {
+      const { data, error } = await supabase.from("orders").select("*").order("created_at", { ascending: false });
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "update") {
+      const { id, ...rest } = body;
+      const { data, error } = await supabase.from("orders").update(rest).eq("id", id as string).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }
+
   return new Response(JSON.stringify({ error: "Not found" }), {
     status: 404,
     headers: { ...corsHeaders, "Content-Type": "application/json" },

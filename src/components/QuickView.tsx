@@ -185,7 +185,6 @@ const QuickView = ({ productId, onClose }: QuickViewProps) => {
                         whileTap={{ scale: 0.97 }}
                         animate={isAdding ? { scale: [1, 1.03, 1] } : {}}
                       >
-                        <ShoppingBag size={14} />
                         {isAdding ? "Added!" : "Add to Cart"}
                       </motion.button>
                     </div>

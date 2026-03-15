@@ -21,6 +21,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
+import Checkout from "./pages/Checkout";
 import Admin from "./pages/Admin";
 import Brands from "./pages/Brands";
 import Auth from "./pages/Auth";
@@ -38,6 +39,7 @@ const AnimatedRoutes = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/about" element={<About />} />
         <Route path="/merch" element={<Merch />} />
         <Route path="/faq" element={<FAQ />} />

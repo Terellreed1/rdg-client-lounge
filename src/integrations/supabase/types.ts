@@ -122,6 +122,75 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string
+          delivery_address: string
+          delivery_city: string
+          delivery_fee: number
+          delivery_method: string
+          delivery_state: string
+          delivery_zip: string
+          id: string
+          items: Json
+          notes: string | null
+          pickup_location: string | null
+          status: string
+          stripe_session_id: string | null
+          subtotal: number
+          time_slot: string | null
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string
+          delivery_address?: string
+          delivery_city?: string
+          delivery_fee?: number
+          delivery_method?: string
+          delivery_state?: string
+          delivery_zip?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          pickup_location?: string | null
+          status?: string
+          stripe_session_id?: string | null
+          subtotal?: number
+          time_slot?: string | null
+          total?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string
+          delivery_address?: string
+          delivery_city?: string
+          delivery_fee?: number
+          delivery_method?: string
+          delivery_state?: string
+          delivery_zip?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          pickup_location?: string | null
+          status?: string
+          stripe_session_id?: string | null
+          subtotal?: number
+          time_slot?: string | null
+          total?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       product_images: {
         Row: {
           created_at: string
