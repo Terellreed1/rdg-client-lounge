@@ -64,7 +64,7 @@ const EmptyState = ({ icon: Icon, title, description, actionLabel, onAction }: {
   icon: React.ElementType; title: string; description: string; actionLabel?: string; onAction?: () => void;
 }) => (
   <div className="flex flex-col items-center justify-center py-20 px-4">
-    <div className="w-16 h-16 rounded-2xl bg-black/[0.03] border border-black/[0.06] flex items-center justify-center mb-5">
+    <div className="w-16 h-16 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center mb-5">
       <Icon size={24} className="text-black/20" />
     </div>
     <h3 className="text-foreground text-base font-medium mb-1">{title}</h3>
