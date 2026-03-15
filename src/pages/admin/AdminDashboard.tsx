@@ -1376,9 +1376,9 @@ const AnalyticsSection = () => {
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Stripe</p>
         <h3 className="text-foreground font-semibold mb-1">Payment Dashboard</h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">View revenue, transactions, and customer data directly in Stripe.</p>
-        <a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer"
+          <a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-xs border border-foreground text-foreground px-4 py-2.5 font-medium hover:bg-foreground hover:text-background transition-all">
-          Open Stripe Dashboard <ExternalLink size={11} />
+          Open Stripe Dashboard →
         </a>
       </div>
     </div>
