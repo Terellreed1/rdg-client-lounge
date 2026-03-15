@@ -1367,7 +1367,7 @@ const AnalyticsSection = () => {
           { label: "Reviews", value: stats.reviewCount },
           { label: "FAQ Items", value: stats.faqCount },
         ].map(({ label, value }) => (
-          <div key={label} className="border border-black/[0.06] rounded-2xl p-5">
+          <div key={label} className="border border-black/[0.06] p-5">
             <p className="text-foreground text-2xl font-light">{value}</p>
             <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
           </div>
