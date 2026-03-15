@@ -1234,7 +1234,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               className="border border-black/[0.06] p-4 hover:border-black/15 transition-all cursor-pointer bg-white">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[order.delivery_method] || "bg-gray-50 text-gray-700"}`}>
+                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${METHOD_COLORS[order.delivery_method] || "bg-gray-50 text-gray-700"}`}>
                     {order.delivery_method}
                   </span>
                   <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${order.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : order.status === "fulfilled" ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-50 text-gray-600 border-gray-200"}`}>
