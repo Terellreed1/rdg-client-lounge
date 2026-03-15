@@ -22,6 +22,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import Admin from "./pages/Admin";
+import Brands from "./pages/Brands";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
 
