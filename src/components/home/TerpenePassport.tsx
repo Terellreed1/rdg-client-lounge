@@ -80,7 +80,7 @@ const terpenes = [
     effect: "Energizing, decongestant",
     found: "Mint, Parsley, Orchids",
     color: "#06b6d4",
-    icon: "🌊",
+    icon: "O",
     unlocked: false,
   },
 ];
