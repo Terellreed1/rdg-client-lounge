@@ -1280,7 +1280,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               </div>
 
               {(selected.delivery_method === "delivery" || selected.delivery_method === "postal") && (
-                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                <div className="border border-black/[0.06] p-4 space-y-1">
                   <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">
                     {selected.delivery_method === "delivery" ? "Delivery Address" : "Shipping Address"}
                   </p>
