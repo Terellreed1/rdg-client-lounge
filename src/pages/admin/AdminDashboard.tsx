@@ -1123,7 +1123,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               )}
               {modal === "edit" && (
                 <Field label="State">
-                  <input className={inputCls + " rounded-xl bg-black/[0.02]"} value={`${form.state_name} (${form.state_code})`} disabled />
+                  <input className={inputCls + " bg-black/[0.02]"} value={`${form.state_name} (${form.state_code})`} disabled />
                 </Field>
               )}
               <Field label="Legal Status">
