@@ -119,6 +119,13 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [customBrand, setCustomBrand] = useState("");
+  const [reorderMode, setReorderMode] = useState(false);
+  const [reordering, setReordering] = useState(false);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -127,6 +134,29 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   }, [callAdmin]);
 
   useEffect(() => { load(); }, [load]);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = products.findIndex((p) => p.id === active.id);
+    const newIndex = products.findIndex((p) => p.id === over.id);
+    setProducts(arrayMove(products, oldIndex, newIndex));
+  };
+
+  const saveOrder = async () => {
+    setReordering(true);
+    try {
+      const items = products.map((p, i) => ({ id: p.id, sort_order: i }));
+      await supabase.functions.invoke("admin-data?resource=products&action=reorder", {
+        method: "POST",
+        body: { items },
+        headers: { Authorization: `Bearer ${localStorage.getItem("lc_admin_token")}` },
+      });
+      await load();
+      setReorderMode(false);
+    } catch (e) { alert("Reorder failed: " + e); }
+    setReordering(false);
+  };
 
   const openAdd = () => {
     setForm({ name: "", brand: "Luxury Courier Club", price: "$65", image_url: "", description: "", strain: "None", product_type: "Flower", sold_out: false, active: true });
