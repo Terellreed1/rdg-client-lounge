@@ -1164,6 +1164,186 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   );
 };
 
+// ─── Orders Section ───────────────────────────────────────────────
+interface Order {
+  id: string; stripe_session_id: string; customer_name: string; customer_email: string;
+  customer_phone: string; delivery_method: string; delivery_address: string;
+  delivery_city: string; delivery_state: string; delivery_zip: string;
+  pickup_location: string | null; time_slot: string; delivery_fee: number;
+  subtotal: number; total: number; items: { name: string; price: number; quantity: number }[];
+  status: string; notes: string; created_at: string;
+}
+
+const PICKUP_LABELS: Record<string, string> = {
+  dc: "DC — 5300 Connecticut Ave NW",
+  pg: "PG — 14718 Baltimore Ave, Laurel, MD",
+  va: "VA — 6500 Springfield Mall, Springfield, VA",
+  baltimore: "Baltimore — 3559 Boston St, Baltimore, MD",
+};
+
+const METHOD_COLORS: Record<string, string> = {
+  delivery: "bg-blue-50 text-blue-700 border-blue-200",
+  pickup: "bg-amber-50 text-amber-700 border-amber-200",
+  postal: "bg-purple-50 text-purple-700 border-purple-200",
+};
+
+const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | "PUT" | "DELETE", b?: object) => Promise<unknown> }) => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState<Order | null>(null);
+  const [filter, setFilter] = useState<"all" | "delivery" | "pickup" | "postal">("all");
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try { setOrders((await callAdmin("orders", "GET")) as Order[]); } catch { setOrders([]); }
+    setLoading(false);
+  }, [callAdmin]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const filtered = filter === "all" ? orders : orders.filter(o => o.delivery_method === filter);
+
+  const updateStatus = async (id: string, status: string) => {
+    await callAdmin("orders&action=update", "POST", { id, status });
+    load();
+  };
+
+  return (
+    <div>
+      <SectionHeader title="Orders" subtitle="Paid orders from customers" actions={
+        <button onClick={load} className={btnSecondary + " rounded-xl"}><RefreshCw size={14} /></button>
+      } />
+
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {(["all", "delivery", "pickup", "postal"] as const).map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            className={`px-3 py-1.5 text-xs rounded-full border transition-all capitalize ${filter === f ? "bg-black text-white border-black" : "border-black/10 text-black/50 hover:border-black/30"}`}>
+            {f} {f !== "all" && `(${orders.filter(o => o.delivery_method === f).length})`}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-20"><Loader2 size={20} className="animate-spin text-black/20" /></div>
+      ) : filtered.length === 0 ? (
+        <EmptyState icon={ShoppingBag} title="No orders yet" description="Paid orders will appear here automatically." />
+      ) : (
+        <div className="space-y-3">
+          {filtered.map(order => (
+            <div key={order.id} onClick={() => setSelected(order)}
+              className="border border-black/[0.06] rounded-xl p-4 hover:border-black/15 transition-all cursor-pointer bg-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[order.delivery_method] || "bg-gray-50 text-gray-700"}`}>
+                    {order.delivery_method}
+                  </span>
+                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${order.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : order.status === "fulfilled" ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-50 text-gray-600 border-gray-200"}`}>
+                    {order.status}
+                  </span>
+                </div>
+                <span className="text-xs text-black/40">{new Date(order.created_at).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-black">{order.customer_name}</p>
+                  <p className="text-xs text-black/40">{order.customer_email} · {order.customer_phone}</p>
+                </div>
+                <p className="text-lg font-light text-black">${order.total.toFixed(2)}</p>
+              </div>
+              {order.delivery_method === "pickup" && order.pickup_location && (
+                <p className="text-[10px] text-black/40 mt-1">📍 {PICKUP_LABELS[order.pickup_location] || order.pickup_location}</p>
+              )}
+              {order.time_slot && <p className="text-[10px] text-black/40 mt-0.5">🕐 {order.time_slot}</p>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <AnimatePresence>
+        {selected && (
+          <Modal title="Order Details" onClose={() => setSelected(null)}>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[selected.delivery_method] || ""}`}>
+                  {selected.delivery_method}
+                </span>
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${selected.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-gray-50 text-gray-600"}`}>
+                  {selected.status}
+                </span>
+              </div>
+
+              <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Customer</p>
+                <p className="text-sm font-medium">{selected.customer_name}</p>
+                <p className="text-xs text-black/50">{selected.customer_email}</p>
+                <p className="text-xs text-black/50">{selected.customer_phone}</p>
+              </div>
+
+              {(selected.delivery_method === "delivery" || selected.delivery_method === "postal") && (
+                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                  <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">
+                    {selected.delivery_method === "delivery" ? "Delivery Address" : "Shipping Address"}
+                  </p>
+                  <p className="text-sm">{selected.delivery_address}</p>
+                  <p className="text-sm">{selected.delivery_city}, {selected.delivery_state} {selected.delivery_zip}</p>
+                </div>
+              )}
+
+              {selected.delivery_method === "pickup" && (
+                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                  <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Pickup Location</p>
+                  <p className="text-sm">{PICKUP_LABELS[selected.pickup_location || ""] || selected.pickup_location}</p>
+                </div>
+              )}
+
+              {selected.time_slot && (
+                <div className="border border-black/[0.06] rounded-xl p-4">
+                  <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Time Slot</p>
+                  <p className="text-sm">{selected.time_slot}</p>
+                </div>
+              )}
+
+              <div className="border border-black/[0.06] rounded-xl p-4">
+                <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Items</p>
+                {(selected.items || []).map((item, i) => (
+                  <div key={i} className="flex justify-between text-sm py-1 border-b border-black/[0.04] last:border-0">
+                    <span>{item.name} × {item.quantity}</span>
+                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+                <div className="flex justify-between text-xs text-black/40 pt-2">
+                  <span>Subtotal</span><span>${selected.subtotal.toFixed(2)}</span>
+                </div>
+                {selected.delivery_fee > 0 && (
+                  <div className="flex justify-between text-xs text-black/40">
+                    <span>{selected.delivery_method === "postal" ? "Shipping" : "Delivery Fee"}</span>
+                    <span>${selected.delivery_fee.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-sm font-medium pt-2 border-t border-black/[0.06]">
+                  <span>Total</span><span>${selected.total.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                {selected.status === "paid" && (
+                  <button onClick={() => { updateStatus(selected.id, "fulfilled"); setSelected(null); }}
+                    className={btnPrimary + " rounded-xl flex-1 justify-center"}>
+                    <Check size={14} /> Mark Fulfilled
+                  </button>
+                )}
+                <button onClick={() => setSelected(null)} className="px-4 py-2.5 text-sm border border-black/10 rounded-xl hover:bg-black/5 transition-all flex-1 text-center">
+                  Close
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // ─── Analytics Section ────────────────────────────────────────────
 const AnalyticsSection = () => {
   const [stats, setStats] = useState({ productCount: 0, reviewCount: 0, faqCount: 0 });
