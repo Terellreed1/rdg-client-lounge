@@ -122,7 +122,7 @@ const SortableProductRow = ({ product, index }: { product: Product; index: numbe
       </button>
       <span className="text-black/25 text-xs font-mono w-6 text-center">{index + 1}</span>
       <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
-        {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15"><ImageIcon size={14} /></div>}
+        {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15 text-[10px]">—</div>}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-black text-sm font-medium truncate">{product.name}</p>
