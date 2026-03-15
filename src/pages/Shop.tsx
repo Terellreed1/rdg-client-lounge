@@ -492,8 +492,13 @@ const ProductCard = ({ product, onQuickView }: { product: Product; onQuickView: 
   return (
     <div className="group">
       <Link to={`/shop/${product.id}`} className="block">
-        {/* Image */}
-        <div className="relative aspect-square overflow-hidden mb-3 bg-[#131810]">
+        {/* Image with gold tint like homepage */}
+        <div 
+          className="relative aspect-square overflow-hidden mb-3"
+          style={{
+            background: "radial-gradient(ellipse at center, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.10) 40%, rgba(201,168,76,0.03) 70%, transparent 100%)",
+          }}
+        >
           {product.image_url ? (
             <img
               src={product.image_url}
