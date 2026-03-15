@@ -1217,7 +1217,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
       <div className="flex gap-2 mb-6 flex-wrap">
         {(["all", "delivery", "pickup", "postal"] as const).map(f => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`px-3 py-1.5 text-xs rounded-full border transition-all capitalize ${filter === f ? "bg-black text-white border-black" : "border-black/10 text-black/50 hover:border-black/30"}`}>
+            className={`px-3 py-1.5 text-xs border transition-all capitalize ${filter === f ? "bg-black text-white border-black" : "border-black/10 text-black/50 hover:border-black/30"}`}>
             {f} {f !== "all" && `(${orders.filter(o => o.delivery_method === f).length})`}
           </button>
         ))}
