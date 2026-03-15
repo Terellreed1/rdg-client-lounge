@@ -223,36 +223,37 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     setModal("bulk");
   };
 
+  const extractImageUrl = (input: string): string | null => {
+    const trimmed = input.trim();
+    // Direct image URL
+    if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg|bmp)/i.test(trimmed)) return trimmed;
+    // imgbb viewer page → extract direct image from the URL pattern
+    const ibbMatch = trimmed.match(/https?:\/\/ibb\.co\/([A-Za-z0-9]+)/);
+    if (ibbMatch) return `https://i.ibb.co/${ibbMatch[1]}/image.jpg`;
+    // HTML img tag → extract src
+    const imgSrcMatch = trimmed.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (imgSrcMatch) return imgSrcMatch[1];
+    // HTML anchor with image URL
+    const hrefMatch = trimmed.match(/href=["']([^"']+\.(jpg|jpeg|png|gif|webp))["']/i);
+    if (hrefMatch) return hrefMatch[1];
+    // BBCode [img] tag
+    const bbcodeMatch = trimmed.match(/\[img\](.*?)\[\/img\]/i);
+    if (bbcodeMatch) return bbcodeMatch[1];
+    // Fallback: if it starts with http, use as-is
+    if (trimmed.startsWith("http")) return trimmed;
+    return null;
+  };
+
   const parseBulkUrls = () => {
-    const urls = bulkUrls
-      .split(/[\n,]+/)
-      .map(u => u.trim())
-      .filter(u => u.startsWith("http"));
+    const lines = bulkUrls.split(/[\n]+/).map(l => l.trim()).filter(Boolean);
+    const urls: string[] = [];
+    for (const line of lines) {
+      const extracted = extractImageUrl(line);
+      if (extracted) urls.push(extracted);
+    }
     if (urls.length === 0) return;
     setBulkItems(urls.map(url => ({ image_url: url, name: "New Product", brand: "Luxury Courier Club", product_type: "Flower", description: "", price: "$65", selected: true })));
     setBulkStep("review");
-  };
-
-  const runAiNaming = async () => {
-    setAiNaming(true);
-    try {
-      const urls = bulkItems.filter(i => i.selected).map(i => i.image_url);
-      const { data, error } = await supabase.functions.invoke("ai-product-namer", {
-        method: "POST",
-        body: { image_urls: urls },
-        headers: { Authorization: `Bearer ${localStorage.getItem("lc_admin_token")}` },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      const results = data.results || [];
-      setBulkItems(prev => prev.map(item => {
-        if (!item.selected) return item;
-        const match = results.find((r: { image_url: string }) => r.image_url === item.image_url);
-        if (match) return { ...item, name: match.name || item.name, brand: match.brand || item.brand, product_type: match.product_type || item.product_type, description: match.description || item.description };
-        return item;
-      }));
-    } catch (e) { alert("AI naming failed: " + e); }
-    setAiNaming(false);
   };
 
   const saveBulkProducts = async () => {
