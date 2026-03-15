@@ -994,11 +994,11 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
           <>
             {states.length < 51 && (
               <button onClick={() => setModal("seed")} className={btnSecondary + " text-xs px-3"}>
-                <Plus size={14} /> Seed All States
+                Seed All States
               </button>
             )}
             <button onClick={openAdd} className={btnPrimary}>
-              <Plus size={14} /> Add State
+              Add State
             </button>
           </>
         }
