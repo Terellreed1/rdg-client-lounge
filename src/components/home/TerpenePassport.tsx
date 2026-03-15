@@ -70,7 +70,7 @@ const terpenes = [
     effect: "Appetite suppressant, anti-inflammatory",
     found: "Hops, Sage, Ginseng",
     color: "#78716c",
-    icon: "🍂",
+    icon: "H",
     unlocked: false,
   },
   {
