@@ -189,27 +189,47 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     <div>
       <SectionHeader title="Products" subtitle={`${products.length} items in catalog`}
         actions={<>
-          <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
-          <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Product</span><span className="sm:hidden">Add</span></button>
+          {!reorderMode ? (
+            <>
+              <button onClick={() => setReorderMode(true)} className={btnSecondary + " text-xs flex items-center gap-1.5"}><GripVertical size={14} /> <span className="hidden sm:inline">Reorder</span></button>
+              <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
+              <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Product</span><span className="sm:hidden">Add</span></button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => { setReorderMode(false); load(); }} className={btnSecondary + " text-xs"}>Cancel</button>
+              <button onClick={saveOrder} disabled={reordering} className={btnPrimary + " text-xs"}>{reordering ? "Saving..." : "Save Order"}</button>
+            </>
+          )}
         </>}
       />
       {loading ? (
         <div className="flex items-center justify-center py-20"><div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" /></div>
       ) : products.length === 0 ? (
         <EmptyState icon={ShoppingBag} title="No products yet" description="Add your first product to get started with your catalog." actionLabel="Add Product" onAction={openAdd} />
+      ) : reorderMode ? (
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={products.map(p => p.id)} strategy={verticalListSortingStrategy}>
+            <div className="space-y-1.5">
+              {products.map((p, idx) => (
+                <SortableProductRow key={p.id} product={p} index={idx} />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       ) : (
         <div className="space-y-1.5">
           {products.map((p) => (
             <motion.div key={p.id} layout
-              className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all ${p.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
+              className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 border transition-all ${p.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
                 {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15"><ImageIcon size={16} /></div>}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <p className="text-foreground text-sm font-medium truncate">{p.name}</p>
-                  {p.sold_out && <span className="text-[9px] bg-red-50 text-red-500 px-1.5 py-0.5 rounded-md font-medium">SOLD OUT</span>}
-                  {!p.active && <span className="text-[9px] bg-black/5 text-muted-foreground px-1.5 py-0.5 rounded-md font-medium">HIDDEN</span>}
+                  {p.sold_out && <span className="text-[9px] bg-red-50 text-red-500 px-1.5 py-0.5 font-medium">SOLD OUT</span>}
+                  {!p.active && <span className="text-[9px] bg-black/5 text-muted-foreground px-1.5 py-0.5 font-medium">HIDDEN</span>}
                 </div>
                 <p className="text-muted-foreground text-xs mt-0.5 truncate">{p.brand} · {p.product_type}{p.strain ? ` · ${p.strain}` : ""}</p>
               </div>
@@ -217,8 +237,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 <p className="text-foreground text-sm font-medium">{p.price}</p>
               </div>
               <div className="flex gap-0.5 flex-shrink-0">
-                <button onClick={() => openEdit(p)} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
-                <button onClick={() => setDeleteId(p.id)} className="p-2 text-muted-foreground hover:text-red-500 rounded-lg hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
+                <button onClick={() => openEdit(p)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
+                <button onClick={() => setDeleteId(p.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
               </div>
             </motion.div>
           ))}
