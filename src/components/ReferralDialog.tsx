@@ -245,7 +245,7 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                         </motion.button>
                         <motion.button
                           onClick={() => handleCopy(shareMessage, "message")}
-                          className="h-10 px-4 rounded-full font-sans text-[10px] uppercase tracking-[0.15em] transition-all duration-300 border border-[rgba(197,163,85,0.4)] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0e0e0e]"
+                          className="h-10 px-4 font-sans text-[10px] uppercase tracking-[0.15em] transition-all duration-300 border border-[rgba(197,163,85,0.4)] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0e0e0e]"
                           whileTap={{ scale: 0.97 }}
                         >
                           {copiedField === "message" ? "Copied" : "Copy"}
