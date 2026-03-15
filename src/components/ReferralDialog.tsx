@@ -154,19 +154,19 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                     ) : (
                       <form onSubmit={handleSubmit} className="space-y-2.5">
                         <input type="text" placeholder="MM/DD/YYYY" value={birthday} onChange={(e) => setBirthday(e.target.value)}
-                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300"
                           style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
                           onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
                           onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <input type="text" placeholder="FIRST NAME (OPTIONAL)" value={firstName} onChange={(e) => setFirstName(e.target.value)}
-                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300"
                           style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
                           onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
                           onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <input type="email" placeholder="EMAIL ADDRESS" value={email} onChange={(e) => setEmail(e.target.value)} required
-                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300 rounded-lg"
+                          className="w-full bg-[#141414] px-4 py-2.5 text-xs font-sans text-white placeholder:text-white/40 uppercase tracking-wider focus:outline-none transition-all duration-300"
                           style={{ border: "1px solid rgba(197, 163, 85, 0.4)" }}
                           onFocus={(e) => e.target.style.borderColor = "#D4AF37"}
                           onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
