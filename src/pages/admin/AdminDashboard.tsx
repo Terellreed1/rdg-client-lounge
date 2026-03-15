@@ -646,11 +646,11 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
               </div>
               <div className="flex items-center gap-0.5 flex-shrink-0">
                 <button onClick={() => toggleActive(r)} title={r.active ? "Hide" : "Show"}
-                  className={`p-2 rounded-lg text-xs font-medium transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center ${r.active ? "text-emerald-600 bg-emerald-50 hover:bg-emerald-100" : "text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"}`}>
+                  className={`p-2 text-xs font-medium transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center ${r.active ? "text-emerald-600 bg-emerald-50 hover:bg-emerald-100" : "text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"}`}>
                   {r.active ? "On" : "Off"}
                 </button>
-                <button onClick={() => openEdit(r)} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
-                <button onClick={() => setDeleteId(r.id)} className="p-2 text-muted-foreground hover:text-red-500 rounded-lg hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
+                <button onClick={() => openEdit(r)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
+                <button onClick={() => setDeleteId(r.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
               </div>
             </div>
           ))}
