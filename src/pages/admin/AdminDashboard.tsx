@@ -411,6 +411,74 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
             </div>
           </Modal>
         )}
+        {modal === "bulk" && (
+          <Modal title={bulkStep === "paste" ? "Bulk Import Products" : `Review ${bulkItems.filter(i => i.selected).length} Products`} onClose={() => setModal(null)}>
+            {bulkStep === "paste" ? (
+              <div className="space-y-4">
+                <p className="text-black/50 text-xs">Paste image URLs below — one per line, or comma-separated. These will be created as draft products you can edit later.</p>
+                <textarea
+                  className={inputCls + " min-h-[200px] font-mono text-xs resize-none"}
+                  value={bulkUrls}
+                  onChange={(e) => setBulkUrls(e.target.value)}
+                  placeholder={"https://i.ibb.co/image1.jpg\nhttps://i.ibb.co/image2.jpg\nhttps://i.ibb.co/image3.jpg\n..."}
+                />
+                <p className="text-black/30 text-[10px]">{bulkUrls.split(/[\n,]+/).filter(u => u.trim().startsWith("http")).length} URLs detected</p>
+                <div className="flex gap-2 pt-2">
+                  <button onClick={() => setModal(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+                  <button onClick={parseBulkUrls} disabled={!bulkUrls.trim()} className="flex-1 py-2.5 text-sm bg-black text-white font-semibold disabled:opacity-30">Continue</button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  <button onClick={runAiNaming} disabled={aiNaming} className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-semibold px-4 py-2.5 hover:opacity-90 transition-opacity disabled:opacity-50">
+                    {aiNaming ? <><Loader2 size={13} className="animate-spin" /> Analyzing...</> : <><Sparkles size={13} /> AI Name & Categorize</>}
+                  </button>
+                  <button onClick={() => setBulkStep("paste")} className="text-xs text-black/40 border border-black/10 px-3 py-2.5 hover:border-black/20">← Back</button>
+                </div>
+                
+                <div className="max-h-[50vh] overflow-y-auto space-y-3 pr-1">
+                  {bulkItems.map((item, idx) => (
+                    <div key={idx} className={`border p-3 transition-all ${item.selected ? "border-black/10" : "border-black/5 opacity-40"}`}>
+                      <div className="flex gap-3">
+                        <label className="flex-shrink-0 pt-1">
+                          <input type="checkbox" checked={item.selected} onChange={(e) => updateBulkItem(idx, "selected", e.target.checked)} className="accent-black" />
+                        </label>
+                        <div className="w-14 h-14 bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
+                          <img src={item.image_url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                        </div>
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <input className="w-full bg-transparent border-b border-black/10 text-black text-sm font-medium pb-1 focus:outline-none focus:border-black/30" 
+                            value={item.name} onChange={(e) => updateBulkItem(idx, "name", e.target.value)} placeholder="Product name" />
+                          <div className="flex gap-2">
+                            <select className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 flex-1" 
+                              value={item.brand} onChange={(e) => updateBulkItem(idx, "brand", e.target.value)}>
+                              {DEFAULT_BRAND_OPTIONS.map(b => <option key={b}>{b}</option>)}
+                            </select>
+                            <select className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 w-24"
+                              value={item.product_type} onChange={(e) => updateBulkItem(idx, "product_type", e.target.value)}>
+                              {TYPE_OPTIONS.map(t => <option key={t}>{t}</option>)}
+                            </select>
+                            <input className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 w-16"
+                              value={item.price} onChange={(e) => updateBulkItem(idx, "price", e.target.value)} placeholder="$65" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex gap-2 pt-2 sticky bottom-0 bg-white">
+                  <button onClick={() => setModal(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+                  <button onClick={saveBulkProducts} disabled={bulkSaving || bulkItems.filter(i => i.selected).length === 0}
+                    className="flex-1 py-2.5 text-sm bg-black text-white font-semibold disabled:opacity-30 flex items-center justify-center gap-2">
+                    {bulkSaving ? <><Loader2 size={13} className="animate-spin" /> Saving...</> : <><Check size={13} /> Import {bulkItems.filter(i => i.selected).length} Products</>}
+                  </button>
+                </div>
+              </div>
+            )}
+          </Modal>
+        )}
       </AnimatePresence>
     </div>
   );
