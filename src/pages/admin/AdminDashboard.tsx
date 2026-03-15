@@ -518,14 +518,14 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
     <div>
       <SectionHeader title="FAQ" subtitle={`${items.length} questions`}
         actions={<>
-          <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
-          <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Question</span><span className="sm:hidden">Add</span></button>
+          <button onClick={load} className={btnSecondary + " text-xs"}>Refresh</button>
+          <button onClick={openAdd} className={btnPrimary}>Add Question</button>
         </>}
       />
       {loading ? (
         <div className="flex items-center justify-center py-20"><div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" /></div>
       ) : items.length === 0 ? (
-        <EmptyState icon={FileQuestion} title="No FAQ items" description="Add frequently asked questions to help your customers." actionLabel="Add Question" onAction={openAdd} />
+        <EmptyState title="No FAQ items" description="Add frequently asked questions to help your customers." actionLabel="Add Question" onAction={openAdd} />
       ) : (
         <div className="space-y-1.5">
           {items.map((item) => (
