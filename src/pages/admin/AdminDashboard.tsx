@@ -615,7 +615,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
   const handleNavClick = (id: string) => { setSection(id); setMobileNavOpen(false); };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex flex-col md:flex-row">
+    <div className="admin-light-theme min-h-screen bg-[#fafafa] flex flex-col md:flex-row" style={{ '--foreground': '0 0% 9%', '--muted-foreground': '0 0% 45%', '--background': '0 0% 98%', '--border': '0 0% 90%', '--muted': '0 0% 96%', '--primary': '0 0% 9%', '--primary-foreground': '0 0% 100%' } as React.CSSProperties}>
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-3 border-b border-black/[0.06] bg-white sticky top-0 z-40">
         <div className="flex items-center gap-3">
