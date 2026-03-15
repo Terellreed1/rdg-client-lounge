@@ -1127,7 +1127,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                 </Field>
               )}
               <Field label="Legal Status">
-                <select className={selectCls + " rounded-xl"} value={form.legal_status} onChange={e => setForm(f => ({ ...f, legal_status: e.target.value }))}>
+                <select className={selectCls} value={form.legal_status} onChange={e => setForm(f => ({ ...f, legal_status: e.target.value }))}>
                   {LEGAL_STATUS_OPTIONS.map(s => (
                     <option key={s} value={s}>{LEGAL_STATUS_LABELS[s]}</option>
                   ))}
