@@ -91,10 +91,10 @@ const Field = ({ label, children, hint }: { label: string; children: React.React
   </div>
 );
 
-const inputCls = "w-full bg-white border border-black/10 text-foreground placeholder-black/20 px-3.5 py-2.5 text-sm rounded-xl focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/5 transition-all";
+const inputCls = "w-full bg-white border border-black/10 text-black placeholder-black/20 px-3.5 py-2.5 text-sm focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/5 transition-all";
 const selectCls = inputCls + " appearance-none";
-const btnPrimary = "flex items-center gap-2 bg-foreground text-background text-sm font-semibold px-4 py-2.5 rounded-xl hover:opacity-80 transition-opacity";
-const btnSecondary = "p-2.5 text-muted-foreground hover:text-foreground border border-black/10 hover:border-black/20 rounded-xl transition-all";
+const btnPrimary = "flex items-center gap-2 bg-black text-white text-sm font-semibold px-4 py-2.5 hover:opacity-80 transition-opacity";
+const btnSecondary = "p-2.5 text-black/40 hover:text-black border border-black/10 hover:border-black/20 transition-all";
 
 const SectionHeader = ({ title, subtitle, actions }: { title: string; subtitle: string; actions: React.ReactNode }) => (
   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
