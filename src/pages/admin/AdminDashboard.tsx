@@ -418,12 +418,12 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
           <Modal title={bulkStep === "paste" ? "Bulk Import Products" : `Review ${bulkItems.filter(i => i.selected).length} Products`} onClose={() => setModal(null)}>
             {bulkStep === "paste" ? (
               <div className="space-y-4">
-                <p className="text-black/50 text-xs">Paste image URLs below — one per line, or comma-separated. These will be created as draft products you can edit later.</p>
+                <p className="text-black/50 text-xs mb-3">Paste image URLs, imgbb links, or HTML embed codes below — one per line. Direct URLs, viewer pages, and HTML img tags all work.</p>
                 <textarea
                   className={inputCls + " min-h-[200px] font-mono text-xs resize-none"}
                   value={bulkUrls}
                   onChange={(e) => setBulkUrls(e.target.value)}
-                  placeholder={"https://i.ibb.co/image1.jpg\nhttps://i.ibb.co/image2.jpg\nhttps://i.ibb.co/image3.jpg\n..."}
+                  placeholder={"https://i.ibb.co/abc123/photo.jpg\nhttps://ibb.co/abc123\n<img src=\"https://i.ibb.co/abc123/photo.jpg\">\n..."}
                 />
                 <p className="text-black/30 text-[10px]">{bulkUrls.split(/[\n,]+/).filter(u => u.trim().startsWith("http")).length} URLs detected</p>
                 <div className="flex gap-2 pt-2">
