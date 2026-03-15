@@ -833,7 +833,7 @@ const ReferralsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
             ))}
           </div>
           {data.codes.length === 0 ? (
-            <EmptyState icon={Users} title="No referral codes" description="Referral codes will appear here when customers create them." />
+            <EmptyState title="No referral codes" description="Referral codes will appear here when customers create them." />
           ) : (
             <div className="space-y-1.5">
               {data.codes.map((rc) => (
