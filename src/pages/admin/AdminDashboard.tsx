@@ -569,8 +569,8 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
           <Modal title="Delete FAQ" onClose={() => setDeleteId(null)}>
             <p className="text-muted-foreground text-sm mb-6">Remove this question permanently?</p>
             <div className="flex gap-2">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold rounded-xl">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold">Delete</button>
             </div>
           </Modal>
         )}
