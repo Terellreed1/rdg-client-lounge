@@ -60,7 +60,7 @@ const terpenes = [
     effect: "Uplifting, creative",
     found: "Lilacs, Nutmeg, Cumin",
     color: "#ec4899",
-    icon: "🌸",
+    icon: "T",
     unlocked: false,
   },
   {
