@@ -1002,7 +1002,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                 <Plus size={14} /> Seed All States
               </button>
             )}
-            <button onClick={openAdd} className={btnPrimary + " rounded-xl"}>
+            <button onClick={openAdd} className={btnPrimary}>
               <Plus size={14} /> Add State
             </button>
           </>
