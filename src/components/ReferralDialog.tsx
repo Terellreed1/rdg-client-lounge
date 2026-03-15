@@ -172,7 +172,7 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                           onBlur={(e) => e.target.style.borderColor = "rgba(197, 163, 85, 0.4)"}
                         />
                         <motion.button type="submit" disabled={submitting} whileTap={{ scale: 0.97 }}
-                          className="w-full h-10 font-sans text-[10px] uppercase tracking-[0.2em] text-white font-semibold rounded-full transition-all duration-300 disabled:opacity-50"
+                          className="w-full h-10 font-sans text-[10px] uppercase tracking-[0.2em] text-white font-semibold transition-all duration-300 disabled:opacity-50"
                           style={{
                             background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",
                             boxShadow: "0 0 20px rgba(212, 175, 55, 0.3)"
