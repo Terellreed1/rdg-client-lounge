@@ -281,10 +281,10 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
         actions={<>
           {!reorderMode ? (
             <>
-              <button onClick={() => setReorderMode(true)} className={btnSecondary + " text-xs flex items-center gap-1.5"}><GripVertical size={14} /> <span className="hidden sm:inline">Reorder</span></button>
-              <button onClick={openBulkImport} className={btnSecondary + " text-xs flex items-center gap-1.5"}><Upload size={14} /> <span className="hidden sm:inline">Bulk Import</span><span className="sm:hidden">Bulk</span></button>
-              <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
-              <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Product</span><span className="sm:hidden">Add</span></button>
+              <button onClick={() => setReorderMode(true)} className={btnSecondary + " text-xs"}>Reorder</button>
+              <button onClick={openBulkImport} className={btnSecondary + " text-xs"}>Bulk Import</button>
+              <button onClick={load} className={btnSecondary + " text-xs"}>Refresh</button>
+              <button onClick={openAdd} className={btnPrimary}>Add Product</button>
             </>
           ) : (
             <>
