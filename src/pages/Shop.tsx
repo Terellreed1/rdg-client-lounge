@@ -545,7 +545,7 @@ const ProductListCard = ({ product, onQuickView }: { product: Product; onQuickVi
 
   return (
     <Link to={`/shop/${product.id}`} className="group flex items-center gap-4 sm:gap-6 py-4 transition-colors" style={{ borderBottom: "1px solid rgba(201,168,76,0.06)" }}>
-      <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 overflow-hidden" style={{ background: "#131810" }}>
+      <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 overflow-hidden" style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.10) 40%, transparent 100%)" }}>
         {product.image_url ? (
           <img src={product.image_url} alt={product.name} className="w-full h-full object-contain" />
         ) : (
