@@ -226,6 +226,48 @@ Deno.serve(async (req) => {
     }
   }
 
+  // ── STATE LAWS ──
+  if (resource === "state_laws") {
+    if (action === "GET" || req.method === "GET") {
+      const { data, error } = await supabase.from("state_laws").select("*").order("state_name");
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "create") {
+      const { data, error } = await supabase.from("state_laws").insert(body).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        status: error ? 400 : 201,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "update") {
+      const { id, ...rest } = body;
+      const { data, error } = await supabase.from("state_laws").update(rest).eq("id", id as string).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "delete") {
+      const { error } = await supabase.from("state_laws").delete().eq("id", body.id as string);
+      return new Response(JSON.stringify(error ? { error } : { ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "bulk_create") {
+      const states = body.states as Record<string, unknown>[];
+      if (!states?.length) {
+        return new Response(JSON.stringify({ error: "No states provided" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data, error } = await supabase.from("state_laws").upsert(states, { onConflict: "state_code" }).select();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }
+
   return new Response(JSON.stringify({ error: "Not found" }), {
     status: 404,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
