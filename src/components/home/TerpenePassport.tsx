@@ -40,7 +40,7 @@ const terpenes = [
     effect: "Anxiety relief, sedation",
     found: "Lavender, Coriander, Birch bark",
     color: "#a78bfa",
-    icon: "💜",
+    icon: "Li",
     unlocked: false,
   },
   {
