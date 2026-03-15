@@ -740,7 +740,7 @@ const BrandsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
           {brands.map((b) => (
             <div key={b.id} className={`border p-4 transition-all group relative ${b.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
               <div className="h-24 flex items-center justify-center mb-3">
-                {b.logo_url ? <img src={b.logo_url} alt={b.name} className="max-h-full max-w-full object-contain" /> : <ImageIcon size={32} className="text-black/10" />}
+                {b.logo_url ? <img src={b.logo_url} alt={b.name} className="max-h-full max-w-full object-contain" /> : <span className="text-black/10 text-sm">No Logo</span>}
               </div>
               <p className="text-black text-xs font-medium text-center truncate">{b.name}</p>
               {!b.active && <span className="absolute top-2 right-2 text-[8px] bg-black/5 text-black/40 px-1.5 py-0.5 font-medium">HIDDEN</span>}
