@@ -351,7 +351,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                         {DEFAULT_BRAND_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
                         <option value="__custom__">+ Custom Brand</option>
                       </select>
-                      <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                      <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-black/30 pointer-events-none" />
                     </div>
                     {(!DEFAULT_BRAND_OPTIONS.includes(form.brand) || form.brand === "") && (
                       <input className={inputCls} value={form.brand} onChange={(e) => f("brand", e.target.value)} placeholder="Enter custom brand name" />
