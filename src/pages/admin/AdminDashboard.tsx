@@ -64,13 +64,13 @@ const EmptyState = ({ icon: Icon, title, description, actionLabel, onAction }: {
   icon: React.ElementType; title: string; description: string; actionLabel?: string; onAction?: () => void;
 }) => (
   <div className="flex flex-col items-center justify-center py-20 px-4">
-    <div className="w-16 h-16 rounded-2xl bg-black/[0.03] border border-black/[0.06] flex items-center justify-center mb-5">
+    <div className="w-16 h-16 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center mb-5">
       <Icon size={24} className="text-black/20" />
     </div>
     <h3 className="text-foreground text-base font-medium mb-1">{title}</h3>
     <p className="text-muted-foreground text-sm text-center max-w-xs mb-6">{description}</p>
     {actionLabel && onAction && (
-      <button onClick={onAction} className="flex items-center gap-2 bg-foreground text-background text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-80 transition-opacity">
+      <button onClick={onAction} className="flex items-center gap-2 bg-foreground text-background text-sm font-semibold px-5 py-2.5 hover:opacity-80 transition-opacity">
         <Plus size={14} /> {actionLabel}
       </button>
     )}
@@ -82,7 +82,7 @@ const Modal = ({ title, onClose, children }: { title: string; onClose: () => voi
   <motion.div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/20 backdrop-blur-sm"
     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-    <motion.div className="bg-white border border-black/10 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl"
+    <motion.div className="bg-white border border-black/10 w-full sm:max-w-lg max-h-[85vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl"
       initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 10 }}>
       <div className="flex items-center justify-between p-5 border-b border-black/[0.06] sticky top-0 bg-white z-10">
         <h3 className="text-foreground font-semibold text-sm">{title}</h3>
@@ -383,7 +383,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 <div className="space-y-2">
                   <input className={inputCls} value={form.image_url} onChange={(e) => f("image_url", e.target.value)} placeholder="https://i.ibb.co/..." />
                   <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors"><ExternalLink size={10} /> Open imgbb.com</a>
-                  {form.image_url && <img src={form.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-xl border border-black/10 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+                  {form.image_url && <img src={form.image_url} alt="Preview" className="w-16 h-16 object-cover border border-black/10 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
                 </div>
               </Field>
               <Field label="Description"><textarea className={inputCls + " min-h-[80px] resize-none"} value={form.description} onChange={(e) => f("description", e.target.value)} placeholder="Product description…" /></Field>
@@ -400,8 +400,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 </label>
               </div>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl hover:border-black/20 transition-colors">Cancel</button>
-                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold rounded-xl hover:opacity-80 disabled:opacity-40 transition-all">{saving ? "Saving…" : "Save Product"}</button>
+                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 hover:border-black/20 transition-colors">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold hover:opacity-80 disabled:opacity-40 transition-all">{saving ? "Saving…" : "Save Product"}</button>
               </div>
             </div>
           </Modal>
@@ -410,8 +410,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
           <Modal title="Delete Product" onClose={() => setDeleteId(null)}>
             <p className="text-muted-foreground text-sm mb-6">This will permanently remove the product. This cannot be undone.</p>
             <div className="flex gap-2">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold hover:bg-red-600 transition-colors">Delete</button>
             </div>
           </Modal>
         )}
@@ -534,14 +534,14 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
       ) : (
         <div className="space-y-1.5">
           {items.map((item) => (
-            <div key={item.id} className={`p-3 sm:p-4 rounded-xl border flex gap-3 sm:gap-4 transition-all ${item.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
+            <div key={item.id} className={`p-3 sm:p-4 border flex gap-3 sm:gap-4 transition-all ${item.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
               <div className="flex-1 min-w-0">
                 <p className="text-foreground text-sm font-medium">{item.question}</p>
                 <p className="text-muted-foreground text-xs mt-1 line-clamp-2">{item.answer}</p>
               </div>
               <div className="flex gap-0.5 flex-shrink-0">
-                <button onClick={() => openEdit(item)} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
-                <button onClick={() => setDeleteId(item.id)} className="p-2 text-muted-foreground hover:text-red-500 rounded-lg hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
+                <button onClick={() => openEdit(item)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
+                <button onClick={() => setDeleteId(item.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
               </div>
             </div>
           ))}
@@ -559,8 +559,8 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
                 <span className="text-muted-foreground text-xs">Visible on FAQ page</span>
               </label>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold rounded-xl disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
+                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
               </div>
             </div>
           </Modal>
@@ -569,8 +569,8 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
           <Modal title="Delete FAQ" onClose={() => setDeleteId(null)}>
             <p className="text-muted-foreground text-sm mb-6">Remove this question permanently?</p>
             <div className="flex gap-2">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold rounded-xl">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold">Delete</button>
             </div>
           </Modal>
         )}
@@ -635,7 +635,7 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
       ) : (
         <div className="space-y-1.5">
           {reviews.map((r) => (
-            <div key={r.id} className={`p-3 sm:p-4 rounded-xl border flex gap-3 sm:gap-4 transition-all ${r.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-50"}`}>
+            <div key={r.id} className={`p-3 sm:p-4 border flex gap-3 sm:gap-4 transition-all ${r.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-50"}`}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <p className="text-foreground text-sm font-medium">{r.author_name}</p>
@@ -646,11 +646,11 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
               </div>
               <div className="flex items-center gap-0.5 flex-shrink-0">
                 <button onClick={() => toggleActive(r)} title={r.active ? "Hide" : "Show"}
-                  className={`p-2 rounded-lg text-xs font-medium transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center ${r.active ? "text-emerald-600 bg-emerald-50 hover:bg-emerald-100" : "text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"}`}>
+                  className={`p-2 text-xs font-medium transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center ${r.active ? "text-emerald-600 bg-emerald-50 hover:bg-emerald-100" : "text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"}`}>
                   {r.active ? "On" : "Off"}
                 </button>
-                <button onClick={() => openEdit(r)} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
-                <button onClick={() => setDeleteId(r.id)} className="p-2 text-muted-foreground hover:text-red-500 rounded-lg hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
+                <button onClick={() => openEdit(r)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
+                <button onClick={() => setDeleteId(r.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
               </div>
             </div>
           ))}
@@ -671,8 +671,8 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
                 <span className="text-muted-foreground text-xs">Visible on homepage</span>
               </label>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold rounded-xl disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
+                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
               </div>
             </div>
           </Modal>
@@ -681,8 +681,8 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
           <Modal title="Delete Review" onClose={() => setDeleteId(null)}>
             <p className="text-muted-foreground text-sm mb-6">Remove this review permanently?</p>
             <div className="flex gap-2">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold rounded-xl">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold">Delete</button>
             </div>
           </Modal>
         )}
@@ -831,7 +831,7 @@ const ReferralsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               { label: "Total Signups", value: data.stats.totalSignups },
               { label: "Conversion", value: data.stats.totalCodes > 0 ? ((data.stats.totalSignups / data.stats.totalCodes) * 100).toFixed(1) + "%" : "0%" },
             ].map(({ label, value }) => (
-              <div key={label} className="border border-black/[0.06] rounded-2xl p-5">
+              <div key={label} className="border border-black/[0.06] p-5">
                 <p className="text-foreground text-2xl font-light">{value}</p>
                 <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
               </div>
@@ -844,7 +844,7 @@ const ReferralsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               {data.codes.map((rc) => (
                 <div key={rc.id}>
                   <button onClick={() => setExpanded(expanded === rc.id ? null : rc.id)}
-                    className="w-full flex items-center gap-3 p-3 sm:p-4 rounded-xl border border-black/[0.06] hover:border-black/10 hover:shadow-sm transition-all text-left">
+                    className="w-full flex items-center gap-3 p-3 sm:p-4 border border-black/[0.06] hover:border-black/10 hover:shadow-sm transition-all text-left">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-mono text-sm font-bold text-foreground tracking-wider">{rc.code}</span>
@@ -998,11 +998,11 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
         actions={
           <>
             {states.length < 51 && (
-              <button onClick={() => setModal("seed")} className={btnSecondary + " rounded-xl text-xs px-3"}>
+              <button onClick={() => setModal("seed")} className={btnSecondary + " text-xs px-3"}>
                 <Plus size={14} /> Seed All States
               </button>
             )}
-            <button onClick={openAdd} className={btnPrimary + " rounded-xl"}>
+            <button onClick={openAdd} className={btnPrimary}>
               <Plus size={14} /> Add State
             </button>
           </>
@@ -1016,7 +1016,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
           { label: "Can Ship", value: shipCount, color: "text-emerald-600" },
           { label: "Can Deliver", value: deliverCount, color: "text-blue-600" },
         ].map(({ label, value, color }) => (
-          <div key={label} className="border border-black/[0.06] rounded-2xl p-4">
+          <div key={label} className="border border-black/[0.06] p-4">
             <p className={`text-2xl font-light ${color}`}>{value}</p>
             <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
           </div>
@@ -1027,7 +1027,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
       <div className="flex gap-2 mb-4">
         {([["all", "All States"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
           <button key={key} onClick={() => setFilter(key)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
+            className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
             {label}
           </button>
         ))}
@@ -1040,8 +1040,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
       ) : (
         <div className="space-y-1.5">
           {filtered.map((state) => (
-            <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white rounded-xl group">
-              <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] rounded-lg flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
+            <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white group">
+              <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
                 {state.state_code}
               </div>
               <div className="flex-1 min-w-0">
@@ -1055,12 +1055,12 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button onClick={() => toggleField(state, "can_ship")}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
                   title={state.can_ship ? "Can ship – click to disable" : "Cannot ship – click to enable"}>
                   <Send size={10} /> Ship
                 </button>
                 <button onClick={() => toggleField(state, "can_deliver")}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
                   title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
                   <Truck size={10} /> Deliver
                 </button>
@@ -1078,8 +1078,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
           <Modal title="Delete State" onClose={() => setDeleteId(null)}>
             <p className="text-sm text-muted-foreground mb-4">Remove this state from the list?</p>
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setDeleteId(null)} className="px-4 py-2 text-sm border border-black/10 rounded-xl hover:bg-black/5 transition-all">Cancel</button>
-              <button onClick={() => remove(deleteId)} className="px-4 py-2 text-sm bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="px-4 py-2 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+              <button onClick={() => remove(deleteId)} className="px-4 py-2 text-sm bg-red-500 text-white hover:bg-red-600 transition-all">Delete</button>
             </div>
           </Modal>
         )}
@@ -1093,8 +1093,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               This will add all {51 - states.length} missing U.S. states to the list with default settings (illegal, no shipping/delivery). You can then configure each one.
             </p>
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setModal(null)} className="px-4 py-2 text-sm border border-black/10 rounded-xl hover:bg-black/5 transition-all">Cancel</button>
-              <button onClick={seedAllStates} disabled={saving} className={btnPrimary + " rounded-xl"}>
+              <button onClick={() => setModal(null)} className="px-4 py-2 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+              <button onClick={seedAllStates} disabled={saving} className={btnPrimary}>
                 {saving ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add All States
               </button>
             </div>
@@ -1109,7 +1109,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
             <div className="space-y-4">
               {modal === "add" && (
                 <Field label="State">
-                  <select className={selectCls + " rounded-xl"} value={form.state_code}
+                  <select className={selectCls} value={form.state_code}
                     onChange={(e) => {
                       const st = US_STATES.find(s => s.code === e.target.value);
                       if (st) setForm(f => ({ ...f, state_code: st.code, state_name: st.name }));
@@ -1123,11 +1123,11 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               )}
               {modal === "edit" && (
                 <Field label="State">
-                  <input className={inputCls + " rounded-xl bg-black/[0.02]"} value={`${form.state_name} (${form.state_code})`} disabled />
+                  <input className={inputCls + " bg-black/[0.02]"} value={`${form.state_name} (${form.state_code})`} disabled />
                 </Field>
               )}
               <Field label="Legal Status">
-                <select className={selectCls + " rounded-xl"} value={form.legal_status} onChange={e => setForm(f => ({ ...f, legal_status: e.target.value }))}>
+                <select className={selectCls} value={form.legal_status} onChange={e => setForm(f => ({ ...f, legal_status: e.target.value }))}>
                   {LEGAL_STATUS_OPTIONS.map(s => (
                     <option key={s} value={s}>{LEGAL_STATUS_LABELS[s]}</option>
                   ))}
@@ -1136,23 +1136,23 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               <div className="grid grid-cols-2 gap-4">
                 <Field label="Can Ship">
                   <button type="button" onClick={() => setForm(f => ({ ...f, can_ship: !f.can_ship }))}
-                    className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium border transition-all ${form.can_ship ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-white border-black/10 text-black/40"}`}>
+                    className={`w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border transition-all ${form.can_ship ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-white border-black/10 text-black/40"}`}>
                     <Send size={14} /> {form.can_ship ? "Yes" : "No"}
                   </button>
                 </Field>
                 <Field label="Can Deliver">
                   <button type="button" onClick={() => setForm(f => ({ ...f, can_deliver: !f.can_deliver }))}
-                    className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium border transition-all ${form.can_deliver ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-white border-black/10 text-black/40"}`}>
+                    className={`w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border transition-all ${form.can_deliver ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-white border-black/10 text-black/40"}`}>
                     <Truck size={14} /> {form.can_deliver ? "Yes" : "No"}
                   </button>
                 </Field>
               </div>
               <Field label="Notes" hint="Optional – internal notes about this state's regulations">
-                <textarea className={inputCls + " rounded-xl h-20 resize-none"} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} placeholder="e.g. Recreational legal since 2018, license required..." />
+                <textarea className={inputCls + " h-20 resize-none"} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} placeholder="e.g. Recreational legal since 2018, license required..." />
               </Field>
               <div className="flex gap-2 justify-end pt-2">
-                <button onClick={() => setModal(null)} className="px-4 py-2.5 text-sm border border-black/10 rounded-xl hover:bg-black/5 transition-all">Cancel</button>
-                <button onClick={save} disabled={saving || !form.state_code} className={btnPrimary + " rounded-xl disabled:opacity-40"}>
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+                <button onClick={save} disabled={saving || !form.state_code} className={btnPrimary + " disabled:opacity-40"}>
                   {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} {modal === "add" ? "Add" : "Save"}
                 </button>
               </div>
@@ -1211,13 +1211,13 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
   return (
     <div>
       <SectionHeader title="Orders" subtitle="Paid orders from customers" actions={
-        <button onClick={load} className={btnSecondary + " rounded-xl"}><RefreshCw size={14} /></button>
+        <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
       } />
 
       <div className="flex gap-2 mb-6 flex-wrap">
         {(["all", "delivery", "pickup", "postal"] as const).map(f => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`px-3 py-1.5 text-xs rounded-full border transition-all capitalize ${filter === f ? "bg-black text-white border-black" : "border-black/10 text-black/50 hover:border-black/30"}`}>
+            className={`px-3 py-1.5 text-xs border transition-all capitalize ${filter === f ? "bg-black text-white border-black" : "border-black/10 text-black/50 hover:border-black/30"}`}>
             {f} {f !== "all" && `(${orders.filter(o => o.delivery_method === f).length})`}
           </button>
         ))}
@@ -1231,13 +1231,13 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
         <div className="space-y-3">
           {filtered.map(order => (
             <div key={order.id} onClick={() => setSelected(order)}
-              className="border border-black/[0.06] rounded-xl p-4 hover:border-black/15 transition-all cursor-pointer bg-white">
+              className="border border-black/[0.06] p-4 hover:border-black/15 transition-all cursor-pointer bg-white">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[order.delivery_method] || "bg-gray-50 text-gray-700"}`}>
+                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${METHOD_COLORS[order.delivery_method] || "bg-gray-50 text-gray-700"}`}>
                     {order.delivery_method}
                   </span>
-                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${order.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : order.status === "fulfilled" ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-50 text-gray-600 border-gray-200"}`}>
+                  <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${order.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : order.status === "fulfilled" ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-50 text-gray-600 border-gray-200"}`}>
                     {order.status}
                   </span>
                 </div>
@@ -1264,15 +1264,15 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
           <Modal title="Order Details" onClose={() => setSelected(null)}>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[selected.delivery_method] || ""}`}>
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${METHOD_COLORS[selected.delivery_method] || ""}`}>
                   {selected.delivery_method}
                 </span>
-                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${selected.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-gray-50 text-gray-600"}`}>
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${selected.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-gray-50 text-gray-600"}`}>
                   {selected.status}
                 </span>
               </div>
 
-              <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+              <div className="border border-black/[0.06] p-4 space-y-1">
                 <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Customer</p>
                 <p className="text-sm font-medium">{selected.customer_name}</p>
                 <p className="text-xs text-black/50">{selected.customer_email}</p>
@@ -1280,7 +1280,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               </div>
 
               {(selected.delivery_method === "delivery" || selected.delivery_method === "postal") && (
-                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                <div className="border border-black/[0.06] p-4 space-y-1">
                   <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">
                     {selected.delivery_method === "delivery" ? "Delivery Address" : "Shipping Address"}
                   </p>
@@ -1290,20 +1290,20 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               )}
 
               {selected.delivery_method === "pickup" && (
-                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                <div className="border border-black/[0.06] p-4 space-y-1">
                   <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Pickup Location</p>
                   <p className="text-sm">{PICKUP_LABELS[selected.pickup_location || ""] || selected.pickup_location}</p>
                 </div>
               )}
 
               {selected.time_slot && (
-                <div className="border border-black/[0.06] rounded-xl p-4">
+                <div className="border border-black/[0.06] p-4">
                   <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Time Slot</p>
                   <p className="text-sm">{selected.time_slot}</p>
                 </div>
               )}
 
-              <div className="border border-black/[0.06] rounded-xl p-4">
+              <div className="border border-black/[0.06] p-4">
                 <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Items</p>
                 {(selected.items || []).map((item, i) => (
                   <div key={i} className="flex justify-between text-sm py-1 border-b border-black/[0.04] last:border-0">
@@ -1328,11 +1328,11 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               <div className="flex gap-2 pt-2">
                 {selected.status === "paid" && (
                   <button onClick={() => { updateStatus(selected.id, "fulfilled"); setSelected(null); }}
-                    className={btnPrimary + " rounded-xl flex-1 justify-center"}>
+                    className={btnPrimary + " flex-1 justify-center"}>
                     <Check size={14} /> Mark Fulfilled
                   </button>
                 )}
-                <button onClick={() => setSelected(null)} className="px-4 py-2.5 text-sm border border-black/10 rounded-xl hover:bg-black/5 transition-all flex-1 text-center">
+                <button onClick={() => setSelected(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all flex-1 text-center">
                   Close
                 </button>
               </div>
@@ -1367,18 +1367,18 @@ const AnalyticsSection = () => {
           { label: "Reviews", value: stats.reviewCount },
           { label: "FAQ Items", value: stats.faqCount },
         ].map(({ label, value }) => (
-          <div key={label} className="border border-black/[0.06] rounded-2xl p-5">
+          <div key={label} className="border border-black/[0.06] p-5">
             <p className="text-foreground text-2xl font-light">{value}</p>
             <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
           </div>
         ))}
       </div>
-      <div className="border border-black/[0.06] rounded-2xl p-5 mb-4">
+      <div className="border border-black/[0.06] p-5 mb-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Stripe</p>
         <h3 className="text-foreground font-semibold mb-1">Payment Dashboard</h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">View revenue, transactions, and customer data directly in Stripe.</p>
         <a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-xs border border-foreground text-foreground px-4 py-2.5 rounded-xl font-medium hover:bg-foreground hover:text-background transition-all">
+          className="inline-flex items-center gap-2 text-xs border border-foreground text-foreground px-4 py-2.5 font-medium hover:bg-foreground hover:text-background transition-all">
           Open Stripe Dashboard <ExternalLink size={11} />
         </a>
       </div>
@@ -1399,10 +1399,10 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-3 border-b border-black/[0.06] bg-white sticky top-0 z-40">
         <div className="flex items-center gap-3">
-          <button onClick={() => setMobileNavOpen(!mobileNavOpen)} className="p-2 text-foreground rounded-lg hover:bg-black/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"><Menu size={20} /></button>
+          <button onClick={() => setMobileNavOpen(!mobileNavOpen)} className="p-2 text-foreground hover:bg-black/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"><Menu size={20} /></button>
           <img src={logoImg} alt="Logo" className="h-8" />
         </div>
-        <button onClick={onLogout} className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all min-h-[44px]">
+        <button onClick={onLogout} className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all min-h-[44px]">
           <LogOut size={14} /> Log Out
         </button>
       </div>
@@ -1421,7 +1421,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
               <nav className="flex-1 p-3">
                 {navItems.map(({ id, label, icon: Icon }) => (
                   <button key={id} onClick={() => handleNavClick(id)}
-                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm mb-1 transition-all min-h-[48px] ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
+                    className={`w-full flex items-center gap-3 px-3 py-3 text-sm mb-1 transition-all min-h-[48px] ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
                     <Icon size={16} /> {label}
                     {section === id && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground/30" />}
                   </button>
@@ -1441,14 +1441,14 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
         <nav className="flex-1 p-3">
           {navItems.map(({ id, label, icon: Icon }) => (
             <button key={id} onClick={() => setSection(id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm mb-1 transition-all ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
+              className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm mb-1 transition-all ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
               <Icon size={15} /> {label}
               {section === id && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground/30" />}
             </button>
           ))}
         </nav>
         <div className="p-4 border-t border-black/[0.06]">
-          <button onClick={onLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all">
+          <button onClick={onLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all">
             <LogOut size={14} /> Log Out
           </button>
         </div>
