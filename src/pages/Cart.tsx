@@ -167,16 +167,12 @@ const Cart = () => {
                     >
                       Clear Cart
                     </button>
-                    <motion.button
-                      className="text-xs font-sans uppercase editorial-spacing border border-foreground text-foreground px-10 py-3 hover:bg-foreground hover:text-background transition-all duration-500 flex items-center gap-2 disabled:opacity-50"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={handleCheckout}
-                      disabled={isCheckingOut}
+                    <Link
+                      to="/checkout"
+                      className="text-xs font-sans uppercase editorial-spacing border border-foreground text-foreground px-10 py-3 hover:bg-foreground hover:text-background transition-all duration-500 flex items-center gap-2"
                     >
-                      {isCheckingOut && <Loader2 size={14} className="animate-spin" />}
-                      {isCheckingOut ? "Processing..." : "Checkout"}
-                    </motion.button>
+                      Checkout
+                    </Link>
                   </div>
                 </div>
               </div>
