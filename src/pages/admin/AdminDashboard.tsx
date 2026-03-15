@@ -400,8 +400,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 </label>
               </div>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl hover:border-black/20 transition-colors">Cancel</button>
-                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold rounded-xl hover:opacity-80 disabled:opacity-40 transition-all">{saving ? "Saving…" : "Save Product"}</button>
+                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 hover:border-black/20 transition-colors">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold hover:opacity-80 disabled:opacity-40 transition-all">{saving ? "Saving…" : "Save Product"}</button>
               </div>
             </div>
           </Modal>
