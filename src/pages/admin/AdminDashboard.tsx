@@ -213,6 +213,67 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     try { await callAdmin("products", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
     setDeleteId(null);
   };
+  const openBulkImport = () => {
+    setBulkUrls("");
+    setBulkItems([]);
+    setBulkStep("paste");
+    setBulkLoading(false);
+    setModal("bulk");
+  };
+
+  const parseBulkUrls = () => {
+    const urls = bulkUrls
+      .split(/[\n,]+/)
+      .map(u => u.trim())
+      .filter(u => u.startsWith("http"));
+    if (urls.length === 0) return;
+    setBulkItems(urls.map(url => ({ image_url: url, name: "New Product", brand: "Luxury Courier Club", product_type: "Flower", description: "", price: "$65", selected: true })));
+    setBulkStep("review");
+  };
+
+  const runAiNaming = async () => {
+    setAiNaming(true);
+    try {
+      const urls = bulkItems.filter(i => i.selected).map(i => i.image_url);
+      const { data, error } = await supabase.functions.invoke("ai-product-namer", {
+        method: "POST",
+        body: { image_urls: urls },
+        headers: { Authorization: `Bearer ${localStorage.getItem("lc_admin_token")}` },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const results = data.results || [];
+      setBulkItems(prev => prev.map(item => {
+        if (!item.selected) return item;
+        const match = results.find((r: { image_url: string }) => r.image_url === item.image_url);
+        if (match) return { ...item, name: match.name || item.name, brand: match.brand || item.brand, product_type: match.product_type || item.product_type, description: match.description || item.description };
+        return item;
+      }));
+    } catch (e) { alert("AI naming failed: " + e); }
+    setAiNaming(false);
+  };
+
+  const saveBulkProducts = async () => {
+    const toSave = bulkItems.filter(i => i.selected);
+    if (toSave.length === 0) return;
+    setBulkSaving(true);
+    try {
+      for (const item of toSave) {
+        await callAdmin("products", "POST", {
+          name: item.name, brand: item.brand, price: item.price, product_type: item.product_type,
+          description: item.description, image_url: item.image_url, strain: null, sold_out: false, active: true,
+        });
+      }
+      await load();
+      setModal(null);
+    } catch (e) { alert("Bulk save failed: " + e); }
+    setBulkSaving(false);
+  };
+
+  const updateBulkItem = (idx: number, field: string, value: string | boolean) => {
+    setBulkItems(prev => prev.map((item, i) => i === idx ? { ...item, [field]: value } : item));
+  };
+
   const f = (k: string, v: string | number | boolean) => setForm((prev) => ({ ...prev, [k]: v }));
 
   return (
