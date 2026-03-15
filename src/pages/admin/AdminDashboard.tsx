@@ -40,6 +40,7 @@ const DEFAULT_BRAND_OPTIONS = ["Luxury Courier Club", "The Candy Shop", "Pain Ne
 const navItems = [
   { id: "products", label: "Products", icon: Package },
   { id: "brands", label: "Brands", icon: ImageIcon },
+  { id: "state_laws", label: "State Laws", icon: MapPin },
   { id: "faq", label: "FAQ", icon: HelpCircle },
   { id: "reviews", label: "Reviews", icon: Star },
   { id: "referrals", label: "Referrals", icon: Users },
