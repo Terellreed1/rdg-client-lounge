@@ -1328,7 +1328,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               <div className="flex gap-2 pt-2">
                 {selected.status === "paid" && (
                   <button onClick={() => { updateStatus(selected.id, "fulfilled"); setSelected(null); }}
-                    className={btnPrimary + " rounded-xl flex-1 justify-center"}>
+                    className={btnPrimary + " flex-1 justify-center"}>
                     <Check size={14} /> Mark Fulfilled
                   </button>
                 )}
