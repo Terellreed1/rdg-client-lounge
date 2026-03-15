@@ -1,5 +1,6 @@
+import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import backpackboyz from "@/assets/brands/backpackboyz-new.png";
 import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
