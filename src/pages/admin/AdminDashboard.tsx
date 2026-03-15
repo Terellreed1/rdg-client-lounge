@@ -1290,7 +1290,7 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               )}
 
               {selected.delivery_method === "pickup" && (
-                <div className="border border-black/[0.06] rounded-xl p-4 space-y-1">
+                <div className="border border-black/[0.06] p-4 space-y-1">
                   <p className="text-[10px] uppercase tracking-widest text-black/30 mb-2">Pickup Location</p>
                   <p className="text-sm">{PICKUP_LABELS[selected.pickup_location || ""] || selected.pickup_location}</p>
                 </div>
