@@ -534,7 +534,7 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
       ) : (
         <div className="space-y-1.5">
           {items.map((item) => (
-            <div key={item.id} className={`p-3 sm:p-4 rounded-xl border flex gap-3 sm:gap-4 transition-all ${item.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
+            <div key={item.id} className={`p-3 sm:p-4 border flex gap-3 sm:gap-4 transition-all ${item.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
               <div className="flex-1 min-w-0">
                 <p className="text-foreground text-sm font-medium">{item.question}</p>
                 <p className="text-muted-foreground text-xs mt-1 line-clamp-2">{item.answer}</p>
