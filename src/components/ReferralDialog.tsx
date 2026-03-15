@@ -197,8 +197,8 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                   >
                     <div className="px-5 pt-5 pb-4">
                       <img src={logo} alt="Luxury Courier Club" className="h-20 w-20 object-contain mx-auto mb-3" />
-                      <h2 className="font-serif text-xl text-foreground leading-tight">
-                        Share the<br /><span className="italic">Club.</span>
+                       <h2 className="font-serif text-xl leading-tight">
+                        <span className="text-white">Share the</span><br /><span className="italic text-[#D4AF37]">Club.</span>
                       </h2>
                       <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                         Both you and your friend receive waived fees on the next qualifying drop.
