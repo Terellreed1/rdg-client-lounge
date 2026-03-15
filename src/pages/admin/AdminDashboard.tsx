@@ -1090,7 +1090,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
             <div className="flex gap-2 justify-end">
               <button onClick={() => setModal(null)} className="px-4 py-2 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
               <button onClick={seedAllStates} disabled={saving} className={btnPrimary}>
-                {saving ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add All States
+                {saving ? "Adding..." : "Add All States"}
               </button>
             </div>
           </Modal>
