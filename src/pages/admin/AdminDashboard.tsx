@@ -152,9 +152,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   const [bulkUrls, setBulkUrls] = useState("");
   const [bulkItems, setBulkItems] = useState<{ image_url: string; name: string; brand: string; product_type: string; description: string; price: string; selected: boolean }[]>([]);
   const [bulkStep, setBulkStep] = useState<"paste" | "review">("paste");
-  const [bulkLoading, setBulkLoading] = useState(false);
   const [bulkSaving, setBulkSaving] = useState(false);
-  const [aiNaming, setAiNaming] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
