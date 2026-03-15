@@ -1373,7 +1373,7 @@ const AnalyticsSection = () => {
           </div>
         ))}
       </div>
-      <div className="border border-black/[0.06] rounded-2xl p-5 mb-4">
+      <div className="border border-black/[0.06] p-5 mb-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Stripe</p>
         <h3 className="text-foreground font-semibold mb-1">Payment Dashboard</h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">View revenue, transactions, and customer data directly in Stripe.</p>
