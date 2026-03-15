@@ -745,8 +745,8 @@ const BrandsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
               <p className="text-black text-xs font-medium text-center truncate">{b.name}</p>
               {!b.active && <span className="absolute top-2 right-2 text-[8px] bg-black/5 text-black/40 px-1.5 py-0.5 font-medium">HIDDEN</span>}
               <div className="absolute top-2 left-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button onClick={() => openEdit(b)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-black"><Pencil size={11} /></button>
-                <button onClick={() => setDeleteId(b.id)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-red-500"><Trash2 size={11} /></button>
+                <button onClick={() => openEdit(b)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-black text-[10px]">Edit</button>
+                <button onClick={() => setDeleteId(b.id)} className="p-1.5 bg-white border border-black/10 text-black/40 hover:text-red-500 text-[10px]">Del</button>
               </div>
             </div>
           ))}
