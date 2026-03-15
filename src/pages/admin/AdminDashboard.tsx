@@ -383,7 +383,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 <div className="space-y-2">
                   <input className={inputCls} value={form.image_url} onChange={(e) => f("image_url", e.target.value)} placeholder="https://i.ibb.co/..." />
                   <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors"><ExternalLink size={10} /> Open imgbb.com</a>
-                  {form.image_url && <img src={form.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-xl border border-black/10 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
+                  {form.image_url && <img src={form.image_url} alt="Preview" className="w-16 h-16 object-cover border border-black/10 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
                 </div>
               </Field>
               <Field label="Description"><textarea className={inputCls + " min-h-[80px] resize-none"} value={form.description} onChange={(e) => f("description", e.target.value)} placeholder="Product description…" /></Field>
