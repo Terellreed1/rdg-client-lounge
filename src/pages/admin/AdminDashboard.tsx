@@ -734,7 +734,7 @@ const BrandsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
       {loading ? (
         <div className="flex items-center justify-center py-20"><div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" /></div>
       ) : brands.length === 0 ? (
-        <EmptyState icon={ImageIcon} title="No brands yet" description="Add your first brand to display on the website." actionLabel="Add Brand" onAction={openAdd} />
+        <EmptyState title="No brands yet" description="Add your first brand to display on the website." actionLabel="Add Brand" onAction={openAdd} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {brands.map((b) => (
