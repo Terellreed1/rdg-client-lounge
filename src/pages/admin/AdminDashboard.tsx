@@ -434,9 +434,6 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
             ) : (
               <div className="space-y-4">
                 <div className="flex gap-2">
-                  <button onClick={runAiNaming} disabled={aiNaming} className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-semibold px-4 py-2.5 hover:opacity-90 transition-opacity disabled:opacity-50">
-                    {aiNaming ? <><Loader2 size={13} className="animate-spin" /> Analyzing...</> : <><Sparkles size={13} /> AI Name & Categorize</>}
-                  </button>
                   <button onClick={() => setBulkStep("paste")} className="text-xs text-black/40 border border-black/10 px-3 py-2.5 hover:border-black/20">← Back</button>
                 </div>
                 
