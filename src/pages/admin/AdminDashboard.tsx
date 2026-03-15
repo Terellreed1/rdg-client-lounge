@@ -535,8 +535,8 @@ const FaqSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | 
                 <p className="text-muted-foreground text-xs mt-1 line-clamp-2">{item.answer}</p>
               </div>
               <div className="flex gap-0.5 flex-shrink-0">
-                <button onClick={() => openEdit(item)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Pencil size={13} /></button>
-                <button onClick={() => setDeleteId(item.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"><Trash2 size={13} /></button>
+                <button onClick={() => openEdit(item)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center text-xs">Edit</button>
+                <button onClick={() => setDeleteId(item.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center text-xs">Del</button>
               </div>
             </div>
           ))}
