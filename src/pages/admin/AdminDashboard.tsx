@@ -1421,7 +1421,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
               <nav className="flex-1 p-3">
                 {navItems.map(({ id, label, icon: Icon }) => (
                   <button key={id} onClick={() => handleNavClick(id)}
-                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm mb-1 transition-all min-h-[48px] ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
+                    className={`w-full flex items-center gap-3 px-3 py-3 text-sm mb-1 transition-all min-h-[48px] ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
                     <Icon size={16} /> {label}
                     {section === id && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground/30" />}
                   </button>
