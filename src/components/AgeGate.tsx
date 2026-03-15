@@ -117,6 +117,11 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Always bypass age gate for admin routes
+    if (window.location.pathname.startsWith("/admin")) {
+      setVerified(true);
+      return;
+    }
     const cookie = getCookie("lcc_age_verified");
     if (cookie === "denied") {
       setDenied(true);

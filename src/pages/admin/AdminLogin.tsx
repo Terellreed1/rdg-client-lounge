@@ -30,7 +30,7 @@ const AdminLogin = ({ onSuccess }: AdminLoginProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4" style={{ '--foreground': '0 0% 9%', '--muted-foreground': '0 0% 45%', '--background': '0 0% 100%', '--border': '0 0% 85%' } as React.CSSProperties}>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
