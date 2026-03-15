@@ -5,6 +5,7 @@ import {
   Plus, Pencil, Trash2, X, ChevronDown, RefreshCw,
   ExternalLink, Image as ImageIcon, Users, Menu,
   ShoppingBag, MessageSquare, FileQuestion, GripVertical,
+  Upload, Sparkles, Check, Loader2,
 } from "lucide-react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
@@ -134,7 +135,7 @@ const SortableProductRow = ({ product, index }: { product: Product; index: numbe
 const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | "PUT" | "DELETE", b?: object) => Promise<unknown> }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState<"add" | "edit" | null>(null);
+  const [modal, setModal] = useState<"add" | "edit" | "bulk" | null>(null);
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState({ name: "", brand: "Luxury Courier Club", price: "$65", image_url: "", description: "", strain: "None", product_type: "Flower", sold_out: false, active: true });
   const [saving, setSaving] = useState(false);
@@ -142,6 +143,14 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   const [customBrand, setCustomBrand] = useState("");
   const [reorderMode, setReorderMode] = useState(false);
   const [reordering, setReordering] = useState(false);
+  
+  // Bulk import state
+  const [bulkUrls, setBulkUrls] = useState("");
+  const [bulkItems, setBulkItems] = useState<{ image_url: string; name: string; brand: string; product_type: string; description: string; price: string; selected: boolean }[]>([]);
+  const [bulkStep, setBulkStep] = useState<"paste" | "review">("paste");
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [bulkSaving, setBulkSaving] = useState(false);
+  const [aiNaming, setAiNaming] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -204,6 +213,67 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     try { await callAdmin("products", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
     setDeleteId(null);
   };
+  const openBulkImport = () => {
+    setBulkUrls("");
+    setBulkItems([]);
+    setBulkStep("paste");
+    setBulkLoading(false);
+    setModal("bulk");
+  };
+
+  const parseBulkUrls = () => {
+    const urls = bulkUrls
+      .split(/[\n,]+/)
+      .map(u => u.trim())
+      .filter(u => u.startsWith("http"));
+    if (urls.length === 0) return;
+    setBulkItems(urls.map(url => ({ image_url: url, name: "New Product", brand: "Luxury Courier Club", product_type: "Flower", description: "", price: "$65", selected: true })));
+    setBulkStep("review");
+  };
+
+  const runAiNaming = async () => {
+    setAiNaming(true);
+    try {
+      const urls = bulkItems.filter(i => i.selected).map(i => i.image_url);
+      const { data, error } = await supabase.functions.invoke("ai-product-namer", {
+        method: "POST",
+        body: { image_urls: urls },
+        headers: { Authorization: `Bearer ${localStorage.getItem("lc_admin_token")}` },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const results = data.results || [];
+      setBulkItems(prev => prev.map(item => {
+        if (!item.selected) return item;
+        const match = results.find((r: { image_url: string }) => r.image_url === item.image_url);
+        if (match) return { ...item, name: match.name || item.name, brand: match.brand || item.brand, product_type: match.product_type || item.product_type, description: match.description || item.description };
+        return item;
+      }));
+    } catch (e) { alert("AI naming failed: " + e); }
+    setAiNaming(false);
+  };
+
+  const saveBulkProducts = async () => {
+    const toSave = bulkItems.filter(i => i.selected);
+    if (toSave.length === 0) return;
+    setBulkSaving(true);
+    try {
+      for (const item of toSave) {
+        await callAdmin("products", "POST", {
+          name: item.name, brand: item.brand, price: item.price, product_type: item.product_type,
+          description: item.description, image_url: item.image_url, strain: null, sold_out: false, active: true,
+        });
+      }
+      await load();
+      setModal(null);
+    } catch (e) { alert("Bulk save failed: " + e); }
+    setBulkSaving(false);
+  };
+
+  const updateBulkItem = (idx: number, field: string, value: string | boolean) => {
+    setBulkItems(prev => prev.map((item, i) => i === idx ? { ...item, [field]: value } : item));
+  };
+
   const f = (k: string, v: string | number | boolean) => setForm((prev) => ({ ...prev, [k]: v }));
 
   return (
@@ -213,6 +283,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
           {!reorderMode ? (
             <>
               <button onClick={() => setReorderMode(true)} className={btnSecondary + " text-xs flex items-center gap-1.5"}><GripVertical size={14} /> <span className="hidden sm:inline">Reorder</span></button>
+              <button onClick={openBulkImport} className={btnSecondary + " text-xs flex items-center gap-1.5"}><Upload size={14} /> <span className="hidden sm:inline">Bulk Import</span><span className="sm:hidden">Bulk</span></button>
               <button onClick={load} className={btnSecondary}><RefreshCw size={14} /></button>
               <button onClick={openAdd} className={btnPrimary}><Plus size={14} /> <span className="hidden sm:inline">Add Product</span><span className="sm:hidden">Add</span></button>
             </>
@@ -338,6 +409,74 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
               <button onClick={() => setDeleteId(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
               <button onClick={() => remove(deleteId)} className="flex-1 py-3 sm:py-2.5 text-sm bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors">Delete</button>
             </div>
+          </Modal>
+        )}
+        {modal === "bulk" && (
+          <Modal title={bulkStep === "paste" ? "Bulk Import Products" : `Review ${bulkItems.filter(i => i.selected).length} Products`} onClose={() => setModal(null)}>
+            {bulkStep === "paste" ? (
+              <div className="space-y-4">
+                <p className="text-black/50 text-xs">Paste image URLs below — one per line, or comma-separated. These will be created as draft products you can edit later.</p>
+                <textarea
+                  className={inputCls + " min-h-[200px] font-mono text-xs resize-none"}
+                  value={bulkUrls}
+                  onChange={(e) => setBulkUrls(e.target.value)}
+                  placeholder={"https://i.ibb.co/image1.jpg\nhttps://i.ibb.co/image2.jpg\nhttps://i.ibb.co/image3.jpg\n..."}
+                />
+                <p className="text-black/30 text-[10px]">{bulkUrls.split(/[\n,]+/).filter(u => u.trim().startsWith("http")).length} URLs detected</p>
+                <div className="flex gap-2 pt-2">
+                  <button onClick={() => setModal(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+                  <button onClick={parseBulkUrls} disabled={!bulkUrls.trim()} className="flex-1 py-2.5 text-sm bg-black text-white font-semibold disabled:opacity-30">Continue</button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  <button onClick={runAiNaming} disabled={aiNaming} className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-semibold px-4 py-2.5 hover:opacity-90 transition-opacity disabled:opacity-50">
+                    {aiNaming ? <><Loader2 size={13} className="animate-spin" /> Analyzing...</> : <><Sparkles size={13} /> AI Name & Categorize</>}
+                  </button>
+                  <button onClick={() => setBulkStep("paste")} className="text-xs text-black/40 border border-black/10 px-3 py-2.5 hover:border-black/20">← Back</button>
+                </div>
+                
+                <div className="max-h-[50vh] overflow-y-auto space-y-3 pr-1">
+                  {bulkItems.map((item, idx) => (
+                    <div key={idx} className={`border p-3 transition-all ${item.selected ? "border-black/10" : "border-black/5 opacity-40"}`}>
+                      <div className="flex gap-3">
+                        <label className="flex-shrink-0 pt-1">
+                          <input type="checkbox" checked={item.selected} onChange={(e) => updateBulkItem(idx, "selected", e.target.checked)} className="accent-black" />
+                        </label>
+                        <div className="w-14 h-14 bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
+                          <img src={item.image_url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                        </div>
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <input className="w-full bg-transparent border-b border-black/10 text-black text-sm font-medium pb-1 focus:outline-none focus:border-black/30" 
+                            value={item.name} onChange={(e) => updateBulkItem(idx, "name", e.target.value)} placeholder="Product name" />
+                          <div className="flex gap-2">
+                            <select className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 flex-1" 
+                              value={item.brand} onChange={(e) => updateBulkItem(idx, "brand", e.target.value)}>
+                              {DEFAULT_BRAND_OPTIONS.map(b => <option key={b}>{b}</option>)}
+                            </select>
+                            <select className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 w-24"
+                              value={item.product_type} onChange={(e) => updateBulkItem(idx, "product_type", e.target.value)}>
+                              {TYPE_OPTIONS.map(t => <option key={t}>{t}</option>)}
+                            </select>
+                            <input className="bg-transparent border border-black/10 text-black/60 text-[11px] px-2 py-1 w-16"
+                              value={item.price} onChange={(e) => updateBulkItem(idx, "price", e.target.value)} placeholder="$65" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex gap-2 pt-2 sticky bottom-0 bg-white">
+                  <button onClick={() => setModal(null)} className="flex-1 py-2.5 text-sm text-black/40 border border-black/10">Cancel</button>
+                  <button onClick={saveBulkProducts} disabled={bulkSaving || bulkItems.filter(i => i.selected).length === 0}
+                    className="flex-1 py-2.5 text-sm bg-black text-white font-semibold disabled:opacity-30 flex items-center justify-center gap-2">
+                    {bulkSaving ? <><Loader2 size={13} className="animate-spin" /> Saving...</> : <><Check size={13} /> Import {bulkItems.filter(i => i.selected).length} Products</>}
+                  </button>
+                </div>
+              </div>
+            )}
           </Modal>
         )}
       </AnimatePresence>
