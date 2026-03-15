@@ -998,7 +998,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
         actions={
           <>
             {states.length < 51 && (
-              <button onClick={() => setModal("seed")} className={btnSecondary + " rounded-xl text-xs px-3"}>
+              <button onClick={() => setModal("seed")} className={btnSecondary + " text-xs px-3"}>
                 <Plus size={14} /> Seed All States
               </button>
             )}
