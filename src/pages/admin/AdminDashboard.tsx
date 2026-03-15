@@ -1398,7 +1398,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between p-3 border-b border-black/[0.06] bg-white sticky top-0 z-40">
         <div className="flex items-center gap-3">
-          <button onClick={() => setMobileNavOpen(!mobileNavOpen)} className="p-2 text-foreground hover:bg-black/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"><Menu size={20} /></button>
+          <button onClick={() => setMobileNavOpen(!mobileNavOpen)} className="p-2 text-foreground hover:bg-black/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center text-sm font-medium">Menu</button>
           <img src={logoImg} alt="Logo" className="h-8" />
         </div>
         <button onClick={onLogout} className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all min-h-[44px]">
