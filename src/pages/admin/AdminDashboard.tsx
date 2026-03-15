@@ -1419,10 +1419,10 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
                 <button onClick={() => setMobileNavOpen(false)} className="p-2 text-muted-foreground min-w-[44px] min-h-[44px] flex items-center justify-center"><X size={18} /></button>
               </div>
               <nav className="flex-1 p-3">
-                {navItems.map(({ id, label, icon: Icon }) => (
+                {navItems.map(({ id, label }) => (
                   <button key={id} onClick={() => handleNavClick(id)}
                     className={`w-full flex items-center gap-3 px-3 py-3 text-sm mb-1 transition-all min-h-[48px] ${section === id ? "bg-black/[0.06] text-foreground font-medium" : "text-muted-foreground hover:text-foreground hover:bg-black/[0.03]"}`}>
-                    <Icon size={16} /> {label}
+                    {label}
                     {section === id && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground/30" />}
                   </button>
                 ))}
