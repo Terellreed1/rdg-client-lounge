@@ -70,7 +70,7 @@ const EmptyState = ({ icon: Icon, title, description, actionLabel, onAction }: {
     <h3 className="text-foreground text-base font-medium mb-1">{title}</h3>
     <p className="text-muted-foreground text-sm text-center max-w-xs mb-6">{description}</p>
     {actionLabel && onAction && (
-      <button onClick={onAction} className="flex items-center gap-2 bg-foreground text-background text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-80 transition-opacity">
+      <button onClick={onAction} className="flex items-center gap-2 bg-foreground text-background text-sm font-semibold px-5 py-2.5 hover:opacity-80 transition-opacity">
         <Plus size={14} /> {actionLabel}
       </button>
     )}
