@@ -30,7 +30,7 @@ const terpenes = [
     effect: "Anti-inflammatory, calming",
     found: "Black Pepper, Cloves, Cinnamon",
     color: "#f97316",
-    icon: "🌶️",
+    icon: "C",
     unlocked: true,
   },
   {
