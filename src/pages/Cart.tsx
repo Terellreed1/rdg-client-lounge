@@ -55,7 +55,7 @@ const Cart = () => {
                     <p className="text-xs font-sans text-muted-foreground">
                       {amountToFree > 0
                         ? `Add $${amountToFree.toFixed(2)} more for free delivery!`
-                        : "🎉 You've unlocked free delivery!"}
+                        : "You've unlocked free delivery!"}
                     </p>
                   </div>
                   <Progress value={deliveryProgress} className="h-2" />

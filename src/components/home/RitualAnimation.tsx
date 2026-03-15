@@ -8,9 +8,9 @@ const RitualAnimation = () => {
 
   const stages = [
     { label: "Selected", icon: "✦" },
-    { label: "Inspected", icon: "🔍" },
-    { label: "Wrapped", icon: "🎁" },
-    { label: "Sealed", icon: "💫" },
+    { label: "Inspected", icon: "◉" },
+    { label: "Wrapped", icon: "▣" },
+    { label: "Sealed", icon: "◆" },
     { label: "Yours", icon: "✓" },
   ];
 

@@ -53,7 +53,7 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
   }, []);
 
   const referralLink = `https://luxurycourier.club/r/${code.toLowerCase()}`;
-  const shareMessage = `Join the Luxury Courier Club and get a free 8th on me 🌿 ${referralLink}`;
+  const shareMessage = `Join the Luxury Courier Club and get a free 8th on me ${referralLink}`;
 
   const handleCopy = useCallback(async (text: string, field: string) => {
     try {

@@ -145,7 +145,7 @@ const TerpenePassport = () => {
                 {/* Lock overlay */}
                 {!terpene.unlocked && (
                   <div className="absolute inset-0 flex items-center justify-center bg-background/60 z-10">
-                    <span className="text-lg">🔒</span>
+                    <span className="text-lg font-bold">—</span>
                   </div>
                 )}
 
