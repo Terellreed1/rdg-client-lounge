@@ -1448,7 +1448,7 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
         </nav>
         <div className="p-4 border-t border-black/[0.06]">
           <button onClick={onLogout} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-medium text-red-500 border border-red-100 hover:bg-red-50 transition-all">
-            <LogOut size={14} /> Log Out
+            Log Out
           </button>
         </div>
       </aside>
