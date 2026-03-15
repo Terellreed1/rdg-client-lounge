@@ -219,7 +219,6 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     setBulkUrls("");
     setBulkItems([]);
     setBulkStep("paste");
-    setBulkLoading(false);
     setModal("bulk");
   };
 
