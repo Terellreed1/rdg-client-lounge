@@ -671,8 +671,8 @@ const ReviewsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST
                 <span className="text-muted-foreground text-xs">Visible on homepage</span>
               </label>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10 rounded-xl">Cancel</button>
-                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold rounded-xl disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
+                <button onClick={() => setModal(null)} className="flex-1 py-3 sm:py-2.5 text-sm text-muted-foreground border border-black/10">Cancel</button>
+                <button onClick={save} disabled={saving} className="flex-1 py-3 sm:py-2.5 text-sm bg-foreground text-background font-semibold disabled:opacity-40">{saving ? "Saving…" : "Save"}</button>
               </div>
             </div>
           </Modal>
