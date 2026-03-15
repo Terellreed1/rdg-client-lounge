@@ -1040,8 +1040,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
       ) : (
         <div className="space-y-1.5">
           {filtered.map((state) => (
-            <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white rounded-xl group">
-              <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] rounded-lg flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
+            <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white group">
+              <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
                 {state.state_code}
               </div>
               <div className="flex-1 min-w-0">
