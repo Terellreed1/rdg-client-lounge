@@ -1148,7 +1148,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
               <div className="flex gap-2 justify-end pt-2">
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
                 <button onClick={save} disabled={saving || !form.state_code} className={btnPrimary + " disabled:opacity-40"}>
-                  {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} {modal === "add" ? "Add" : "Save"}
+                  {saving ? "Saving..." : modal === "add" ? "Add" : "Save"}
                 </button>
               </div>
             </div>
