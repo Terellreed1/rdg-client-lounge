@@ -1264,10 +1264,10 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
           <Modal title="Order Details" onClose={() => setSelected(null)}>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${METHOD_COLORS[selected.delivery_method] || ""}`}>
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${METHOD_COLORS[selected.delivery_method] || ""}`}>
                   {selected.delivery_method}
                 </span>
-                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border font-medium ${selected.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-gray-50 text-gray-600"}`}>
+                <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 border font-medium ${selected.status === "paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-gray-50 text-gray-600"}`}>
                   {selected.status}
                 </span>
               </div>
