@@ -132,6 +132,94 @@ const SortableProductRow = ({ product, index }: { product: Product; index: numbe
   );
 };
 
+// ─── Image Upload Helper ──────────────────────────────────────────
+const uploadToStorage = async (file: File, productId?: string): Promise<string | null> => {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `${productId || "temp"}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from("product-images").upload(path, file, { cacheControl: "3600", upsert: false });
+  if (error) { console.error("Upload error:", error); return null; }
+  const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+  return data.publicUrl;
+};
+
+// ─── Drag-Drop Image Zone ─────────────────────────────────────────
+const ImageDropZone = ({ images, onAdd, onRemove, onReorder, uploading }: {
+  images: { url: string; id?: string }[];
+  onAdd: (files: FileList) => void;
+  onRemove: (idx: number) => void;
+  onReorder: (from: number, to: number) => void;
+  uploading: boolean;
+}) => {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const [dragIdx, setDragIdx] = useState<number | null>(null);
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    if (dragIdx !== null) return;
+    if (e.dataTransfer.files.length > 0) onAdd(e.dataTransfer.files);
+  };
+
+  const handleImageDragStart = (idx: number) => (e: React.DragEvent) => {
+    setDragIdx(idx);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleImageDragOver = (idx: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    if (dragIdx !== null && dragIdx !== idx) {
+      onReorder(dragIdx, idx);
+      setDragIdx(idx);
+    }
+  };
+
+  const handleImageDragEnd = () => setDragIdx(null);
+
+  return (
+    <div>
+      <div
+        className={`border-2 border-dashed p-4 transition-all text-center cursor-pointer ${dragOver ? "border-black/40 bg-black/[0.04]" : "border-black/10 hover:border-black/20"}`}
+        onDragOver={(e) => { e.preventDefault(); if (dragIdx === null) setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+        onClick={() => fileRef.current?.click()}
+      >
+        <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { if (e.target.files) onAdd(e.target.files); e.target.value = ""; }} />
+        {uploading ? (
+          <div className="flex items-center justify-center gap-2 py-4">
+            <Loader2 size={16} className="animate-spin text-black/40" />
+            <span className="text-xs text-black/40">Uploading...</span>
+          </div>
+        ) : (
+          <div className="py-4">
+            <p className="text-xs text-black/40">Drag & drop images here or click to browse</p>
+            <p className="text-[10px] text-black/20 mt-1">JPG, PNG, WEBP — up to 10MB each</p>
+          </div>
+        )}
+      </div>
+      {images.length > 0 && (
+        <div className="flex gap-2 mt-3 flex-wrap">
+          {images.map((img, idx) => (
+            <div key={img.url + idx} draggable
+              onDragStart={handleImageDragStart(idx)}
+              onDragOver={handleImageDragOver(idx)}
+              onDragEnd={handleImageDragEnd}
+              className={`relative w-20 h-20 border border-black/10 overflow-hidden group cursor-grab active:cursor-grabbing flex-shrink-0 ${dragIdx === idx ? "opacity-50" : ""} ${idx === 0 ? "ring-2 ring-black/20" : ""}`}>
+              <img src={img.url} alt="" className="w-full h-full object-cover" />
+              {idx === 0 && <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[8px] text-center py-0.5">MAIN</span>}
+              <button onClick={(e) => { e.stopPropagation(); onRemove(idx); }}
+                className="absolute top-0.5 right-0.5 w-5 h-5 bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs">
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── Products Section ─────────────────────────────────────────────
 const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | "PUT" | "DELETE", b?: object) => Promise<unknown> }) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -144,6 +232,10 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   const [customBrand, setCustomBrand] = useState("");
   const [reorderMode, setReorderMode] = useState(false);
   const [reordering, setReordering] = useState(false);
+  
+  // Multi-image state
+  const [productImages, setProductImages] = useState<{ url: string; id?: string }[]>([]);
+  const [imageUploading, setImageUploading] = useState(false);
   
   // Bulk import state
   const [bulkUrls, setBulkUrls] = useState("");
@@ -163,6 +255,11 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
   }, [callAdmin]);
 
   useEffect(() => { load(); }, [load]);
+
+  const loadProductImages = useCallback(async (productId: string) => {
+    const { data } = await supabase.from("product_images").select("*").eq("product_id", productId).order("sort_order");
+    return (data || []).map((img) => ({ url: img.image_url, id: img.id }));
+  }, []);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -187,31 +284,93 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
     setReordering(false);
   };
 
+  const handleImageAdd = async (files: FileList) => {
+    setImageUploading(true);
+    const newImages: { url: string }[] = [];
+    for (const file of Array.from(files)) {
+      if (file.size > 10 * 1024 * 1024) { alert(`${file.name} exceeds 10MB limit`); continue; }
+      const url = await uploadToStorage(file, editing?.id || "new");
+      if (url) newImages.push({ url });
+    }
+    setProductImages(prev => [...prev, ...newImages]);
+    setImageUploading(false);
+  };
+
+  const handleImageRemove = (idx: number) => {
+    setProductImages(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleImageReorder = (from: number, to: number) => {
+    setProductImages(prev => {
+      const arr = [...prev];
+      const [item] = arr.splice(from, 1);
+      arr.splice(to, 0, item);
+      return arr;
+    });
+  };
+
   const openAdd = () => {
     setForm({ name: "", brand: "Luxury Courier Club", price: "$65", image_url: "", description: "", strain: "None", product_type: "Flower", sold_out: false, active: true });
     setCustomBrand("");
+    setProductImages([]);
     setModal("add");
   };
-  const openEdit = (p: Product) => {
+
+  const openEdit = async (p: Product) => {
     setEditing(p);
     setForm({ name: p.name, brand: p.brand, price: p.price, image_url: p.image_url || "", description: p.description, strain: p.strain || "None", product_type: p.product_type, sold_out: p.sold_out, active: p.active });
     setCustomBrand("");
+    const existing = await loadProductImages(p.id);
+    if (p.image_url && !existing.some(img => img.url === p.image_url)) {
+      setProductImages([{ url: p.image_url }, ...existing]);
+    } else if (existing.length > 0) {
+      setProductImages(existing);
+    } else if (p.image_url) {
+      setProductImages([{ url: p.image_url }]);
+    } else {
+      setProductImages([]);
+    }
     setModal("edit");
   };
+
   const save = async () => {
     setSaving(true);
     try {
-      const payload = { ...form, image_url: form.image_url || null, strain: form.strain === "None" ? null : form.strain };
-      if (modal === "add") await callAdmin("products", "POST", payload);
-      else await callAdmin("products", "PUT", { id: editing!.id, ...payload });
+      const mainImage = productImages.length > 0 ? productImages[0].url : (form.image_url || null);
+      const payload = { ...form, image_url: mainImage, strain: form.strain === "None" ? null : form.strain };
+      let productId: string;
+      if (modal === "add") {
+        const result = await callAdmin("products", "POST", payload) as any;
+        productId = result?.id || result?.[0]?.id;
+      } else {
+        productId = editing!.id;
+        await callAdmin("products", "PUT", { id: productId, ...payload });
+      }
+      
+      if (productId && productImages.length > 0) {
+        await supabase.from("product_images").delete().eq("product_id", productId);
+        const imageRows = productImages.map((img, idx) => ({
+          product_id: productId,
+          image_url: img.url,
+          sort_order: idx,
+        }));
+        await supabase.from("product_images").insert(imageRows);
+      }
+      
       await load(); setModal(null);
     } catch (e) { alert("Save failed: " + e); }
     setSaving(false);
   };
+
   const remove = async (id: string) => {
-    try { await callAdmin("products", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
+    try {
+      await supabase.from("product_images").delete().eq("product_id", id);
+      await callAdmin("products", "DELETE", { id });
+      await load();
+    } catch (e) { alert("Delete failed: " + e); }
     setDeleteId(null);
   };
+
   const openBulkImport = () => {
     setBulkUrls("");
     setBulkItems([]);
@@ -221,21 +380,15 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
 
   const extractImageUrl = (input: string): string | null => {
     const trimmed = input.trim();
-    // Direct image URL
     if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg|bmp)/i.test(trimmed)) return trimmed;
-    // imgbb viewer page → extract direct image from the URL pattern
     const ibbMatch = trimmed.match(/https?:\/\/ibb\.co\/([A-Za-z0-9]+)/);
     if (ibbMatch) return `https://i.ibb.co/${ibbMatch[1]}/image.jpg`;
-    // HTML img tag → extract src
     const imgSrcMatch = trimmed.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (imgSrcMatch) return imgSrcMatch[1];
-    // HTML anchor with image URL
     const hrefMatch = trimmed.match(/href=["']([^"']+\.(jpg|jpeg|png|gif|webp))["']/i);
     if (hrefMatch) return hrefMatch[1];
-    // BBCode [img] tag
     const bbcodeMatch = trimmed.match(/\[img\](.*?)\[\/img\]/i);
     if (bbcodeMatch) return bbcodeMatch[1];
-    // Fallback: if it starts with http, use as-is
     if (trimmed.startsWith("http")) return trimmed;
     return null;
   };
@@ -337,7 +490,7 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
       )}
 
       <AnimatePresence>
-        {modal && (
+        {(modal === "add" || modal === "edit") && (
           <Modal title={modal === "add" ? "Add Product" : "Edit Product"} onClose={() => setModal(null)}>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -374,12 +527,14 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                   </div>
                 </Field>
               </div>
-              <Field label="Image URL" hint="Upload to imgbb.com → copy Direct Link → paste here">
-                <div className="space-y-2">
-                  <input className={inputCls} value={form.image_url} onChange={(e) => f("image_url", e.target.value)} placeholder="https://i.ibb.co/..." />
-                  <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors">Open imgbb.com →</a>
-                  {form.image_url && <img src={form.image_url} alt="Preview" className="w-16 h-16 object-cover border border-black/10 mt-1" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />}
-                </div>
+              <Field label="Product Images" hint="Drag to reorder — first image becomes the main photo">
+                <ImageDropZone
+                  images={productImages}
+                  onAdd={handleImageAdd}
+                  onRemove={handleImageRemove}
+                  onReorder={handleImageReorder}
+                  uploading={imageUploading}
+                />
               </Field>
               <Field label="Description"><textarea className={inputCls + " min-h-[80px] resize-none"} value={form.description} onChange={(e) => f("description", e.target.value)} placeholder="Product description…" /></Field>
               <div className="flex gap-6">
