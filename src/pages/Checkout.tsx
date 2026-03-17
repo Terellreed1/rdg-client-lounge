@@ -42,6 +42,27 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [compliance, setCompliance] = useState<ComplianceCheckResult | null>(null);
   const [checkingCompliance, setCheckingCompliance] = useState(false);
+  const [slotCounts, setSlotCounts] = useState<Record<string, number>>({});
+
+  // Fetch today's order counts per time slot
+  useEffect(() => {
+    const fetchSlotCounts = async () => {
+      const today = new Date().toISOString().split("T")[0];
+      const { data } = await supabase
+        .from("orders")
+        .select("time_slot")
+        .gte("created_at", `${today}T00:00:00`)
+        .lte("created_at", `${today}T23:59:59`);
+      if (data) {
+        const counts: Record<string, number> = {};
+        data.forEach((order) => {
+          if (order.time_slot) counts[order.time_slot] = (counts[order.time_slot] || 0) + 1;
+        });
+        setSlotCounts(counts);
+      }
+    };
+    fetchSlotCounts();
+  }, []);
 
   const subtotal = useMemo(() =>
     items.reduce((sum, item) => sum + parseFloat(item.price.replace("$", "")) * item.quantity, 0),
