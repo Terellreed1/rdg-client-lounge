@@ -503,7 +503,7 @@ const DeliveryMap = () => {
                         color: activeZone.type === "delivery" ? "#22c55e" : "#a78bfa",
                       }}
                     >
-                      {activeZone.type === "delivery" ? "● Same-Day Delivery" : "○ Priority Shipping"}
+                      {activeZone.type === "delivery" ? "● Same-Day Delivery" : "○ Postal Shipping"}
                     </span>
 
                     <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
