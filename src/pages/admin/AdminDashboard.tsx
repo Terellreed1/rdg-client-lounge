@@ -41,9 +41,8 @@ const navItems = [
   { id: "brands", label: "Brands" },
   { id: "state_laws", label: "State Laws" },
   { id: "faq", label: "FAQ" },
-  { id: "reviews", label: "Reviews" },
-  { id: "referrals", label: "Referrals" },
   { id: "analytics", label: "Analytics" },
+  { id: "dev", label: "Dev Controls" },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────
