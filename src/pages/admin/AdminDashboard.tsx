@@ -1550,6 +1550,17 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
     load();
   };
 
+  const removeOrder = async (id: string) => {
+    setDeleting(true);
+    try {
+      await callAdmin("orders", "DELETE", { id });
+      setDeleteId(null);
+      setSelected(null);
+      load();
+    } catch { /* ignore */ }
+    setDeleting(false);
+  };
+
   return (
     <div>
       <SectionHeader title="Orders" subtitle="Paid orders from customers" actions={
