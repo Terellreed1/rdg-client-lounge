@@ -1226,85 +1226,135 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
 
   return (
     <div>
-      <SectionHeader title="State Cannabis Laws" subtitle="Manage shipping & delivery eligibility by state"
+      <SectionHeader title="Compliance & Service Areas" subtitle="Manage state laws, shipping eligibility, and local delivery zones"
         actions={
-          <>
-            {states.length < 51 && (
-              <button onClick={() => setModal("seed")} className={btnSecondary + " text-xs px-3"}>
-                Seed All States
-              </button>
-            )}
-            <button onClick={openAdd} className={btnPrimary}>
-              Add State
-            </button>
-          </>
+          subTab === "states" ? (
+            <>
+              {states.length < 51 && (
+                <button onClick={() => setModal("seed")} className={btnSecondary + " text-xs px-3"}>
+                  Seed All States
+                </button>
+              )}
+              <button onClick={openAdd} className={btnPrimary}>Add State</button>
+            </>
+          ) : (
+            <button onClick={openAddArea} className={btnPrimary}>Add Service Area</button>
+          )
         }
       />
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
-        {[
-          { label: "Total States", value: states.length, color: "text-foreground" },
-          { label: "Can Ship", value: shipCount, color: "text-emerald-600" },
-          { label: "Can Deliver", value: deliverCount, color: "text-blue-600" },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="border border-black/[0.06] p-4">
-            <p className={`text-2xl font-light ${color}`}>{value}</p>
-            <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Filter tabs */}
-      <div className="flex gap-2 mb-4">
-        {([["all", "All States"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
-          <button key={key} onClick={() => setFilter(key)}
-            className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
+      {/* Sub-tabs */}
+      <div className="flex gap-2 mb-6">
+        {([["states", "State Laws"], ["areas", "Service Areas"]] as const).map(([key, label]) => (
+          <button key={key} onClick={() => setSubTab(key)}
+            className={`px-4 py-2 text-xs font-medium transition-all ${subTab === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
             {label}
           </button>
         ))}
       </div>
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20"><Loader2 className="animate-spin text-muted-foreground" size={20} /></div>
-      ) : filtered.length === 0 ? (
-        <EmptyState title="No states configured" description="Add states to manage cannabis shipping and delivery laws." actionLabel="Add State" onAction={openAdd} />
-      ) : (
-        <div className="space-y-1.5">
-          {filtered.map((state) => (
-            <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white group">
-              <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
-                {state.state_code}
+      {subTab === "states" && (
+        <>
+          {/* Stats */}
+          <div className="grid grid-cols-4 gap-3 mb-6">
+            {[
+              { label: "Total States", value: states.length, color: "text-foreground" },
+              { label: "Can Ship", value: shipCount, color: "text-emerald-600" },
+              { label: "Can Deliver", value: deliverCount, color: "text-blue-600" },
+              { label: "Service Areas", value: areas.length, color: "text-foreground" },
+            ].map(({ label, value, color }) => (
+              <div key={label} className="border border-black/[0.06] p-4">
+                <p className={`text-2xl font-light ${color}`}>{value}</p>
+                <p className="text-muted-foreground text-[10px] mt-1 uppercase tracking-wider">{label}</p>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-foreground text-sm font-medium">{state.state_name}</p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${LEGAL_STATUS_COLORS[state.legal_status] || "bg-black/5 text-black/40"}`}>
-                    {LEGAL_STATUS_LABELS[state.legal_status] || state.legal_status}
-                  </span>
-                  {state.notes && <span className="text-muted-foreground text-[10px] truncate max-w-[150px]">{state.notes}</span>}
+            ))}
+          </div>
+
+          {/* Filter tabs */}
+          <div className="flex gap-2 mb-4">
+            {([["all", "All States"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
+              <button key={key} onClick={() => setFilter(key)}
+                className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {loading ? (
+            <div className="flex items-center justify-center py-20"><Loader2 className="animate-spin text-muted-foreground" size={20} /></div>
+          ) : filtered.length === 0 ? (
+            <EmptyState title="No states configured" description="Add states to manage cannabis shipping and delivery laws." actionLabel="Add State" onAction={openAdd} />
+          ) : (
+            <div className="space-y-1.5">
+              {filtered.map((state) => (
+                <div key={state.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white group">
+                  <div className="w-10 h-10 bg-black/[0.03] border border-black/[0.06] flex items-center justify-center text-xs font-bold text-foreground flex-shrink-0">
+                    {state.state_code}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-foreground text-sm font-medium">{state.state_name}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${LEGAL_STATUS_COLORS[state.legal_status] || "bg-black/5 text-black/40"}`}>
+                        {LEGAL_STATUS_LABELS[state.legal_status] || state.legal_status}
+                      </span>
+                      {state.can_ship && <span className="text-[10px] text-muted-foreground">${state.shipping_fee} / {state.estimated_days}d</span>}
+                      {state.notes && <span className="text-muted-foreground text-[10px] truncate max-w-[150px]">{state.notes}</span>}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button onClick={() => toggleField(state, "can_ship")}
+                      className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
+                      title={state.can_ship ? "Can ship – click to disable" : "Cannot ship – click to enable"}>
+                      Ship
+                    </button>
+                    <button onClick={() => toggleField(state, "can_deliver")}
+                      className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
+                      title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
+                      Deliver
+                    </button>
+                    <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
+                    <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <button onClick={() => toggleField(state, "can_ship")}
-                  className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_ship ? "bg-emerald-100 text-emerald-700" : "bg-black/[0.04] text-black/30"}`}
-                  title={state.can_ship ? "Can ship – click to disable" : "Cannot ship – click to enable"}>
-                  Ship
-                </button>
-                <button onClick={() => toggleField(state, "can_deliver")}
-                  className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
-                  title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
-                  Deliver
-                </button>
-                <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
-                <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
 
-      {/* Delete Confirm */}
+      {/* Service Areas Tab */}
+      {subTab === "areas" && (
+        <>
+          {loading ? (
+            <div className="flex items-center justify-center py-20"><Loader2 className="animate-spin text-muted-foreground" size={20} /></div>
+          ) : areas.length === 0 ? (
+            <EmptyState title="No service areas" description="Add delivery zones with ZIP codes for local delivery." actionLabel="Add Service Area" onAction={openAddArea} />
+          ) : (
+            <div className="space-y-1.5">
+              {areas.map((area) => (
+                <div key={area.id} className="flex items-center gap-3 p-3 border border-black/[0.06] bg-white group">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-foreground text-sm font-medium">{area.name}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-[10px] text-muted-foreground">{area.zip_codes.length} ZIP codes</span>
+                      <span className="text-[10px] text-muted-foreground">${area.delivery_fee} fee</span>
+                      <span className="text-[10px] text-muted-foreground">~{area.estimated_time_minutes} min</span>
+                      {!area.is_active && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-100 text-red-600 font-medium">Inactive</span>}
+                    </div>
+                    <p className="text-[10px] text-muted-foreground/60 mt-1 truncate">{area.zip_codes.slice(0, 10).join(", ")}{area.zip_codes.length > 10 ? ` +${area.zip_codes.length - 10} more` : ""}</p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button onClick={() => openEditArea(area)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
+                    <button onClick={() => setDeleteAreaId(area.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Delete State Confirm */}
       <AnimatePresence>
         {deleteId && (
           <Modal title="Delete State" onClose={() => setDeleteId(null)}>
@@ -1317,12 +1367,25 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
         )}
       </AnimatePresence>
 
+      {/* Delete Area Confirm */}
+      <AnimatePresence>
+        {deleteAreaId && (
+          <Modal title="Delete Service Area" onClose={() => setDeleteAreaId(null)}>
+            <p className="text-sm text-muted-foreground mb-4">Remove this service area?</p>
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setDeleteAreaId(null)} className="px-4 py-2 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+              <button onClick={() => removeArea(deleteAreaId)} className="px-4 py-2 text-sm bg-red-500 text-white hover:bg-red-600 transition-all">Delete</button>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
       {/* Seed Confirm */}
       <AnimatePresence>
         {modal === "seed" && (
           <Modal title="Seed All States" onClose={() => setModal(null)}>
             <p className="text-sm text-muted-foreground mb-4">
-              This will add all {51 - states.length} missing U.S. states to the list with default settings (illegal, no shipping/delivery). You can then configure each one.
+              This will add all {51 - states.length} missing U.S. states with default settings. You can then configure each one.
             </p>
             <div className="flex gap-2 justify-end">
               <button onClick={() => setModal(null)} className="px-4 py-2 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
@@ -1334,7 +1397,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
         )}
       </AnimatePresence>
 
-      {/* Add / Edit Modal */}
+      {/* Add / Edit State Modal */}
       <AnimatePresence>
         {(modal === "add" || modal === "edit") && (
           <Modal title={modal === "add" ? "Add State" : "Edit State"} onClose={() => setModal(null)}>
@@ -1379,6 +1442,17 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                   </button>
                 </Field>
               </div>
+              <div className="grid grid-cols-3 gap-4">
+                <Field label="Shipping Fee ($)">
+                  <input type="number" step="0.01" className={inputCls} value={form.shipping_fee} onChange={e => setForm(f => ({ ...f, shipping_fee: parseFloat(e.target.value) || 0 }))} />
+                </Field>
+                <Field label="Est. Days">
+                  <input type="number" className={inputCls} value={form.estimated_days} onChange={e => setForm(f => ({ ...f, estimated_days: parseInt(e.target.value) || 0 }))} />
+                </Field>
+                <Field label="Min Age">
+                  <input type="number" className={inputCls} value={form.min_age} onChange={e => setForm(f => ({ ...f, min_age: parseInt(e.target.value) || 21 }))} />
+                </Field>
+              </div>
               <Field label="Notes" hint="Optional – internal notes about this state's regulations">
                 <textarea className={inputCls + " h-20 resize-none"} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} placeholder="e.g. Recreational legal since 2018, license required..." />
               </Field>
@@ -1386,6 +1460,42 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
                 <button onClick={save} disabled={saving || !form.state_code} className={btnPrimary + " disabled:opacity-40"}>
                   {saving ? "Saving..." : modal === "add" ? "Add" : "Save"}
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
+      {/* Add / Edit Service Area Modal */}
+      <AnimatePresence>
+        {(modal === "add_area" || modal === "edit_area") && (
+          <Modal title={modal === "add_area" ? "Add Service Area" : "Edit Service Area"} onClose={() => setModal(null)}>
+            <div className="space-y-4">
+              <Field label="Area Name" hint="e.g. DMV Metro, Baltimore Area">
+                <input className={inputCls} value={areaForm.name} onChange={e => setAreaForm(f => ({ ...f, name: e.target.value }))} placeholder="DMV Metro" />
+              </Field>
+              <Field label="ZIP Codes" hint="Comma or space separated list of ZIP codes covered by this area">
+                <textarea className={inputCls + " h-32 resize-none font-mono text-xs"} value={areaForm.zip_codes_text} onChange={e => setAreaForm(f => ({ ...f, zip_codes_text: e.target.value }))} placeholder="20001, 20002, 20003, 20004..." />
+              </Field>
+              <div className="grid grid-cols-2 gap-4">
+                <Field label="Delivery Fee ($)">
+                  <input type="number" step="0.01" className={inputCls} value={areaForm.delivery_fee} onChange={e => setAreaForm(f => ({ ...f, delivery_fee: parseFloat(e.target.value) || 0 }))} />
+                </Field>
+                <Field label="Est. Minutes">
+                  <input type="number" className={inputCls} value={areaForm.estimated_time_minutes} onChange={e => setAreaForm(f => ({ ...f, estimated_time_minutes: parseInt(e.target.value) || 60 }))} />
+                </Field>
+              </div>
+              <Field label="Active">
+                <button type="button" onClick={() => setAreaForm(f => ({ ...f, is_active: !f.is_active }))}
+                  className={`w-full flex items-center justify-center py-2.5 text-sm font-medium border transition-all ${areaForm.is_active ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-white border-black/10 text-black/40"}`}>
+                  {areaForm.is_active ? "Active" : "Inactive"}
+                </button>
+              </Field>
+              <div className="flex gap-2 justify-end pt-2">
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+                <button onClick={saveArea} disabled={saving || !areaForm.name} className={btnPrimary + " disabled:opacity-40"}>
+                  {saving ? "Saving..." : modal === "add_area" ? "Add" : "Save"}
                 </button>
               </div>
             </div>
