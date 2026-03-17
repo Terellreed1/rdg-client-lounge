@@ -1261,7 +1261,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
             {[
               { label: "Total States", value: states.length, color: "text-foreground" },
               { label: "Can Ship", value: shipCount, color: "text-emerald-600" },
-              { label: "Can Deliver", value: deliverCount, color: "text-blue-600" },
+              { label: "Can Ship & Deliver", value: deliverCount, color: "text-blue-600" },
               { label: "Service Areas", value: areas.length, color: "text-foreground" },
             ].map(({ label, value, color }) => (
               <div key={label} className="border border-black/[0.06] p-4">
