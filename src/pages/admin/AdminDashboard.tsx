@@ -1134,14 +1134,25 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   const openAdd = () => {
     const existingCodes = new Set(states.map(s => s.state_code));
     const nextState = US_STATES.find(s => !existingCodes.has(s.code));
-    setForm({ state_name: nextState?.name || "", state_code: nextState?.code || "", can_ship: false, can_deliver: false, legal_status: "illegal", notes: "", active: true });
+    setForm({ state_name: nextState?.name || "", state_code: nextState?.code || "", can_ship: false, can_deliver: false, legal_status: "illegal", notes: "", active: true, shipping_fee: 9.99, estimated_days: 5, min_age: 21 });
     setModal("add");
   };
 
   const openEdit = (s: StateLaw) => {
     setEditing(s);
-    setForm({ state_name: s.state_name, state_code: s.state_code, can_ship: s.can_ship, can_deliver: s.can_deliver, legal_status: s.legal_status, notes: s.notes || "", active: s.active });
+    setForm({ state_name: s.state_name, state_code: s.state_code, can_ship: s.can_ship, can_deliver: s.can_deliver, legal_status: s.legal_status, notes: s.notes || "", active: s.active, shipping_fee: s.shipping_fee ?? 9.99, estimated_days: s.estimated_days ?? 5, min_age: s.min_age ?? 21 });
     setModal("edit");
+  };
+
+  const openAddArea = () => {
+    setAreaForm({ name: "", zip_codes_text: "", delivery_fee: 10, estimated_time_minutes: 60, is_active: true });
+    setModal("add_area");
+  };
+
+  const openEditArea = (a: ServiceAreaItem) => {
+    setEditingArea(a);
+    setAreaForm({ name: a.name, zip_codes_text: a.zip_codes.join(", "), delivery_fee: a.delivery_fee, estimated_time_minutes: a.estimated_time_minutes, is_active: a.is_active });
+    setModal("edit_area");
   };
 
   const save = async () => {
