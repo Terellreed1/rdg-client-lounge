@@ -1891,6 +1891,17 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="p-4 sm:p-6 md:p-8 max-w-4xl">
+          {/* Welcome Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+            className="mb-6"
+          >
+            <h1 className="text-2xl font-medium text-foreground">Welcome, Kevin</h1>
+            <p className="text-sm text-muted-foreground mt-1">Here's your admin dashboard.</p>
+          </motion.div>
+
           <AnimatePresence mode="wait">
             <motion.div key={section} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {section === "orders" && <OrdersSection callAdmin={callAdmin} />}
