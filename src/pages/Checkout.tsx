@@ -202,7 +202,7 @@ const Checkout = () => {
                   onClick={() => setMethod(opt.id)}
                   className={`p-6 border text-left transition-all duration-300 ${
                     method === opt.id
-                      ? "border-gold bg-gold/5"
+                      ? "border-foreground/30 bg-foreground/5"
                       : "border-border/30 hover:border-border/60"
                   }`}
                   whileTap={{ scale: 0.98 }}
