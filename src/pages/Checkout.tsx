@@ -22,8 +22,10 @@ const TIME_SLOTS = [
   "8:00 PM - 10:30 PM",
 ];
 
+const MAX_SLOT_ORDERS = 5;
+
 function getDeliveryFee(subtotal: number): number {
-  if (subtotal >= 110) return 0;
+  if (subtotal >= 115) return 0;
   if (subtotal >= 50) return 7.5;
   return 15;
 }
