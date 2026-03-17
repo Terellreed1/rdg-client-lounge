@@ -22,8 +22,10 @@ const TIME_SLOTS = [
   "8:00 PM - 10:30 PM",
 ];
 
+const MAX_SLOT_ORDERS = 5;
+
 function getDeliveryFee(subtotal: number): number {
-  if (subtotal >= 110) return 0;
+  if (subtotal >= 115) return 0;
   if (subtotal >= 50) return 7.5;
   return 15;
 }
@@ -40,6 +42,27 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [compliance, setCompliance] = useState<ComplianceCheckResult | null>(null);
   const [checkingCompliance, setCheckingCompliance] = useState(false);
+  const [slotCounts, setSlotCounts] = useState<Record<string, number>>({});
+
+  // Fetch today's order counts per time slot
+  useEffect(() => {
+    const fetchSlotCounts = async () => {
+      const today = new Date().toISOString().split("T")[0];
+      const { data } = await supabase
+        .from("orders")
+        .select("time_slot")
+        .gte("created_at", `${today}T00:00:00`)
+        .lte("created_at", `${today}T23:59:59`);
+      if (data) {
+        const counts: Record<string, number> = {};
+        data.forEach((order) => {
+          if (order.time_slot) counts[order.time_slot] = (counts[order.time_slot] || 0) + 1;
+        });
+        setSlotCounts(counts);
+      }
+    };
+    fetchSlotCounts();
+  }, []);
 
   const subtotal = useMemo(() =>
     items.reduce((sum, item) => sum + parseFloat(item.price.replace("$", "")) * item.quantity, 0),
@@ -214,7 +237,7 @@ const Checkout = () => {
           {(method === "delivery" || method === "postal") && (
             <div className="mb-12">
               <h2 className="font-serif text-xl text-foreground mb-6">
-                {method === "delivery" ? "Delivery Address" : "Shipping Address"}
+                {method === "delivery" ? "Delivery Address" : "Postal Address"}
               </h2>
               <div className="space-y-4">
                 <input type="text" placeholder="Street Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className={inputCls} />
@@ -228,7 +251,7 @@ const Checkout = () => {
                 {compliance && !checkingCompliance && (
                   <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-gold/30 bg-gold/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
                     {compliance.canServe ? (
-                      <span>Service available — {compliance.method === "both" ? "Delivery & Shipping" : compliance.method === "local" ? "Local Delivery" : "Postal Shipping"}</span>
+                      <span>Service available — {compliance.method === "both" ? "Delivery & Postal" : compliance.method === "local" ? "Local Delivery" : "Postal"}</span>
                     ) : (
                       <span>{compliance.restrictions.join(". ")}</span>
                     )}
@@ -246,12 +269,19 @@ const Checkout = () => {
                 {method === "pickup" ? "Pickup Time" : method === "delivery" ? "Delivery Time" : "Preferred Processing Time"}
               </h2>
               <RadioGroup value={timeSlot} onValueChange={setTimeSlot} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {TIME_SLOTS.map((slot) => (
-                  <label key={slot} className={`flex items-center gap-3 p-3 border cursor-pointer transition-all ${timeSlot === slot ? "border-gold bg-gold/5" : "border-border/30 hover:border-border/60"}`}>
-                    <RadioGroupItem value={slot} />
-                    <span className="text-sm font-sans text-foreground">{slot}</span>
-                  </label>
-                ))}
+                {TIME_SLOTS.map((slot) => {
+                  const count = slotCounts[slot] || 0;
+                  const isFull = count >= MAX_SLOT_ORDERS;
+                  return (
+                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-gold bg-gold/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
+                      <RadioGroupItem value={slot} disabled={isFull} />
+                      <div>
+                        <span className="text-sm font-sans text-foreground">{slot}</span>
+                        {isFull && <p className="text-[10px] text-destructive font-sans">Fully booked</p>}
+                      </div>
+                    </label>
+                  );
+                })}
               </RadioGroup>
             </div>
           )}
@@ -277,9 +307,9 @@ const Checkout = () => {
                     <span>{deliveryFee === 0 ? <span className="text-gold">FREE</span> : `$${deliveryFee.toFixed(2)}`}</span>
                   </div>
                 )}
-                {method === "delivery" && deliveryFee > 0 && subtotal < 110 && (
+                {method === "delivery" && deliveryFee > 0 && subtotal < 115 && (
                   <p className="text-[10px] text-gold/70">
-                    Add ${(110 - subtotal).toFixed(2)} more for free delivery!
+                    Add ${(115 - subtotal).toFixed(2)} more for free delivery!
                   </p>
                 )}
                 <div className="border-t border-border/30 pt-2 flex justify-between text-foreground font-serif text-lg">
