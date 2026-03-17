@@ -160,7 +160,7 @@ const Delivery = () => {
           <ScrollReveal delay={0.1}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {PICKUP_LOCATIONS.map((loc) => (
-                <div key={loc.name} className="border border-border/30 p-5 hover:border-gold/30 transition-colors">
+                <div key={loc.name} className="border border-border/30 p-5 hover:border-foreground/20 transition-colors">
                   <p className="font-serif text-base text-foreground">{loc.name}</p>
                   <p className="text-xs text-muted-foreground/60 font-sans mt-1">{loc.address}</p>
                 </div>
