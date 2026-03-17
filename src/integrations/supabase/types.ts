@@ -413,15 +413,51 @@ export type Database = {
           },
         ]
       }
+      service_areas: {
+        Row: {
+          created_at: string
+          delivery_fee: number
+          estimated_time_minutes: number
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          zip_codes: string[]
+        }
+        Insert: {
+          created_at?: string
+          delivery_fee?: number
+          estimated_time_minutes?: number
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          zip_codes?: string[]
+        }
+        Update: {
+          created_at?: string
+          delivery_fee?: number
+          estimated_time_minutes?: number
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          zip_codes?: string[]
+        }
+        Relationships: []
+      }
       state_laws: {
         Row: {
           active: boolean
           can_deliver: boolean
           can_ship: boolean
           created_at: string
+          estimated_days: number
           id: string
           legal_status: string
+          min_age: number
           notes: string | null
+          shipping_fee: number
           sort_order: number
           state_code: string
           state_name: string
@@ -432,9 +468,12 @@ export type Database = {
           can_deliver?: boolean
           can_ship?: boolean
           created_at?: string
+          estimated_days?: number
           id?: string
           legal_status?: string
+          min_age?: number
           notes?: string | null
+          shipping_fee?: number
           sort_order?: number
           state_code: string
           state_name: string
@@ -445,9 +484,12 @@ export type Database = {
           can_deliver?: boolean
           can_ship?: boolean
           created_at?: string
+          estimated_days?: number
           id?: string
           legal_status?: string
+          min_age?: number
           notes?: string | null
+          shipping_fee?: number
           sort_order?: number
           state_code?: string
           state_name?: string
