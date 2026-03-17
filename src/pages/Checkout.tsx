@@ -280,7 +280,7 @@ const Checkout = () => {
                   const count = slotCounts[slot] || 0;
                   const isFull = count >= MAX_SLOT_ORDERS;
                   return (
-                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-gold bg-gold/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
+                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-foreground/30 bg-foreground/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
                       <RadioGroupItem value={slot} disabled={isFull} />
                       <div>
                         <span className="text-sm font-sans text-foreground">{slot}</span>

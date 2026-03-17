@@ -37,7 +37,7 @@ const ConvenienceSection = () => {
           {methods.map((m, i) => (
             <motion.div
               key={m.title}
-              className="border border-border/30 p-7 hover:border-gold/30 transition-all duration-500 text-center"
+              className="border border-border/30 p-7 hover:border-foreground/20 transition-all duration-500 text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

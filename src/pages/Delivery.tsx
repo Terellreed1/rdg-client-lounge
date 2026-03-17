@@ -185,7 +185,7 @@ const Delivery = () => {
             <ScrollReveal delay={0.1}>
               <div className="flex flex-wrap justify-center gap-2">
                 {postalStates.map((s) => (
-                  <span key={s.state_code} className="border border-border/30 px-4 py-2 text-sm font-sans text-foreground hover:border-gold/30 transition-colors">
+                  <span key={s.state_code} className="border border-border/30 px-4 py-2 text-sm font-sans text-foreground hover:border-foreground/20 transition-colors">
                     {s.state_name}
                   </span>
                 ))}
