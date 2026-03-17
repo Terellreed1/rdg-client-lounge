@@ -196,7 +196,7 @@ const MenuBoard = () => {
                 </div>
 
                 {/* Page dots */}
-                <div className="flex items-center justify-center gap-2 mt-8 pt-6 border-t border-gold/10">
+                <div className="flex items-center justify-center gap-2 mt-8 pt-6 border-t border-border/20">
                   {categories.map((cat, idx) => (
                     <button
                       key={cat}
