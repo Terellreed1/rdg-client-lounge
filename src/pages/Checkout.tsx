@@ -251,7 +251,7 @@ const Checkout = () => {
                 {compliance && !checkingCompliance && (
                   <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-gold/30 bg-gold/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
                     {compliance.canServe ? (
-                      <span>Service available — {compliance.method === "both" ? "Delivery & Shipping" : compliance.method === "local" ? "Local Delivery" : "Postal Shipping"}</span>
+                      <span>Service available — {compliance.method === "both" ? "Delivery & Postal" : compliance.method === "local" ? "Local Delivery" : "Postal"}</span>
                     ) : (
                       <span>{compliance.restrictions.join(". ")}</span>
                     )}
