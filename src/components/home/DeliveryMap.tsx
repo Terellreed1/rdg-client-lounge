@@ -474,7 +474,7 @@ const DeliveryMap = () => {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#8b5cf6" }} />
                   <span className="text-[10px] font-sans uppercase editorial-spacing text-muted-foreground">
-                    Shipping
+                    Postal
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -503,7 +503,7 @@ const DeliveryMap = () => {
                         color: activeZone.type === "delivery" ? "#22c55e" : "#a78bfa",
                       }}
                     >
-                      {activeZone.type === "delivery" ? "● Same-Day Delivery" : "○ Priority Shipping"}
+                      {activeZone.type === "delivery" ? "● Same-Day Delivery" : "○ Postal Shipping"}
                     </span>
 
                     <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
@@ -580,7 +580,7 @@ const DeliveryMap = () => {
                           className="text-[9px] font-sans uppercase editorial-spacing"
                           style={{ color: z.type === "delivery" ? "#22c55e" : "#a78bfa", opacity: 0.7 }}
                         >
-                          {z.type}
+                          {z.type === "delivery" ? "delivery" : "postal"}
                         </span>
                       </div>
                     </button>

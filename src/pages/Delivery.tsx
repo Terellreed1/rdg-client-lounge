@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
+import DeliveryMap from "@/components/home/DeliveryMap";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,6 +73,9 @@ const Delivery = () => {
           </ScrollReveal>
         </div>
       </div>
+
+      {/* Interactive Globe */}
+      <DeliveryMap />
 
       {/* Three Methods */}
       <section className="py-20 md:py-28 px-6">
