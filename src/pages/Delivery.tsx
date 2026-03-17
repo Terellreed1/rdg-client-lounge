@@ -37,7 +37,9 @@ const Delivery = () => {
   const [focused, setFocused] = useState<string | null>(null);
   const [states, setStates] = useState<StateInfo[]>([]);
   const [deliveryAreas, setDeliveryAreas] = useState<AreaInfo[]>([]);
-  const [stateFilter, setStateFilter] = useState<"all" | "legal" | "medical">("all");
+  const [stateSearch, setStateSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<StateInfo | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,13 +68,18 @@ const Delivery = () => {
     }`;
 
   const shippableStates = states.filter(s => s.can_ship);
-  const deliverableStates = states.filter(s => s.can_deliver);
-  const legalStates = states.filter(s => s.legal_status === "legal");
-  const medicalStates = states.filter(s => s.legal_status === "medical");
 
-  const filteredStates = stateFilter === "all"
-    ? states.filter(s => s.legal_status !== "illegal")
-    : states.filter(s => s.legal_status === stateFilter);
+  const handleStateSearch = () => {
+    const query = stateSearch.trim().toLowerCase();
+    if (!query) { setHasSearched(false); setSearchResult(null); return; }
+    const match = states.find(s =>
+      s.state_name.toLowerCase() === query ||
+      s.state_code.toLowerCase() === query ||
+      s.state_name.toLowerCase().startsWith(query)
+    );
+    setSearchResult(match || null);
+    setHasSearched(true);
+  };
 
   return (
     <PageLayout>
@@ -226,64 +233,93 @@ const Delivery = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              {/* Filter tabs */}
-              <div className="flex justify-center gap-3 mb-10">
-                {[
-                  { key: "all" as const, label: `All Serviceable (${legalStates.length + medicalStates.length})` },
-                  { key: "legal" as const, label: `Fully Legal (${legalStates.length})` },
-                  { key: "medical" as const, label: `Medical (${medicalStates.length})` },
-                ].map(tab => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setStateFilter(tab.key)}
-                    className={`text-xs font-sans uppercase editorial-spacing px-5 py-2.5 border transition-all duration-300 ${
-                      stateFilter === tab.key
-                        ? "border-foreground text-foreground bg-foreground/5"
-                        : "border-border/30 text-muted-foreground/60 hover:border-foreground/20"
-                    }`}
+              {/* Search input */}
+              <div className="max-w-md mx-auto">
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    value={stateSearch}
+                    onChange={(e) => setStateSearch(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleStateSearch()}
+                    placeholder="Enter state name or abbreviation"
+                    className="flex-1 bg-transparent border-b border-border/50 py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 focus:border-foreground"
+                  />
+                  <motion.button
+                    onClick={handleStateSearch}
+                    className="text-xs font-sans uppercase editorial-spacing border border-foreground text-foreground px-8 py-3 hover:bg-foreground hover:text-background transition-all duration-500"
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
                   >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
+                    Check
+                  </motion.button>
+                </div>
 
-              {/* State grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {filteredStates.map((s) => (
+                {/* Result */}
+                {hasSearched && (
                   <motion.div
-                    key={s.state_code}
-                    layout
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="border border-border/30 p-4 hover:border-foreground/20 transition-colors"
+                    className="mt-8"
                   >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="font-serif text-base text-foreground">{s.state_name}</p>
-                        <p className="text-xs text-muted-foreground/50 font-sans mt-0.5">
-                          {s.legal_status === "legal" ? "Fully Legal" : "Medical Only"}
+                    {searchResult ? (
+                      <div className="border border-border/30 p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <p className="font-serif text-xl text-foreground">{searchResult.state_name}</p>
+                            <p className="text-xs text-muted-foreground/50 font-sans mt-1">
+                              {searchResult.legal_status === "legal" ? "Fully Legal" : searchResult.legal_status === "medical" ? "Medical Only" : "Not Legal"}
+                            </p>
+                          </div>
+                          <span className="text-sm font-sans text-muted-foreground/40">{searchResult.state_code}</span>
+                        </div>
+
+                        {searchResult.legal_status === "illegal" ? (
+                          <p className="text-sm text-muted-foreground/60 font-sans">
+                            Unfortunately, we cannot ship to {searchResult.state_name} at this time due to state regulations.
+                          </p>
+                        ) : (
+                          <div className="space-y-3">
+                            {searchResult.can_ship && (
+                              <div className="flex justify-between text-sm font-sans">
+                                <span className="text-muted-foreground/70">Postal Shipping</span>
+                                <span className="text-foreground">${searchResult.shipping_fee} · ~{searchResult.estimated_days} days</span>
+                              </div>
+                            )}
+                            {searchResult.can_deliver && (
+                              <div className="flex justify-between text-sm font-sans">
+                                <span className="text-muted-foreground/70">Local Delivery</span>
+                                <span className="text-foreground">Available</span>
+                              </div>
+                            )}
+                            {!searchResult.can_ship && !searchResult.can_deliver && (
+                              <p className="text-sm text-muted-foreground/60 font-sans">
+                                This state is legal but we don't currently service it. Check back soon.
+                              </p>
+                            )}
+                            <div className="flex justify-between text-sm font-sans">
+                              <span className="text-muted-foreground/70">Minimum Age</span>
+                              <span className="text-foreground">{searchResult.min_age}+</span>
+                            </div>
+                            {searchResult.notes && (
+                              <p className="text-xs text-muted-foreground/40 font-sans italic pt-2 border-t border-border/20">{searchResult.notes}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="border border-border/30 p-6 text-center">
+                        <p className="text-sm text-muted-foreground/60 font-sans">
+                          No state found matching "{stateSearch}". Try a full state name or two-letter abbreviation.
                         </p>
                       </div>
-                      <span className="text-xs font-sans text-muted-foreground/40">{s.state_code}</span>
-                    </div>
-                    <div className="mt-3 flex gap-4 text-xs font-sans text-muted-foreground/60">
-                      {s.can_ship && (
-                        <span>Ship: ${s.shipping_fee} · ~{s.estimated_days} days</span>
-                      )}
-                      {s.can_deliver && <span>Local Delivery</span>}
-                      {!s.can_ship && !s.can_deliver && <span className="text-muted-foreground/40">Not currently serviceable</span>}
-                    </div>
-                    {s.notes && (
-                      <p className="text-xs text-muted-foreground/40 font-sans mt-2 italic">{s.notes}</p>
                     )}
                   </motion.div>
-                ))}
-              </div>
+                )}
 
-              {filteredStates.length === 0 && (
-                <p className="text-center text-sm text-muted-foreground/40 font-sans py-8">No states match this filter.</p>
-              )}
+                <p className="text-xs text-muted-foreground/40 font-sans text-center mt-6">
+                  We currently ship to {shippableStates.length} states across the U.S.
+                </p>
+              </div>
             </ScrollReveal>
           </div>
         </section>
