@@ -222,7 +222,7 @@ const Checkout = () => {
               <h2 className="font-serif text-xl text-foreground mb-6">Select Pickup Location</h2>
               <RadioGroup value={pickupLocation} onValueChange={setPickupLocation} className="space-y-3">
                 {PICKUP_LOCATIONS.map((loc) => (
-                  <label key={loc.id} className={`flex items-start gap-4 p-4 border cursor-pointer transition-all ${pickupLocation === loc.id ? "border-gold bg-gold/5" : "border-border/30 hover:border-border/60"}`}>
+                  <label key={loc.id} className={`flex items-start gap-4 p-4 border cursor-pointer transition-all ${pickupLocation === loc.id ? "border-foreground/30 bg-foreground/5" : "border-border/30 hover:border-border/60"}`}>
                     <RadioGroupItem value={loc.id} className="mt-1" />
                     <div>
                       <p className="font-serif text-sm text-foreground">{loc.label}</p>
