@@ -1086,9 +1086,9 @@ const US_STATES = [
   { code: "WI", name: "Wisconsin" }, { code: "WY", name: "Wyoming" }, { code: "DC", name: "Washington D.C." },
 ];
 
-const LEGAL_STATUS_OPTIONS = ["legal", "decriminalized", "illegal"];
-const LEGAL_STATUS_LABELS: Record<string, string> = { legal: "Fully Legal", decriminalized: "Decriminalized", illegal: "Illegal" };
-const LEGAL_STATUS_COLORS: Record<string, string> = { legal: "bg-emerald-100 text-emerald-700", decriminalized: "bg-blue-100 text-blue-700", illegal: "bg-red-100 text-red-700" };
+const LEGAL_STATUS_OPTIONS = ["legal", "medical", "illegal"];
+const LEGAL_STATUS_LABELS: Record<string, string> = { legal: "Legal", medical: "Medical", illegal: "Illegal" };
+const LEGAL_STATUS_COLORS: Record<string, string> = { legal: "bg-emerald-100 text-emerald-700", medical: "bg-amber-100 text-amber-700", illegal: "bg-red-100 text-red-700" };
 
 interface StateLaw {
   id: string; state_name: string; state_code: string; can_ship: boolean; can_deliver: boolean;
@@ -1114,7 +1114,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteAreaId, setDeleteAreaId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | "ship" | "deliver">("all");
+  const [filter, setFilter] = useState<"all" | "ship" | "deliver" | "legal" | "medical" | "illegal">("all");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -1218,6 +1218,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   const filtered = states.filter(s => {
     if (filter === "ship") return s.can_ship;
     if (filter === "deliver") return s.can_deliver;
+    if (filter === "legal" || filter === "medical" || filter === "illegal") return s.legal_status === filter;
     return true;
   });
 
@@ -1271,8 +1272,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
           </div>
 
           {/* Filter tabs */}
-          <div className="flex gap-2 mb-4">
-            {([["all", "All States"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
+          <div className="flex gap-2 mb-4 flex-wrap">
+            {([["all", "All"], ["legal", "Legal"], ["medical", "Medical"], ["illegal", "Illegal"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
               <button key={key} onClick={() => setFilter(key)}
                 className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
                 {label}
