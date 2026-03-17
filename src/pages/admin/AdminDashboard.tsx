@@ -1261,7 +1261,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
             {[
               { label: "Total States", value: states.length, color: "text-foreground" },
               { label: "Can Ship", value: shipCount, color: "text-emerald-600" },
-              { label: "Can Deliver", value: deliverCount, color: "text-blue-600" },
+              { label: "Can Ship & Deliver", value: deliverCount, color: "text-blue-600" },
               { label: "Service Areas", value: areas.length, color: "text-foreground" },
             ].map(({ label, value, color }) => (
               <div key={label} className="border border-black/[0.06] p-4">
@@ -1273,7 +1273,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
 
           {/* Filter tabs */}
           <div className="flex gap-2 mb-4 flex-wrap">
-            {([["all", "All"], ["legal", "Legal"], ["medical", "Medical"], ["illegal", "Illegal"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
+            {([["all", "All"], ["legal", "Legal"], ["medical", "Medical"], ["illegal", "Illegal"], ["ship", "Can Ship"], ["deliver", "Can Ship & Deliver"]] as const).map(([key, label]) => (
               <button key={key} onClick={() => setFilter(key)}
                 className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
                 {label}
@@ -1307,8 +1307,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                     </button>
                     <button onClick={() => toggleField(state, "can_deliver")}
                       className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
-                      title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
-                      Deliver
+                      title={state.can_deliver ? "Can ship & deliver – click to disable" : "Cannot ship & deliver – click to enable"}>
+                      Ship & Deliver
                     </button>
                     <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
                     <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
@@ -1433,7 +1433,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                     {form.can_ship ? "Yes" : "No"}
                   </button>
                 </Field>
-                <Field label="Can Deliver">
+                <Field label="Can Ship & Deliver">
                   <button type="button" onClick={() => setForm(f => ({ ...f, can_deliver: !f.can_deliver }))}
                     className={`w-full flex items-center justify-center py-2.5 text-sm font-medium border transition-all ${form.can_deliver ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-white border-black/10 text-black/40"}`}>
                     {form.can_deliver ? "Yes" : "No"}
