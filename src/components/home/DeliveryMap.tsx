@@ -474,7 +474,7 @@ const DeliveryMap = () => {
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: "#8b5cf6" }} />
                   <span className="text-[10px] font-sans uppercase editorial-spacing text-muted-foreground">
-                    Shipping
+                    Postal
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
