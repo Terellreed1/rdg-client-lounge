@@ -1,12 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Truck, MapPin, Mail, Clock, Loader2, ArrowLeft } from "lucide-react";
+import { Clock, Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import PageLayout from "@/components/PageLayout";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { checkAddress, type ComplianceCheckResult } from "@/lib/compliance";
 
 const PICKUP_LOCATIONS = [
   { id: "dc", label: "Washington, DC", address: "5300 Connecticut Ave NW, Washington, DC" },
@@ -14,8 +15,6 @@ const PICKUP_LOCATIONS = [
   { id: "va", label: "Springfield, VA", address: "6500 Springfield Mall, Springfield, VA 22150" },
   { id: "baltimore", label: "Baltimore, MD", address: "3559 Boston St, Baltimore, MD 21224" },
 ];
-
-const DMV_STATES = ["DC", "MD", "VA"];
 
 const TIME_SLOTS = [
   "8:00 AM - 11:00 AM",
@@ -39,27 +38,47 @@ const Checkout = () => {
   const [timeSlot, setTimeSlot] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", address: "", city: "", state: "", zip: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [compliance, setCompliance] = useState<ComplianceCheckResult | null>(null);
+  const [checkingCompliance, setCheckingCompliance] = useState(false);
 
   const subtotal = useMemo(() =>
     items.reduce((sum, item) => sum + parseFloat(item.price.replace("$", "")) * item.quantity, 0),
     [items]
   );
 
-  const deliveryFee = method === "delivery" ? getDeliveryFee(subtotal) : method === "postal" ? 9.99 : 0;
+  // Run compliance check when state/zip changes
+  useEffect(() => {
+    const state = form.state.trim();
+    if (!state || state.length < 2) { setCompliance(null); return; }
+    const timer = setTimeout(async () => {
+      setCheckingCompliance(true);
+      try {
+        const result = await checkAddress(state, form.zip.trim() || undefined);
+        setCompliance(result);
+      } catch { setCompliance(null); }
+      setCheckingCompliance(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [form.state, form.zip]);
+
+  const postalFee = compliance?.shipping?.fee ?? 9.99;
+  const deliveryFee = method === "delivery" ? getDeliveryFee(subtotal) : method === "postal" ? postalFee : 0;
   const total = subtotal + deliveryFee;
 
-  // Check if state is in DMV area
-  const stateUpper = form.state.toUpperCase().trim();
-  const isDMV = DMV_STATES.includes(stateUpper) || stateUpper === "MARYLAND" || stateUpper === "VIRGINIA" || stateUpper === "DISTRICT OF COLUMBIA";
-
-  // Validate method based on location
+  // Validate method based on compliance
   const methodError = useMemo(() => {
-    if (!method) return "";
-    if ((method === "delivery" || method === "pickup") && form.state && !isDMV) {
-      return "Delivery and pickup are only available in the DMV area (DC, MD, VA). Please select Postal.";
+    if (!method || !compliance) return "";
+    if (method === "delivery" && !compliance.local?.available && !compliance.stateCompliance?.can_deliver) {
+      return "Local delivery is not available in your area. Please select Postal.";
+    }
+    if (method === "postal" && !compliance.shipping?.available) {
+      return "Shipping is not available in your state.";
+    }
+    if (!compliance.canServe) {
+      return compliance.restrictions.join(". ");
     }
     return "";
-  }, [method, form.state, isDMV]);
+  }, [method, compliance]);
 
   const canSubmit = method && !methodError && form.name && form.email && form.phone && timeSlot &&
     (method === "pickup" ? pickupLocation : (form.address && form.city && form.state && form.zip));
