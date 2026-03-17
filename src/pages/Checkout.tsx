@@ -223,6 +223,17 @@ const Checkout = () => {
                   <input type="text" placeholder="State" value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} className={inputCls} />
                   <input type="text" placeholder="ZIP Code" value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })} className={inputCls} />
                 </div>
+                {/* Compliance indicator */}
+                {checkingCompliance && <p className="text-xs text-muted-foreground/60 font-sans mt-2">Checking availability...</p>}
+                {compliance && !checkingCompliance && (
+                  <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-gold/30 bg-gold/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
+                    {compliance.canServe ? (
+                      <span>Service available — {compliance.method === "both" ? "Delivery & Shipping" : compliance.method === "local" ? "Local Delivery" : "Postal Shipping"}</span>
+                    ) : (
+                      <span>{compliance.restrictions.join(". ")}</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}
