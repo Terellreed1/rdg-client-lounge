@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
 import BrandCarousel from "@/components/home/BrandCarousel";
 import ProductsPreview from "@/components/home/ProductsPreview";
+import ConvenienceSection from "@/components/home/ConvenienceSection";
 import ReferralDialog from "@/components/ReferralDialog";
 
 const Index = () => {
@@ -28,6 +29,7 @@ const Index = () => {
         <HeroSection />
         <BrandCarousel />
         <ProductsPreview />
+        <ConvenienceSection />
       </main>
       <Footer />
       <ReferralDialog open={popupOpen} onClose={handleClosePopup} initialTab="join" />
