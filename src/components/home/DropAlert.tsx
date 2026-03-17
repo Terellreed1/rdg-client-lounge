@@ -48,8 +48,8 @@ const DropAlert = () => {
       <div className="max-w-4xl mx-auto text-center">
         <ScrollReveal>
           <motion.div
-            className="inline-block mb-6 px-4 py-1.5 border border-gold/30"
-            animate={{ boxShadow: ["0 0 20px rgba(180,155,100,0)", "0 0 20px rgba(180,155,100,0.15)", "0 0 20px rgba(180,155,100,0)"] }}
+            className="inline-block mb-6 px-4 py-1.5 border border-foreground/20"
+            animate={{ boxShadow: ["0 0 20px rgba(255,255,255,0)", "0 0 20px rgba(255,255,255,0.06)", "0 0 20px rgba(255,255,255,0)"] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <span className="text-[10px] font-sans uppercase editorial-spacing text-gold">Incoming Drop</span>

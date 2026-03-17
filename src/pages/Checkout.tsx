@@ -30,7 +30,7 @@ function getDeliveryFee(subtotal: number): number {
   return 15;
 }
 
-const inputCls = "w-full bg-transparent border-b border-border/50 text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none focus:border-gold transition-colors";
+const inputCls = "w-full bg-transparent border-b border-border/50 text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none focus:border-foreground transition-colors";
 
 const Checkout = () => {
   const { items, totalItems } = useCart();
@@ -202,7 +202,7 @@ const Checkout = () => {
                   onClick={() => setMethod(opt.id)}
                   className={`p-6 border text-left transition-all duration-300 ${
                     method === opt.id
-                      ? "border-gold bg-gold/5"
+                      ? "border-foreground/30 bg-foreground/5"
                       : "border-border/30 hover:border-border/60"
                   }`}
                   whileTap={{ scale: 0.98 }}
@@ -222,7 +222,7 @@ const Checkout = () => {
               <h2 className="font-serif text-xl text-foreground mb-6">Select Pickup Location</h2>
               <RadioGroup value={pickupLocation} onValueChange={setPickupLocation} className="space-y-3">
                 {PICKUP_LOCATIONS.map((loc) => (
-                  <label key={loc.id} className={`flex items-start gap-4 p-4 border cursor-pointer transition-all ${pickupLocation === loc.id ? "border-gold bg-gold/5" : "border-border/30 hover:border-border/60"}`}>
+                  <label key={loc.id} className={`flex items-start gap-4 p-4 border cursor-pointer transition-all ${pickupLocation === loc.id ? "border-foreground/30 bg-foreground/5" : "border-border/30 hover:border-border/60"}`}>
                     <RadioGroupItem value={loc.id} className="mt-1" />
                     <div>
                       <p className="font-serif text-sm text-foreground">{loc.label}</p>
@@ -249,7 +249,7 @@ const Checkout = () => {
                 {/* Compliance indicator */}
                 {checkingCompliance && <p className="text-xs text-muted-foreground/60 font-sans mt-2">Checking availability...</p>}
                 {compliance && !checkingCompliance && (
-                  <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-gold/30 bg-gold/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
+                  <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-foreground/20 bg-foreground/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
                     {compliance.canServe ? (
                       <span>Service available — {compliance.method === "both" ? "Delivery & Postal" : compliance.method === "local" ? "Local Delivery" : "Postal"}</span>
                     ) : (
@@ -263,7 +263,7 @@ const Checkout = () => {
 
           {/* Same-day notice */}
           {method && method !== "pickup" && (
-            <div className="mb-8 p-4 border border-gold/30 bg-gold/5 text-xs font-sans text-foreground">
+            <div className="mb-8 p-4 border border-foreground/20 bg-foreground/5 text-xs font-sans text-foreground">
               Orders placed before <span className="text-gold font-medium">2:00 PM</span> are sent out the same day.
             </div>
           )}
@@ -280,7 +280,7 @@ const Checkout = () => {
                   const count = slotCounts[slot] || 0;
                   const isFull = count >= MAX_SLOT_ORDERS;
                   return (
-                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-gold bg-gold/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
+                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-foreground/30 bg-foreground/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
                       <RadioGroupItem value={slot} disabled={isFull} />
                       <div>
                         <span className="text-sm font-sans text-foreground">{slot}</span>

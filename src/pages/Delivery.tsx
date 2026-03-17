@@ -55,7 +55,7 @@ const Delivery = () => {
 
   const inputClasses = (field: string) =>
     `w-full bg-transparent border-b py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 ${
-      focused === field ? "border-gold" : "border-border/50"
+      focused === field ? "border-foreground" : "border-border/50"
     }`;
 
   return (
@@ -104,7 +104,7 @@ const Delivery = () => {
               },
             ].map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 0.1}>
-                <div className="border border-border/30 p-8 hover:border-gold/30 transition-all duration-500">
+                <div className="border border-border/30 p-8 hover:border-foreground/20 transition-all duration-500">
                   <p className="font-serif text-xl text-foreground mb-3">{item.title}</p>
                   <p className="text-sm text-muted-foreground/70 font-sans leading-relaxed mb-4">{item.desc}</p>
                   <p className="text-xs text-gold font-sans uppercase editorial-spacing">{item.detail}</p>
@@ -114,7 +114,7 @@ const Delivery = () => {
           </div>
 
           <ScrollReveal delay={0.3}>
-            <div className="mt-12 text-center border border-gold/30 bg-gold/5 p-6">
+            <div className="mt-12 text-center border border-foreground/20 bg-foreground/5 p-6">
               <p className="text-sm font-sans text-foreground">
                 Orders placed before <span className="text-gold font-medium">2:00 PM</span> are sent out the same day.
               </p>
@@ -160,7 +160,7 @@ const Delivery = () => {
           <ScrollReveal delay={0.1}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {PICKUP_LOCATIONS.map((loc) => (
-                <div key={loc.name} className="border border-border/30 p-5 hover:border-gold/30 transition-colors">
+                <div key={loc.name} className="border border-border/30 p-5 hover:border-foreground/20 transition-colors">
                   <p className="font-serif text-base text-foreground">{loc.name}</p>
                   <p className="text-xs text-muted-foreground/60 font-sans mt-1">{loc.address}</p>
                 </div>
@@ -185,7 +185,7 @@ const Delivery = () => {
             <ScrollReveal delay={0.1}>
               <div className="flex flex-wrap justify-center gap-2">
                 {postalStates.map((s) => (
-                  <span key={s.state_code} className="border border-border/30 px-4 py-2 text-sm font-sans text-foreground hover:border-gold/30 transition-colors">
+                  <span key={s.state_code} className="border border-border/30 px-4 py-2 text-sm font-sans text-foreground hover:border-foreground/20 transition-colors">
                     {s.state_name}
                   </span>
                 ))}

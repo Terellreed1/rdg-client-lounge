@@ -116,14 +116,14 @@ const MenuBoard = () => {
           {/* Menu "book" */}
           <div className="relative" style={{ perspective: "1200px" }}>
             {/* Outer menu card */}
-            <div className="relative border border-gold/30 p-1 bg-background shadow-[0_8px_60px_-12px_hsl(var(--gold)/0.08)]">
+            <div className="relative border border-border/30 p-1 bg-background">
               {/* Inner border */}
-              <div className="border border-gold/20 px-3 py-6 sm:px-6 sm:py-10 md:px-14 md:py-14 min-h-[380px] sm:min-h-[500px] flex flex-col">
+              <div className="border border-border/20 px-3 py-6 sm:px-6 sm:py-10 md:px-14 md:py-14 min-h-[380px] sm:min-h-[500px] flex flex-col">
                 {/* Corner flourishes */}
-                <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-gold/40" />
-                <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-gold/40" />
-                <div className="absolute bottom-3 left-3 w-6 h-6 border-b border-l border-gold/40" />
-                <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-gold/40" />
+                <div className="absolute top-3 left-3 w-6 h-6 border-t border-l border-foreground/20" />
+                <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-foreground/20" />
+                <div className="absolute bottom-3 left-3 w-6 h-6 border-b border-l border-foreground/20" />
+                <div className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-foreground/20" />
 
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -196,7 +196,7 @@ const MenuBoard = () => {
                 </div>
 
                 {/* Page dots */}
-                <div className="flex items-center justify-center gap-2 mt-8 pt-6 border-t border-gold/10">
+                <div className="flex items-center justify-center gap-2 mt-8 pt-6 border-t border-border/20">
                   {categories.map((cat, idx) => (
                     <button
                       key={cat}
