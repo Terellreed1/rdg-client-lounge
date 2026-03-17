@@ -104,7 +104,7 @@ const Delivery = () => {
               },
             ].map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 0.1}>
-                <div className="border border-border/30 p-8 hover:border-gold/30 transition-all duration-500">
+                <div className="border border-border/30 p-8 hover:border-foreground/20 transition-all duration-500">
                   <p className="font-serif text-xl text-foreground mb-3">{item.title}</p>
                   <p className="text-sm text-muted-foreground/70 font-sans leading-relaxed mb-4">{item.desc}</p>
                   <p className="text-xs text-gold font-sans uppercase editorial-spacing">{item.detail}</p>
