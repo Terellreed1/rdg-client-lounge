@@ -1086,9 +1086,9 @@ const US_STATES = [
   { code: "WI", name: "Wisconsin" }, { code: "WY", name: "Wyoming" }, { code: "DC", name: "Washington D.C." },
 ];
 
-const LEGAL_STATUS_OPTIONS = ["legal", "decriminalized", "illegal"];
-const LEGAL_STATUS_LABELS: Record<string, string> = { legal: "Fully Legal", decriminalized: "Decriminalized", illegal: "Illegal" };
-const LEGAL_STATUS_COLORS: Record<string, string> = { legal: "bg-emerald-100 text-emerald-700", decriminalized: "bg-blue-100 text-blue-700", illegal: "bg-red-100 text-red-700" };
+const LEGAL_STATUS_OPTIONS = ["legal", "medical", "illegal"];
+const LEGAL_STATUS_LABELS: Record<string, string> = { legal: "Legal", medical: "Medical", illegal: "Illegal" };
+const LEGAL_STATUS_COLORS: Record<string, string> = { legal: "bg-emerald-100 text-emerald-700", medical: "bg-amber-100 text-amber-700", illegal: "bg-red-100 text-red-700" };
 
 interface StateLaw {
   id: string; state_name: string; state_code: string; can_ship: boolean; can_deliver: boolean;
