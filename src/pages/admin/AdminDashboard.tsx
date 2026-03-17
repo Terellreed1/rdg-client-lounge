@@ -1272,8 +1272,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
           </div>
 
           {/* Filter tabs */}
-          <div className="flex gap-2 mb-4">
-            {([["all", "All States"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
+          <div className="flex gap-2 mb-4 flex-wrap">
+            {([["all", "All"], ["legal", "Legal"], ["medical", "Medical"], ["illegal", "Illegal"], ["ship", "Can Ship"], ["deliver", "Can Deliver"]] as const).map(([key, label]) => (
               <button key={key} onClick={() => setFilter(key)}
                 className={`px-3 py-1.5 text-xs font-medium transition-all ${filter === key ? "bg-black text-white" : "bg-black/[0.04] text-muted-foreground hover:bg-black/[0.08]"}`}>
                 {label}
