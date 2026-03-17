@@ -307,9 +307,9 @@ const Checkout = () => {
                     <span>{deliveryFee === 0 ? <span className="text-gold">FREE</span> : `$${deliveryFee.toFixed(2)}`}</span>
                   </div>
                 )}
-                {method === "delivery" && deliveryFee > 0 && subtotal < 110 && (
+                {method === "delivery" && deliveryFee > 0 && subtotal < 115 && (
                   <p className="text-[10px] text-gold/70">
-                    Add ${(110 - subtotal).toFixed(2)} more for free delivery!
+                    Add ${(115 - subtotal).toFixed(2)} more for free delivery!
                   </p>
                 )}
                 <div className="border-t border-border/30 pt-2 flex justify-between text-foreground font-serif text-lg">
