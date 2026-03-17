@@ -268,6 +268,36 @@ Deno.serve(async (req) => {
     }
   }
 
+  // ── SERVICE AREAS ──
+  if (resource === "service_areas") {
+    if (action === "GET" || req.method === "GET") {
+      const { data, error } = await supabase.from("service_areas").select("*").order("name");
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "create") {
+      const { data, error } = await supabase.from("service_areas").insert(body).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        status: error ? 400 : 201,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "update") {
+      const { id, ...rest } = body;
+      const { data, error } = await supabase.from("service_areas").update(rest).eq("id", id as string).select().single();
+      return new Response(JSON.stringify(error ? { error } : data), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (action === "delete") {
+      const { error } = await supabase.from("service_areas").delete().eq("id", body.id as string);
+      return new Response(JSON.stringify(error ? { error } : { ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }
+
   // ── ORDERS ──
   if (resource === "orders") {
     if (action === "GET" || req.method === "GET") {
