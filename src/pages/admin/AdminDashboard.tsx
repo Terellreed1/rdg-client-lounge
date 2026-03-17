@@ -1767,6 +1767,59 @@ const AnalyticsSection = () => {
   );
 };
 
+// ─── Dev Controls Section ─────────────────────────────────────────
+const DEV_LINKS = [
+  {
+    name: "Stripe",
+    url: "https://dashboard.stripe.com",
+    description: "Your payment processor. Go here to manage payments, refunds, subscriptions, and customer data.",
+    questions: ["Need to issue a refund?", "Looking for a specific transaction?", "Want to check your revenue or payout schedule?"],
+  },
+  {
+    name: "GitHub",
+    url: "https://github.com",
+    description: "Your code repository. All site code is stored and version-controlled here.",
+    questions: ["Need to review recent code changes?", "Want to roll back to a previous version?", "Looking to set up a custom deployment?"],
+  },
+  {
+    name: "Supabase",
+    url: "https://supabase.com/dashboard",
+    description: "Your database and backend. Manages all stored data including products, orders, users, and authentication.",
+    questions: ["Looking for the database?", "Need to run a direct query on your data?", "Want to manage storage buckets or edge functions?"],
+  },
+  {
+    name: "Vercel",
+    url: "https://vercel.com/dashboard",
+    description: "Your hosting and deployment platform. Controls how the site is built, deployed, and served to visitors.",
+    questions: ["Need to check deployment status?", "Want to add a custom domain?", "Looking for build logs or error reports?"],
+  },
+];
+
+const DevControlsSection = () => (
+  <div>
+    <SectionHeader title="Dev Controls" subtitle="Quick access to your development tools and services" actions={<></>} />
+    <div className="space-y-4">
+      {DEV_LINKS.map((link) => (
+        <div key={link.name} className="border border-black/[0.06] bg-white p-5">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-foreground font-semibold text-sm">{link.name}</h3>
+            <a href={link.url} target="_blank" rel="noopener noreferrer"
+              className="text-xs border border-foreground text-foreground px-4 py-2 font-medium hover:bg-foreground hover:text-background transition-all">
+              Open {link.name} →
+            </a>
+          </div>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-3">{link.description}</p>
+          <div className="flex flex-wrap gap-2">
+            {link.questions.map((q) => (
+              <span key={q} className="text-[11px] text-black/40 bg-black/[0.03] px-2.5 py-1 border border-black/[0.04]">{q}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 // ─── Main Dashboard ───────────────────────────────────────────────
 const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
   const { callAdmin } = useAdmin();
