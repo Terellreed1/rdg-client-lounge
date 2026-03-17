@@ -114,7 +114,7 @@ const Delivery = () => {
           </div>
 
           <ScrollReveal delay={0.3}>
-            <div className="mt-12 text-center border border-gold/30 bg-gold/5 p-6">
+            <div className="mt-12 text-center border border-foreground/20 bg-foreground/5 p-6">
               <p className="text-sm font-sans text-foreground">
                 Orders placed before <span className="text-gold font-medium">2:00 PM</span> are sent out the same day.
               </p>
