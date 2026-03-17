@@ -1532,6 +1532,8 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Order | null>(null);
   const [filter, setFilter] = useState<"all" | "delivery" | "pickup" | "postal">("all");
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -1546,6 +1548,17 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
   const updateStatus = async (id: string, status: string) => {
     await callAdmin("orders&action=update", "POST", { id, status });
     load();
+  };
+
+  const removeOrder = async (id: string) => {
+    setDeleting(true);
+    try {
+      await callAdmin("orders", "DELETE", { id });
+      setDeleteId(null);
+      setSelected(null);
+      load();
+    } catch { /* ignore */ }
+    setDeleting(false);
   };
 
   return (
@@ -1676,8 +1689,33 @@ const OrdersSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST"
                     Mark Fulfilled
                   </button>
                 )}
+                <button onClick={() => setDeleteId(selected.id)}
+                  className="px-4 py-2.5 text-sm border border-red-200 text-red-600 hover:bg-red-50 transition-all text-center">
+                  Delete
+                </button>
                 <button onClick={() => setSelected(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all flex-1 text-center">
                   Close
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
+      {/* Delete Order Confirm */}
+      <AnimatePresence>
+        {deleteId && (
+          <Modal title="Delete Order" onClose={() => setDeleteId(null)}>
+            <div className="space-y-4">
+              <div className="border border-red-200 bg-red-50 p-4">
+                <p className="text-sm font-medium text-red-800 mb-1">This action cannot be undone</p>
+                <p className="text-xs text-red-600">This order and all its details will be permanently removed from your records. You will need to check Stripe directly to recover any payment information.</p>
+              </div>
+              <div className="flex gap-2 justify-end">
+                <button onClick={() => setDeleteId(null)} className="px-4 py-2.5 text-sm border border-black/10 hover:bg-black/5 transition-all">Cancel</button>
+                <button onClick={() => removeOrder(deleteId)} disabled={deleting}
+                  className="px-4 py-2.5 text-sm bg-red-500 text-white hover:bg-red-600 transition-all disabled:opacity-50">
+                  {deleting ? "Deleting..." : "Delete Permanently"}
                 </button>
               </div>
             </div>
