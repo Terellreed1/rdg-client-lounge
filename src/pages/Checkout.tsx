@@ -170,9 +170,9 @@ const Checkout = () => {
             <h2 className="font-serif text-xl text-foreground mb-6">Delivery Method</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { id: "delivery" as const, label: "Delivery", desc: "We drive to you", sub: "DMV & Baltimore only" },
-                { id: "pickup" as const, label: "Pickup", desc: "Pick up from a location", sub: "DMV & Baltimore only" },
-                { id: "postal" as const, label: "Postal", desc: "Mailed to you", sub: "Available everywhere" },
+                { id: "delivery" as const, label: "Delivery", desc: "We drive to you", sub: compliance?.local?.serviceArea ? `Available in ${compliance.local.serviceArea}` : "DMV & Baltimore area" },
+                { id: "pickup" as const, label: "Pickup", desc: "Pick up from a location", sub: "DMV & Baltimore area" },
+                { id: "postal" as const, label: "Postal", desc: "Mailed to you", sub: compliance?.shipping ? `$${compliance.shipping.fee} / ~${compliance.shipping.days} days` : "Available in legal states" },
               ].map((opt) => (
                 <motion.button
                   key={opt.id}
