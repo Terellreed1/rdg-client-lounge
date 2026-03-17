@@ -580,7 +580,7 @@ const DeliveryMap = () => {
                           className="text-[9px] font-sans uppercase editorial-spacing"
                           style={{ color: z.type === "delivery" ? "#22c55e" : "#a78bfa", opacity: 0.7 }}
                         >
-                          {z.type}
+                          {z.type === "delivery" ? "delivery" : "postal"}
                         </span>
                       </div>
                     </button>
