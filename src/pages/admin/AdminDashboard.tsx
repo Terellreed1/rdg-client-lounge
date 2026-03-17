@@ -1218,6 +1218,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   const filtered = states.filter(s => {
     if (filter === "ship") return s.can_ship;
     if (filter === "deliver") return s.can_deliver;
+    if (filter === "legal" || filter === "medical" || filter === "illegal") return s.legal_status === filter;
     return true;
   });
 
