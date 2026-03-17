@@ -1118,7 +1118,14 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
 
   const load = useCallback(async () => {
     setLoading(true);
-    try { setStates((await callAdmin("state_laws", "GET")) as StateLaw[]); } catch { setStates([]); }
+    try {
+      const [statesData, areasData] = await Promise.all([
+        callAdmin("state_laws", "GET"),
+        callAdmin("service_areas", "GET"),
+      ]);
+      setStates(statesData as StateLaw[]);
+      setAreas(areasData as ServiceAreaItem[]);
+    } catch { setStates([]); setAreas([]); }
     setLoading(false);
   }, [callAdmin]);
 
