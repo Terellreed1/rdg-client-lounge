@@ -249,7 +249,7 @@ const Checkout = () => {
                 {/* Compliance indicator */}
                 {checkingCompliance && <p className="text-xs text-muted-foreground/60 font-sans mt-2">Checking availability...</p>}
                 {compliance && !checkingCompliance && (
-                  <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-gold/30 bg-gold/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
+                  <div className={`mt-3 p-3 border text-xs font-sans ${compliance.canServe ? "border-foreground/20 bg-foreground/5 text-foreground" : "border-destructive/30 bg-destructive/5 text-destructive"}`}>
                     {compliance.canServe ? (
                       <span>Service available — {compliance.method === "both" ? "Delivery & Postal" : compliance.method === "local" ? "Local Delivery" : "Postal"}</span>
                     ) : (
