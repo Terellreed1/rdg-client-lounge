@@ -237,7 +237,7 @@ const Checkout = () => {
           {(method === "delivery" || method === "postal") && (
             <div className="mb-12">
               <h2 className="font-serif text-xl text-foreground mb-6">
-                {method === "delivery" ? "Delivery Address" : "Shipping Address"}
+                {method === "delivery" ? "Delivery Address" : "Postal Address"}
               </h2>
               <div className="space-y-4">
                 <input type="text" placeholder="Street Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className={inputCls} />
