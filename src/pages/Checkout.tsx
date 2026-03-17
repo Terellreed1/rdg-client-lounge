@@ -269,12 +269,19 @@ const Checkout = () => {
                 {method === "pickup" ? "Pickup Time" : method === "delivery" ? "Delivery Time" : "Preferred Processing Time"}
               </h2>
               <RadioGroup value={timeSlot} onValueChange={setTimeSlot} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {TIME_SLOTS.map((slot) => (
-                  <label key={slot} className={`flex items-center gap-3 p-3 border cursor-pointer transition-all ${timeSlot === slot ? "border-gold bg-gold/5" : "border-border/30 hover:border-border/60"}`}>
-                    <RadioGroupItem value={slot} />
-                    <span className="text-sm font-sans text-foreground">{slot}</span>
-                  </label>
-                ))}
+                {TIME_SLOTS.map((slot) => {
+                  const count = slotCounts[slot] || 0;
+                  const isFull = count >= MAX_SLOT_ORDERS;
+                  return (
+                    <label key={slot} className={`flex items-center gap-3 p-3 border transition-all ${isFull ? "opacity-40 cursor-not-allowed border-border/20" : timeSlot === slot ? "border-gold bg-gold/5 cursor-pointer" : "border-border/30 hover:border-border/60 cursor-pointer"}`}>
+                      <RadioGroupItem value={slot} disabled={isFull} />
+                      <div>
+                        <span className="text-sm font-sans text-foreground">{slot}</span>
+                        {isFull && <p className="text-[10px] text-destructive font-sans">Fully booked</p>}
+                      </div>
+                    </label>
+                  );
+                })}
               </RadioGroup>
             </div>
           )}
