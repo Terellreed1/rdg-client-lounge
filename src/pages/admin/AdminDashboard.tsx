@@ -1114,7 +1114,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteAreaId, setDeleteAreaId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | "ship" | "deliver">("all");
+  const [filter, setFilter] = useState<"all" | "ship" | "deliver" | "legal" | "medical" | "illegal">("all");
 
   const load = useCallback(async () => {
     setLoading(true);
