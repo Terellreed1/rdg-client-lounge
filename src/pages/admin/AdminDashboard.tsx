@@ -1165,9 +1165,26 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
     setSaving(false);
   };
 
+  const saveArea = async () => {
+    setSaving(true);
+    try {
+      const zipArr = areaForm.zip_codes_text.split(/[,\s]+/).map(z => z.trim()).filter(Boolean);
+      const payload = { name: areaForm.name, zip_codes: zipArr, delivery_fee: areaForm.delivery_fee, estimated_time_minutes: areaForm.estimated_time_minutes, is_active: areaForm.is_active };
+      if (modal === "add_area") await callAdmin("service_areas", "POST", payload);
+      else await callAdmin("service_areas", "PUT", { id: editingArea!.id, ...payload });
+      await load(); setModal(null);
+    } catch (e) { alert("Save failed: " + e); }
+    setSaving(false);
+  };
+
   const remove = async (id: string) => {
     try { await callAdmin("state_laws", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
     setDeleteId(null);
+  };
+
+  const removeArea = async (id: string) => {
+    try { await callAdmin("service_areas", "DELETE", { id }); await load(); } catch (e) { alert("Delete failed: " + e); }
+    setDeleteAreaId(null);
   };
 
   const seedAllStates = async () => {
