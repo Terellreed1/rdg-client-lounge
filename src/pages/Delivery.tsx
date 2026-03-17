@@ -96,20 +96,40 @@ const Delivery = () => {
 
   return (
     <PageLayout>
-      {/* Header */}
-      <div className="pt-16 md:pt-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <ScrollReveal>
-            <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4">
-              Service & Fulfillment
-            </p>
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-foreground">
-              Delivery & Shipping
-            </h1>
-            <p className="text-sm text-muted-foreground/60 font-sans mt-6 max-w-xl mx-auto leading-relaxed">
-              We offer local delivery, in-store pickup, and postal shipping across legal states. All orders are discreetly packaged and fully tracked.
-            </p>
-          </ScrollReveal>
+      {/* Hero Statement */}
+      <div className="pt-24 md:pt-32 pb-16 md:pb-24 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-6"
+          >
+            Service & Fulfillment
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight"
+          >
+            We Ship to{" "}
+            <span className="text-gold">{shippableStates.length}</span> States
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-base md:text-lg text-muted-foreground/50 font-sans mt-8 max-w-lg mx-auto leading-relaxed"
+          >
+            Same-day local delivery. Four pickup spots. Discreet postal shipping nationwide.
+          </motion.p>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="w-24 h-px bg-foreground/20 mx-auto mt-10"
+          />
         </div>
       </div>
 
