@@ -313,6 +313,12 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    if (action === "delete") {
+      const { error } = await supabase.from("orders").delete().eq("id", body.id as string);
+      return new Response(JSON.stringify(error ? { error } : { ok: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
   }
 
   return new Response(JSON.stringify({ error: "Not found" }), {
