@@ -37,7 +37,9 @@ const Delivery = () => {
   const [focused, setFocused] = useState<string | null>(null);
   const [states, setStates] = useState<StateInfo[]>([]);
   const [deliveryAreas, setDeliveryAreas] = useState<AreaInfo[]>([]);
-  const [stateFilter, setStateFilter] = useState<"all" | "legal" | "medical">("all");
+  const [stateSearch, setStateSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<StateInfo | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
