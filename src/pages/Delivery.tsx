@@ -68,13 +68,18 @@ const Delivery = () => {
     }`;
 
   const shippableStates = states.filter(s => s.can_ship);
-  const deliverableStates = states.filter(s => s.can_deliver);
-  const legalStates = states.filter(s => s.legal_status === "legal");
-  const medicalStates = states.filter(s => s.legal_status === "medical");
 
-  const filteredStates = stateFilter === "all"
-    ? states.filter(s => s.legal_status !== "illegal")
-    : states.filter(s => s.legal_status === stateFilter);
+  const handleStateSearch = () => {
+    const query = stateSearch.trim().toLowerCase();
+    if (!query) { setHasSearched(false); setSearchResult(null); return; }
+    const match = states.find(s =>
+      s.state_name.toLowerCase() === query ||
+      s.state_code.toLowerCase() === query ||
+      s.state_name.toLowerCase().startsWith(query)
+    );
+    setSearchResult(match || null);
+    setHasSearched(true);
+  };
 
   return (
     <PageLayout>
