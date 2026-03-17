@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
+import DeliveryMap from "@/components/home/DeliveryMap";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
