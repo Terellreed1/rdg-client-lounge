@@ -263,7 +263,7 @@ const Checkout = () => {
 
           {/* Same-day notice */}
           {method && method !== "pickup" && (
-            <div className="mb-8 p-4 border border-gold/30 bg-gold/5 text-xs font-sans text-foreground">
+            <div className="mb-8 p-4 border border-foreground/20 bg-foreground/5 text-xs font-sans text-foreground">
               Orders placed before <span className="text-gold font-medium">2:00 PM</span> are sent out the same day.
             </div>
           )}
