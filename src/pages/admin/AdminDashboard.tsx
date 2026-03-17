@@ -1307,8 +1307,8 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                     </button>
                     <button onClick={() => toggleField(state, "can_deliver")}
                       className={`px-2 py-1 text-[10px] font-medium transition-all ${state.can_deliver ? "bg-blue-100 text-blue-700" : "bg-black/[0.04] text-black/30"}`}
-                      title={state.can_deliver ? "Can deliver – click to disable" : "Cannot deliver – click to enable"}>
-                      Deliver
+                      title={state.can_deliver ? "Can ship & deliver – click to disable" : "Cannot ship & deliver – click to enable"}>
+                      Ship & Deliver
                     </button>
                     <button onClick={() => openEdit(state)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-foreground transition-all text-[10px]">Edit</button>
                     <button onClick={() => setDeleteId(state.id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-foreground hover:text-red-500 transition-all text-[10px]">Del</button>
