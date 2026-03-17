@@ -1093,16 +1093,27 @@ const LEGAL_STATUS_COLORS: Record<string, string> = { legal: "bg-emerald-100 tex
 interface StateLaw {
   id: string; state_name: string; state_code: string; can_ship: boolean; can_deliver: boolean;
   legal_status: string; notes: string; active: boolean; sort_order: number;
+  shipping_fee: number; estimated_days: number; min_age: number;
+}
+
+interface ServiceAreaItem {
+  id: string; name: string; zip_codes: string[]; delivery_fee: number;
+  estimated_time_minutes: number; is_active: boolean;
 }
 
 const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POST" | "PUT" | "DELETE", b?: object) => Promise<unknown> }) => {
   const [states, setStates] = useState<StateLaw[]>([]);
+  const [areas, setAreas] = useState<ServiceAreaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState<"add" | "edit" | "seed" | null>(null);
+  const [subTab, setSubTab] = useState<"states" | "areas">("states");
+  const [modal, setModal] = useState<"add" | "edit" | "seed" | "add_area" | "edit_area" | null>(null);
   const [editing, setEditing] = useState<StateLaw | null>(null);
-  const [form, setForm] = useState({ state_name: "", state_code: "", can_ship: false, can_deliver: false, legal_status: "illegal", notes: "", active: true });
+  const [editingArea, setEditingArea] = useState<ServiceAreaItem | null>(null);
+  const [form, setForm] = useState({ state_name: "", state_code: "", can_ship: false, can_deliver: false, legal_status: "illegal", notes: "", active: true, shipping_fee: 9.99, estimated_days: 5, min_age: 21 });
+  const [areaForm, setAreaForm] = useState({ name: "", zip_codes_text: "", delivery_fee: 10, estimated_time_minutes: 60, is_active: true });
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteAreaId, setDeleteAreaId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "ship" | "deliver">("all");
 
   const load = useCallback(async () => {
