@@ -29,6 +29,7 @@ const Index = () => {
         <HeroSection />
         <BrandCarousel />
         <ProductsPreview />
+        <ConvenienceSection />
       </main>
       <Footer />
       <ReferralDialog open={popupOpen} onClose={handleClosePopup} initialTab="join" />
