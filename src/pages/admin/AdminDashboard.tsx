@@ -1898,9 +1898,8 @@ const AdminDashboard = ({ onLogout }: { onLogout: () => void }) => {
               {section === "brands" && <BrandsSection callAdmin={callAdmin} />}
               {section === "state_laws" && <StateLawsSection callAdmin={callAdmin} />}
               {section === "faq" && <FaqSection callAdmin={callAdmin} />}
-              {section === "reviews" && <ReviewsSection callAdmin={callAdmin} />}
-              {section === "referrals" && <ReferralsSection callAdmin={callAdmin} />}
               {section === "analytics" && <AnalyticsSection />}
+              {section === "dev" && <DevControlsSection />}
             </motion.div>
           </AnimatePresence>
         </div>
