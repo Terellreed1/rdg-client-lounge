@@ -1433,7 +1433,7 @@ const StateLawsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "PO
                     {form.can_ship ? "Yes" : "No"}
                   </button>
                 </Field>
-                <Field label="Can Deliver">
+                <Field label="Can Ship & Deliver">
                   <button type="button" onClick={() => setForm(f => ({ ...f, can_deliver: !f.can_deliver }))}
                     className={`w-full flex items-center justify-center py-2.5 text-sm font-medium border transition-all ${form.can_deliver ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-white border-black/10 text-black/40"}`}>
                     {form.can_deliver ? "Yes" : "No"}
