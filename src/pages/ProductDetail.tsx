@@ -172,7 +172,7 @@ const ProductDetail = () => {
                   </motion.button>
                 </div>
 
-                <div className="border-t border-border/50 pt-8 space-y-4">
+                <div className="pt-8 space-y-4">
                   <p className="text-[10px] text-muted-foreground/60 font-sans leading-relaxed">
                     <strong className="text-muted-foreground/80">FDA Disclaimer:</strong> These statements have not been evaluated by the Food and Drug Administration.
                   </p>
