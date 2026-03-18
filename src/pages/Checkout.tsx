@@ -30,7 +30,7 @@ function getDeliveryFee(subtotal: number): number {
   return 15;
 }
 
-const inputCls = "w-full bg-transparent border-b border-border/50 text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none focus:border-foreground transition-colors";
+const inputCls = "w-full bg-transparent text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none transition-colors";
 
 const Checkout = () => {
   const { items, totalItems } = useCart();
