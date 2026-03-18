@@ -184,7 +184,7 @@ const Delivery = () => {
 
       {/* State Search */}
       {states.length > 0 && (
-        <section className="py-16 px-6 border-t border-border/20">
+        <section className="py-16 px-6">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal>
               <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Check Availability</p>
