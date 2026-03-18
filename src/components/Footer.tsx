@@ -147,7 +147,7 @@ const Footer = () => (
         </p>
       </div>
 
-      <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-6" />
       <div className="space-y-2 mb-6" style={{ color: "rgba(232,220,200,0.18)" }}>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.28)" }} className="font-semibold">⚠ WARNING:</span> Cannabis use during pregnancy or breastfeeding poses potential harms. Cannabis is not safe for children. Keep all cannabis products out of reach of children. Do not drive or operate machinery while under the influence of cannabis.
