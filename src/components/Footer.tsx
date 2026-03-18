@@ -137,7 +137,7 @@ const Footer = () => (
       <div className="space-y-3 mb-8" style={{ color: "rgba(232,220,200,0.12)" }}>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.22)" }} className="font-semibold">WARNING:</span> CANCER AND REPRODUCTIVE HARM.{" "}
-          <a href="https://www.p65warnings.ca.gov" target="_blank" rel="noopener noreferrer" className="underline">www.p65warnings.ca.gov</a>
+          <a href="https://www.p65warnings.ca.gov" target="_blank" rel="noopener noreferrer">www.p65warnings.ca.gov</a>
         </p>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.22)" }} className="font-semibold">Legal Disclaimer:</span> This product contains less than 0.3% Δ9 THC and is compliant with the Industrial Hemp Farming Act Bill H.R. 525/S 359. Not available for shipment to: AK, AR, CA, CO, HI, ID, KS, LA, MI, MT, NM, OK, OR, PR, RI, TX, UT, VT, WA.
