@@ -295,7 +295,7 @@ const Checkout = () => {
 
           {/* Order Summary */}
           {method && (
-            <div className="border-t border-border/30 pt-8 mb-8">
+            <div className="pt-8 mb-8">
               <h2 className="font-serif text-xl text-foreground mb-4">Order Summary</h2>
               <div className="space-y-2 text-sm font-sans">
                 {items.map((item) => (
