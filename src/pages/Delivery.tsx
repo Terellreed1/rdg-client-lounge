@@ -1,9 +1,31 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+
+function CountUp({ target, duration = 1.2 }: { target: number; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!inView || target === 0) return;
+    const start = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / (duration * 1000), 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, target, duration]);
+
+  return <span ref={ref}>{count}</span>;
+}
 
 interface StateInfo {
   state_name: string;
@@ -114,7 +136,7 @@ const Delivery = () => {
             className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight"
           >
             We Ship to{" "}
-            <span className="text-gold">{shippableStates.length}</span> States
+            <span className="text-gold"><CountUp target={shippableStates.length} /></span> States
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
