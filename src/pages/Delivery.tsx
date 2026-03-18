@@ -210,7 +210,7 @@ const Delivery = () => {
                         }
                       }}
                       placeholder="Type a state name..."
-                      className="w-full bg-transparent border-b border-border/50 py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 focus:border-foreground"
+                      className="w-full bg-transparent py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40"
                     />
                     {stateSearch.trim().length > 0 && !hasSearched && (() => {
                       const suggestions = getSuggestions();
