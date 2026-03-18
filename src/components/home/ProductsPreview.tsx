@@ -41,10 +41,6 @@ const ProductsPreview = () => {
 
       {/* ─── SHOP BY CATEGORY ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-16 sm:pb-20">
-        {/* Gold divider line */}
-        <div className="flex justify-center mb-8">
-          <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
-        </div>
 
         <div className="text-center mb-10 sm:mb-14">
           <h2
