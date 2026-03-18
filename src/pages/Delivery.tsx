@@ -112,9 +112,7 @@ const Delivery = () => {
   };
 
   const inputClasses = (field: string) =>
-    `w-full bg-transparent border-b py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 ${
-      focused === field ? "border-foreground" : "border-border/50"
-    }`;
+    `w-full bg-transparent py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40`;
 
   return (
     <PageLayout>
