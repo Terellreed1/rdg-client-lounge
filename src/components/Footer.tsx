@@ -133,7 +133,7 @@ const Footer = () => (
       </div>
 
       {/* Legal */}
-      <div className="h-px mb-8" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-8" />
       <div className="space-y-3 mb-8" style={{ color: "rgba(232,220,200,0.12)" }}>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.22)" }} className="font-semibold">WARNING:</span> CANCER AND REPRODUCTIVE HARM.{" "}
