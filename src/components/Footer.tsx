@@ -27,7 +27,7 @@ const linkStyle: React.CSSProperties = {
 
 const Footer = () => (
   <footer style={{ background: "#070A06" }}>
-    <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.12), transparent)" }} />
+    
 
     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
       {/* Top row: Logo + columns */}
