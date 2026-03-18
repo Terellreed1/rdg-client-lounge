@@ -61,8 +61,8 @@ const FAQ = () => {
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4">Support</p>
-              <h1 className="font-serif text-4xl md:text-6xl text-foreground">FAQ</h1>
+              <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-6">Support</p>
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight">FAQ</h1>
             </div>
           </ScrollReveal>
 

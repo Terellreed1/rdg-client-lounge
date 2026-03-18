@@ -74,14 +74,13 @@ const Brands = () => {
     <div className="min-h-screen" style={{ background: "#FFFFFF" }}>
       <PageLayout>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24" style={{ background: "#FFFFFF" }}>
-          <div className="flex justify-center mb-8">
-            <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
-          </div>
-
           <div className="text-center mb-14">
+            <p className="text-xs font-sans uppercase mb-6" style={{ letterSpacing: "0.25em", color: "rgba(0,0,0,0.35)" }}>
+              Partners
+            </p>
             <h1
-              className="text-3xl sm:text-4xl lg:text-5xl uppercase mb-3"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, color: "#1a1a1a", letterSpacing: "0.06em" }}
+              className="text-5xl md:text-7xl lg:text-[6.5rem] uppercase leading-[0.95] tracking-tight mb-6"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, color: "#1a1a1a" }}
             >
               Our Brands
             </h1>

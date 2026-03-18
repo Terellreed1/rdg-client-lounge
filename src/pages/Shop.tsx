@@ -186,12 +186,11 @@ const Shop = () => {
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,13,9,0.4) 0%, rgba(10,13,9,0.8) 100%)" }} />
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl uppercase mb-4"
+            className="text-5xl sm:text-6xl lg:text-7xl xl:text-[6.5rem] uppercase leading-[0.95] tracking-tight mb-4"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontWeight: 400,
               color: "#F0EBE0",
-              letterSpacing: "0.06em",
             }}
           >
             Shop Premium Cannabis Online
