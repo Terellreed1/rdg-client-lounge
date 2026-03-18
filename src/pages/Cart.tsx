@@ -26,8 +26,8 @@ const Cart = () => {
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <p className="text-xs font-sans uppercase editorial-spacing text-gold mb-4">Your Selection</p>
-              <h1 className="font-serif text-4xl md:text-6xl text-foreground">Cart</h1>
+              <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-6">Your Selection</p>
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight">Cart</h1>
             </div>
           </ScrollReveal>
 

@@ -2,10 +2,6 @@ import { Link } from "react-router-dom";
 
 const BrandCarousel = () => (
   <section className="relative py-14 overflow-hidden" style={{ background: "#0A0D09" }}>
-    {/* Gold divider line */}
-    <div className="flex justify-center mb-6">
-      <div style={{ width: 100, height: 1, backgroundColor: "rgba(197, 163, 85, 0.3)" }} />
-    </div>
 
     <div className="text-center">
       <p

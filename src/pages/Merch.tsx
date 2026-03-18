@@ -135,18 +135,17 @@ const Merch = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <p
-              className="text-xs font-sans uppercase mb-4"
-              style={{ letterSpacing: "0.3em", color: "#C9A84C" }}
+              className="text-xs font-sans uppercase mb-6"
+              style={{ letterSpacing: "0.3em", color: "rgba(160,144,112,0.5)" }}
             >
               Lifestyle
             </p>
             <h1
-              className="text-4xl md:text-6xl mb-6"
+              className="text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.95] tracking-tight mb-6"
               style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: "#F0EBE0" }}
             >
               Official Merch
             </h1>
-            
             <p
               className="text-sm md:text-base font-light max-w-md mx-auto leading-relaxed"
               style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(160,144,112,0.7)" }}

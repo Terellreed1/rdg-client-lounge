@@ -25,8 +25,8 @@ const About = () => {
           {/* Header */}
           <ScrollReveal>
             <div className="text-center mb-20">
-              <p className="text-xs font-sans uppercase editorial-spacing text-gold mb-4">Our Story</p>
-              <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-foreground">About Us</h1>
+              <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-6">Our Story</p>
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight">About Us</h1>
             </div>
           </ScrollReveal>
 

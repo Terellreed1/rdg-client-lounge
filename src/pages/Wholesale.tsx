@@ -48,7 +48,8 @@ const Wholesale = () => {
   return (
     <PageLayout>
       <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-        <h1 className="font-serif text-3xl sm:text-5xl text-foreground mb-3">Wholesale</h1>
+        <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-6">Partners</p>
+        <h1 className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight mb-4">Wholesale</h1>
         <p className="text-muted-foreground mb-12 max-w-xl">
           Interested in carrying our products? Fill out the form below and our team will get back to you.
         </p>
