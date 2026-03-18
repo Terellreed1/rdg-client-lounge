@@ -195,11 +195,8 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                     <img src={heroLogo} alt="Luxury Courier Club" className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(201,168,76,0.12))" }} />
                   </div>
 
-                  {/* Gold rule */}
-                  <div
-                    className="mx-auto my-8 h-px w-16 age-stagger age-rule"
-                    style={{ background: "#C9A84C" }}
-                  />
+                  {/* Spacer */}
+                  <div className="my-8 age-stagger age-rule" />
 
                   {/* Headline */}
                   <h1
