@@ -186,7 +186,7 @@ const ProductDetail = () => {
 
           {/* Reviews */}
           {reviews.length > 0 && (
-            <div className="mt-20 border-t border-border/50 pt-12">
+            <div className="mt-20 pt-12">
               <h2 className="font-serif text-2xl text-foreground mb-8">Customer Reviews</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {reviews.map((r) => (

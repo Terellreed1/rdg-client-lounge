@@ -46,7 +46,7 @@ const StoreInfo = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
               <Link
                 to="/delivery"
-                className="inline-block text-xs font-sans uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors border-b border-border pb-0.5"
+                className="inline-block text-xs font-sans uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
               >
                 View Full Delivery Map →
               </Link>

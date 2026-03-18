@@ -346,7 +346,7 @@ const Delivery = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-24 md:py-32 px-6 border-t border-border/20">
+      <section className="py-24 md:py-32 px-6">
         <div className="max-w-2xl mx-auto">
           <ScrollReveal>
             <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Reach Out</p>

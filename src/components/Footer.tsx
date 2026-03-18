@@ -154,7 +154,7 @@ const Footer = () => (
         </p>
       </div>
 
-      <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-6" />
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="text-[10px] font-sans" style={{ color: "rgba(232,220,200,0.15)" }}>

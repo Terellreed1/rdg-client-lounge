@@ -319,7 +319,7 @@ const Checkout = () => {
                     Add ${(115 - subtotal).toFixed(2)} more for free delivery!
                   </p>
                 )}
-                <div className="border-t border-border/30 pt-2 flex justify-between text-foreground font-serif text-lg">
+                <div className="pt-2 flex justify-between text-foreground font-serif text-lg">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>

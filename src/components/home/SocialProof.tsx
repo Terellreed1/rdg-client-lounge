@@ -43,7 +43,7 @@ const SocialProof = () => {
           >
             What People Say
           </h2>
-          <div className="h-px w-12 mx-auto" style={{ background: "rgba(201,168,76,0.3)" }} />
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">

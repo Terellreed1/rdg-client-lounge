@@ -75,7 +75,7 @@ const StrainEffects = () => {
           {strains.map((strain) => (
             <motion.div
               key={strain.name}
-              className="p-6 border border-border/20 hover:border-border/40 transition-colors duration-500"
+              className="p-6 hover:bg-foreground/[0.02] transition-colors duration-500"
             >
               <div className="flex items-start justify-between mb-6">
                 <div>

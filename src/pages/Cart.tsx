@@ -68,7 +68,7 @@ const Cart = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="flex items-center gap-6 border-b border-border/30 pb-6"
+                    className="flex items-center gap-6 pb-6"
                   >
                     {/* Image */}
                     <Link to={`/shop/${item.id}`} className="shrink-0">
