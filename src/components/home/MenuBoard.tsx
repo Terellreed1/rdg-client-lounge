@@ -128,11 +128,7 @@ const MenuBoard = () => {
                 {/* Header */}
                 <div className="text-center mb-8">
                   <h2 className="font-serif text-4xl md:text-5xl text-foreground italic">The Menu</h2>
-                  <div className="flex items-center justify-center gap-4 mt-4">
-                    <div className="h-px w-12 bg-gold/30" />
-                    <span className="text-gold text-xs">✦</span>
-                    <div className="h-px w-12 bg-gold/30" />
-                  </div>
+                  <div className="mt-4" />
                 </div>
 
                 {/* Flippable page content */}

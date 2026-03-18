@@ -95,7 +95,7 @@ const Navbar = () => {
                 onMouseLeave={(e) => { if (location.pathname !== link.to) e.currentTarget.style.color = "rgba(160,144,112,0.6)"; }}
               >
                 {link.label}
-                <span className="absolute bottom-[-3px] left-0 h-px transition-all duration-300" style={{ width: location.pathname === link.to ? "100%" : "0%", background: "#C9A84C" }} />
+                <span className="absolute bottom-[-3px] left-0 transition-all duration-300" style={{ width: location.pathname === link.to ? "100%" : "0%" }} />
               </Link>
             ))}
           </div>
