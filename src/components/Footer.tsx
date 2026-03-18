@@ -27,7 +27,7 @@ const linkStyle: React.CSSProperties = {
 
 const Footer = () => (
   <footer style={{ background: "#070A06" }}>
-    <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.12), transparent)" }} />
+    
 
     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
       {/* Top row: Logo + columns */}
@@ -133,11 +133,11 @@ const Footer = () => (
       </div>
 
       {/* Legal */}
-      <div className="h-px mb-8" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-8" />
       <div className="space-y-3 mb-8" style={{ color: "rgba(232,220,200,0.12)" }}>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.22)" }} className="font-semibold">WARNING:</span> CANCER AND REPRODUCTIVE HARM.{" "}
-          <a href="https://www.p65warnings.ca.gov" target="_blank" rel="noopener noreferrer" className="underline">www.p65warnings.ca.gov</a>
+          <a href="https://www.p65warnings.ca.gov" target="_blank" rel="noopener noreferrer">www.p65warnings.ca.gov</a>
         </p>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.22)" }} className="font-semibold">Legal Disclaimer:</span> This product contains less than 0.3% Δ9 THC and is compliant with the Industrial Hemp Farming Act Bill H.R. 525/S 359. Not available for shipment to: AK, AR, CA, CO, HI, ID, KS, LA, MI, MT, NM, OK, OR, PR, RI, TX, UT, VT, WA.
@@ -147,14 +147,14 @@ const Footer = () => (
         </p>
       </div>
 
-      <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-6" />
       <div className="space-y-2 mb-6" style={{ color: "rgba(232,220,200,0.18)" }}>
         <p className="text-[9px] leading-relaxed">
           <span style={{ color: "rgba(232,220,200,0.28)" }} className="font-semibold">⚠ WARNING:</span> Cannabis use during pregnancy or breastfeeding poses potential harms. Cannabis is not safe for children. Keep all cannabis products out of reach of children. Do not drive or operate machinery while under the influence of cannabis.
         </p>
       </div>
 
-      <div className="h-px mb-6" style={{ background: "rgba(201,168,76,0.06)" }} />
+      <div className="mb-6" />
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="text-[10px] font-sans" style={{ color: "rgba(232,220,200,0.15)" }}>

@@ -62,13 +62,7 @@ const AccessDenied = () => (
         <img src={heroLogo} alt="Luxury Courier Club" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
       </motion.div>
 
-      <motion.div
-        className="mx-auto my-8 h-px w-16"
-        style={{ background: "#C9A84C" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-      />
+      <div className="my-8" />
 
       <motion.h1
         className="text-3xl sm:text-4xl md:text-5xl uppercase mb-4"
@@ -201,11 +195,8 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
                     <img src={heroLogo} alt="Luxury Courier Club" className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(201,168,76,0.12))" }} />
                   </div>
 
-                  {/* Gold rule */}
-                  <div
-                    className="mx-auto my-8 h-px w-16 age-stagger age-rule"
-                    style={{ background: "#C9A84C" }}
-                  />
+                  {/* Spacer */}
+                  <div className="my-8 age-stagger age-rule" />
 
                   {/* Headline */}
                   <h1
@@ -314,13 +305,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
 
               {/* Footer */}
               <div className="relative z-10 w-full max-w-2xl mx-auto px-8 pb-8">
-                <motion.div
-                  className="h-px w-full mb-8"
-                  style={{ background: "rgba(201,168,76,0.15)" }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 }}
-                />
+                <div className="mb-8" />
                 <motion.p
                   className="text-center text-[11px] font-sans font-light"
                   style={{ color: "rgba(122,96,48,0.5)", letterSpacing: "0.08em" }}

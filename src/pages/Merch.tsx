@@ -146,7 +146,7 @@ const Merch = () => {
             >
               Official Merch
             </h1>
-            <div className="mx-auto h-px w-16 mb-8" style={{ background: "#C9A84C" }} />
+            
             <p
               className="text-sm md:text-base font-light max-w-md mx-auto leading-relaxed"
               style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(160,144,112,0.7)" }}

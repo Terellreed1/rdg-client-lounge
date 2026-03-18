@@ -28,7 +28,7 @@ const SocialProof = () => {
 
   return (
     <section style={{ background: "#0A0D09" }}>
-      <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.12), transparent)" }} />
+      
 
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-28">
         <div className="text-center mb-14">
@@ -43,7 +43,7 @@ const SocialProof = () => {
           >
             What People Say
           </h2>
-          <div className="h-px w-12 mx-auto" style={{ background: "rgba(201,168,76,0.3)" }} />
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">

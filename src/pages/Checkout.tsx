@@ -30,7 +30,7 @@ function getDeliveryFee(subtotal: number): number {
   return 15;
 }
 
-const inputCls = "w-full bg-transparent border-b border-border/50 text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none focus:border-foreground transition-colors";
+const inputCls = "w-full bg-transparent text-foreground placeholder-muted-foreground/40 px-0 py-3 text-sm font-sans focus:outline-none transition-colors";
 
 const Checkout = () => {
   const { items, totalItems } = useCart();
@@ -295,7 +295,7 @@ const Checkout = () => {
 
           {/* Order Summary */}
           {method && (
-            <div className="border-t border-border/30 pt-8 mb-8">
+            <div className="pt-8 mb-8">
               <h2 className="font-serif text-xl text-foreground mb-4">Order Summary</h2>
               <div className="space-y-2 text-sm font-sans">
                 {items.map((item) => (
@@ -304,7 +304,7 @@ const Checkout = () => {
                     <span>${(parseFloat(item.price.replace("$", "")) * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
-                <div className="border-t border-border/20 pt-2 flex justify-between text-muted-foreground">
+                <div className="pt-2 flex justify-between text-muted-foreground">
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
@@ -319,7 +319,7 @@ const Checkout = () => {
                     Add ${(115 - subtotal).toFixed(2)} more for free delivery!
                   </p>
                 )}
-                <div className="border-t border-border/30 pt-2 flex justify-between text-foreground font-serif text-lg">
+                <div className="pt-2 flex justify-between text-foreground font-serif text-lg">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>

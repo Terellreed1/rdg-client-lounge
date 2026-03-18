@@ -112,9 +112,7 @@ const Delivery = () => {
   };
 
   const inputClasses = (field: string) =>
-    `w-full bg-transparent border-b py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 ${
-      focused === field ? "border-foreground" : "border-border/50"
-    }`;
+    `w-full bg-transparent py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40`;
 
   return (
     <PageLayout>
@@ -146,12 +144,6 @@ const Delivery = () => {
           >
             Same-day local delivery. Four pickup spots. Discreet postal shipping nationwide.
           </motion.p>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="w-24 h-px bg-foreground/20 mx-auto mt-10"
-          />
         </div>
       </div>
 
@@ -192,7 +184,7 @@ const Delivery = () => {
 
       {/* State Search */}
       {states.length > 0 && (
-        <section className="py-16 px-6 border-t border-border/20">
+        <section className="py-16 px-6">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal>
               <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Check Availability</p>
@@ -218,7 +210,7 @@ const Delivery = () => {
                         }
                       }}
                       placeholder="Type a state name..."
-                      className="w-full bg-transparent border-b border-border/50 py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40 focus:border-foreground"
+                      className="w-full bg-transparent py-3 text-foreground font-sans text-sm outline-none transition-all duration-500 placeholder:text-muted-foreground/40"
                     />
                     {stateSearch.trim().length > 0 && !hasSearched && (() => {
                       const suggestions = getSuggestions();
@@ -287,7 +279,7 @@ const Delivery = () => {
                               <span className="text-foreground">{searchResult.min_age}+</span>
                             </div>
                             {searchResult.notes && (
-                              <p className="text-xs text-muted-foreground/40 font-sans italic pt-2 border-t border-border/20">{searchResult.notes}</p>
+                              <p className="text-xs text-muted-foreground/40 font-sans italic pt-2">{searchResult.notes}</p>
                             )}
                           </div>
                         )}
@@ -311,7 +303,7 @@ const Delivery = () => {
 
       {/* Where We Deliver (Local) */}
       {deliveryAreas.length > 0 && (
-        <section className="py-16 px-6 border-t border-border/20">
+        <section className="py-16 px-6">
           <div className="max-w-3xl mx-auto">
             <ScrollReveal>
               <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Local Delivery</p>
@@ -334,7 +326,7 @@ const Delivery = () => {
       )}
 
       {/* Pickup Locations */}
-      <section className="py-16 px-6 border-t border-border/20">
+      <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Pickup</p>
@@ -354,7 +346,7 @@ const Delivery = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-24 md:py-32 px-6 border-t border-border/20">
+      <section className="py-24 md:py-32 px-6">
         <div className="max-w-2xl mx-auto">
           <ScrollReveal>
             <p className="text-xs font-sans uppercase editorial-spacing text-muted-foreground mb-4 text-center">Reach Out</p>
