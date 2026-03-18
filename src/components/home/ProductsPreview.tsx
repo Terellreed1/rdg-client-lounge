@@ -37,7 +37,7 @@ const ProductsPreview = () => {
 
   return (
     <section style={{ background: "#0A0D09" }}>
-      <div className="h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent)" }} />
+      
 
       {/* ─── SHOP BY CATEGORY ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-16 sm:pb-20">
