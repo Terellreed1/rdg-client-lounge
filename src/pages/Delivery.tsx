@@ -136,7 +136,7 @@ const Delivery = () => {
             className="font-serif text-5xl md:text-7xl lg:text-[6.5rem] text-foreground leading-[0.95] tracking-tight"
           >
             We Ship to{" "}
-            <span className="text-gold">{shippableStates.length}</span> States
+            <span className="text-gold"><CountUp target={shippableStates.length} /></span> States
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
