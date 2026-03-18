@@ -144,12 +144,6 @@ const Delivery = () => {
           >
             Same-day local delivery. Four pickup spots. Discreet postal shipping nationwide.
           </motion.p>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="w-24 h-px bg-foreground/20 mx-auto mt-10"
-          />
         </div>
       </div>
 
