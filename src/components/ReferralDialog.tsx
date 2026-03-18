@@ -205,7 +205,7 @@ const ReferralDialog = ({ open, onClose, initialTab = "join" }: ReferralDialogPr
                       </p>
                     </div>
 
-                    <div className="mx-5 h-px bg-border" />
+                    <div className="mx-5" />
 
                     <div className="px-5 py-3.5">
                       <p className="text-[10px] font-sans uppercase wide-spacing text-muted-foreground mb-2">Your Code</p>

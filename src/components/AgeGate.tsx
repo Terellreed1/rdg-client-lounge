@@ -305,13 +305,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
 
               {/* Footer */}
               <div className="relative z-10 w-full max-w-2xl mx-auto px-8 pb-8">
-                <motion.div
-                  className="h-px w-full mb-8"
-                  style={{ background: "rgba(201,168,76,0.15)" }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 }}
-                />
+                <div className="mb-8" />
                 <motion.p
                   className="text-center text-[11px] font-sans font-light"
                   style={{ color: "rgba(122,96,48,0.5)", letterSpacing: "0.08em" }}
