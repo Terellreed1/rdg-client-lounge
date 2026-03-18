@@ -62,13 +62,7 @@ const AccessDenied = () => (
         <img src={heroLogo} alt="Luxury Courier Club" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
       </motion.div>
 
-      <motion.div
-        className="mx-auto my-8 h-px w-16"
-        style={{ background: "#C9A84C" }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-      />
+      <div className="my-8" />
 
       <motion.h1
         className="text-3xl sm:text-4xl md:text-5xl uppercase mb-4"
