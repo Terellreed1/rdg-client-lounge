@@ -304,7 +304,7 @@ const Checkout = () => {
                     <span>${(parseFloat(item.price.replace("$", "")) * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
-                <div className="border-t border-border/20 pt-2 flex justify-between text-muted-foreground">
+                <div className="pt-2 flex justify-between text-muted-foreground">
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
