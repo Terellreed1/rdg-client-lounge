@@ -279,7 +279,7 @@ const Delivery = () => {
                               <span className="text-foreground">{searchResult.min_age}+</span>
                             </div>
                             {searchResult.notes && (
-                              <p className="text-xs text-muted-foreground/40 font-sans italic pt-2 border-t border-border/20">{searchResult.notes}</p>
+                              <p className="text-xs text-muted-foreground/40 font-sans italic pt-2">{searchResult.notes}</p>
                             )}
                           </div>
                         )}
