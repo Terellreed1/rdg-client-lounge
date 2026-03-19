@@ -93,9 +93,9 @@ const Brands = () => {
           {/* Logo marquee carousel */}
           <div className="relative w-full overflow-hidden mb-16">
             <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to right, #FFFFFF, transparent)" }} />
+              style={{ background: "linear-gradient(to right, #0A0D09, transparent)" }} />
             <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to left, #FFFFFF, transparent)" }} />
+              style={{ background: "linear-gradient(to left, #0A0D09, transparent)" }} />
             <div className="flex items-center gap-14 animate-marquee">
               {[...brands, ...brands].map((brand, i) => (
                 <img
