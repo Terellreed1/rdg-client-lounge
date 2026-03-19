@@ -1,75 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
-
-// Static fallback brands
-import backpackboyz from "@/assets/brands/backpackboyz-new.png";
-import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
-import alwaysFaded from "@/assets/brands/always-faded.png";
-import kushFactory from "@/assets/brands/kush-factory.png";
-import highTolerance from "@/assets/brands/high-tolerance.png";
-import zourZop from "@/assets/brands/zour-zop.png";
-import frutaz from "@/assets/brands/frutaz.png";
-import donMerfos from "@/assets/brands/don-merfos.png";
-import fumi from "@/assets/brands/fumi.png";
-import caliCloudsClub from "@/assets/brands/cali-clouds-club.png";
-import cupsStrainz from "@/assets/brands/cups-strainz.png";
-import julatoNyc from "@/assets/brands/julato-nyc.png";
-import highMonkey from "@/assets/brands/high-monkey.png";
-import highMart from "@/assets/brands/high-mart.png";
-import kandyDepo from "@/assets/brands/kandy-depo.png";
-import mameys from "@/assets/brands/mameys.png";
-import painNetwork from "@/assets/brands/pain-network.png";
-import theCandyShop from "@/assets/brands/the-candy-shop.png";
-import grumpus from "@/assets/brands/grumpus.png";
-import hb from "@/assets/brands/hb.png";
-
-const staticBrands = [
-  { src: backpackboyz, alt: "BackPackBoyz" },
-  { src: superCandyBros, alt: "Super Candy Bros" },
-  { src: alwaysFaded, alt: "Always Faded" },
-  { src: kushFactory, alt: "Kush Factory" },
-  { src: highTolerance, alt: "High Tolerance" },
-  { src: zourZop, alt: "Zour Zop" },
-  { src: frutaz, alt: "Frutaz" },
-  { src: donMerfos, alt: "Don Merfos" },
-  { src: fumi, alt: "Fumi" },
-  { src: caliCloudsClub, alt: "Cali Clouds Club" },
-  { src: cupsStrainz, alt: "Cups Strainz" },
-  { src: julatoNyc, alt: "Julato NYC" },
-  { src: highMonkey, alt: "High Monkey" },
-  { src: highMart, alt: "High Mart" },
-  { src: kandyDepo, alt: "Kandy Depo" },
-  { src: mameys, alt: "Mameys" },
-  { src: painNetwork, alt: "Pain Network" },
-  { src: theCandyShop, alt: "The Candy Shop" },
-  { src: grumpus, alt: "Grumpus" },
-  { src: hb, alt: "HB" },
-];
-
-interface BrandItem {
-  src: string;
-  alt: string;
-}
+import { useActiveBrands, type BrandLogo } from "@/components/home/BrandCarousel";
 
 const Brands = () => {
-  const [viewImage, setViewImage] = useState<BrandItem | null>(null);
-  const [brands, setBrands] = useState<BrandItem[]>(staticBrands);
-
-  useEffect(() => {
-    supabase
-      .from("brands")
-      .select("name, logo_url")
-      .eq("active", true)
-      .order("sort_order")
-      .then(({ data }) => {
-        if (data && data.length > 0) {
-          const withLogos = data.filter(b => b.logo_url).map(b => ({ src: b.logo_url!, alt: b.name }));
-          if (withLogos.length > 0) setBrands(withLogos);
-        }
-      });
-  }, []);
+  const [viewImage, setViewImage] = useState<BrandLogo | null>(null);
+  const brands = useActiveBrands();
 
   return (
     <div className="min-h-screen" style={{ background: "#0A0D09" }}>
