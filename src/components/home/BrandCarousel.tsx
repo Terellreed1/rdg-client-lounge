@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 import alwaysFaded from "@/assets/brands/always-faded.png";
 import backpackboyz from "@/assets/brands/backpackboyz-new.png";
@@ -23,7 +25,12 @@ import superCandyBros from "@/assets/brands/super-candy-bros-new.png";
 import theCandyShop from "@/assets/brands/the-candy-shop.png";
 import zourZop from "@/assets/brands/zour-zop.png";
 
-const LOGOS = [
+export interface BrandLogo {
+  src: string;
+  alt: string;
+}
+
+export const STATIC_LOGOS: BrandLogo[] = [
   { src: alwaysFaded, alt: "Always Faded" },
   { src: backpackboyz, alt: "BackPackBoyz" },
   { src: caliClouds, alt: "Cali Clouds Club" },
@@ -48,10 +55,32 @@ const LOGOS = [
   { src: zourZop, alt: "Zour Zop" },
 ];
 
-export { LOGOS };
+/** Hook to fetch active brands from DB, falling back to static logos */
+export function useActiveBrands(): BrandLogo[] {
+  const [brands, setBrands] = useState<BrandLogo[]>(STATIC_LOGOS);
+
+  useEffect(() => {
+    supabase
+      .from("brands")
+      .select("name, logo_url")
+      .eq("active", true)
+      .order("sort_order")
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          const withLogos = data
+            .filter((b) => b.logo_url)
+            .map((b) => ({ src: b.logo_url!, alt: b.name }));
+          if (withLogos.length > 0) setBrands(withLogos);
+        }
+      });
+  }, []);
+
+  return brands;
+}
 
 const BrandCarousel = () => {
-  const doubled = [...LOGOS, ...LOGOS];
+  const brands = useActiveBrands();
+  const doubled = [...brands, ...brands];
 
   return (
     <section className="relative py-12 overflow-hidden" style={{ background: "#0A0D09" }}>
