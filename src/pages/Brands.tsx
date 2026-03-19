@@ -65,7 +65,8 @@ const Brands = () => {
       .order("sort_order")
       .then(({ data }) => {
         if (data && data.length > 0) {
-          setBrands(data.filter(b => b.logo_url).map(b => ({ src: b.logo_url!, alt: b.name })));
+          const withLogos = data.filter(b => b.logo_url).map(b => ({ src: b.logo_url!, alt: b.name }));
+          if (withLogos.length > 0) setBrands(withLogos);
         }
       });
   }, []);
