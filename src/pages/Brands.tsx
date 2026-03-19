@@ -76,16 +76,16 @@ const Brands = () => {
       <PageLayout>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center mb-14">
-            <p className="text-xs font-sans uppercase mb-6" style={{ letterSpacing: "0.25em", color: "rgba(0,0,0,0.35)" }}>
+            <p className="text-xs font-sans uppercase mb-6" style={{ letterSpacing: "0.25em", color: "rgba(240,235,224,0.4)" }}>
               Partners
             </p>
             <h1
               className="text-5xl md:text-7xl lg:text-[6.5rem] uppercase leading-[0.95] tracking-tight mb-6"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, color: "#1a1a1a" }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, color: "#F0EBE0" }}
             >
               Our Brands
             </h1>
-            <p className="text-sm font-sans font-light max-w-lg mx-auto" style={{ color: "rgba(0,0,0,0.4)", letterSpacing: "0.04em" }}>
+            <p className="text-sm font-sans font-light max-w-lg mx-auto" style={{ color: "rgba(240,235,224,0.4)", letterSpacing: "0.04em" }}>
               We partner with the best names in the industry to bring you premium quality.
             </p>
           </div>
