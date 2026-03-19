@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
+
+const JAZZ_SRC = "https://res.cloudinary.com/ddfe8uqth/video/upload/v1749080400/Smoke_Shop_Jazz_-_Smooth_Late-Night_Instrumental_ynxftj.mp3";
 
 const SLIDES = [
   {
@@ -30,8 +32,29 @@ const VIDEO_SRC =
 const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio
+  useEffect(() => {
+    const audio = new Audio(JAZZ_SRC);
+    audio.loop = true;
+    audio.volume = 0.3;
+    audioRef.current = audio;
+    return () => { audio.pause(); audio.src = ""; };
+  }, []);
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   // Expose hero element for navbar transparency
   useEffect(() => {
@@ -175,6 +198,23 @@ const HeroSection = () => {
         aria-label="Next slide"
       >
         <ChevronRight size={24} strokeWidth={2} />
+      </button>
+
+      {/* Audio play/pause */}
+      <button
+        onClick={toggleAudio}
+        className="absolute bottom-8 right-8 z-20 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300"
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          color: "rgba(255,255,255,0.6)",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; e.currentTarget.style.background = "rgba(255,255,255,0.2)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
+        aria-label={isPlaying ? "Pause music" : "Play music"}
+      >
+        {isPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
       </button>
     </section>
   );
