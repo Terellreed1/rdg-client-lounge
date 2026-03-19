@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 
-const JAZZ_SRC = "https://res.cloudinary.com/ddfe8uqth/video/upload/v1749080400/Smoke_Shop_Jazz_-_Smooth_Late-Night_Instrumental_ynxftj.mp3";
+const JAZZ_SRC = "https://cdn.pixabay.com/audio/2024/11/04/audio_a90f26e498.mp3";
 
 const SLIDES = [
   {
