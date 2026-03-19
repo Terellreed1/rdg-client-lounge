@@ -199,6 +199,23 @@ const HeroSection = () => {
       >
         <ChevronRight size={24} strokeWidth={2} />
       </button>
+
+      {/* Audio play/pause */}
+      <button
+        onClick={toggleAudio}
+        className="absolute bottom-8 right-8 z-20 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300"
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          color: "rgba(255,255,255,0.6)",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; e.currentTarget.style.background = "rgba(255,255,255,0.2)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
+        aria-label={isPlaying ? "Pause music" : "Play music"}
+      >
+        {isPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
+      </button>
     </section>
   );
 };
