@@ -72,9 +72,9 @@ const Brands = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#FFFFFF" }}>
+    <div className="min-h-screen" style={{ background: "#0A0D09" }}>
       <PageLayout>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24" style={{ background: "#FFFFFF" }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center mb-14">
             <p className="text-xs font-sans uppercase mb-6" style={{ letterSpacing: "0.25em", color: "rgba(0,0,0,0.35)" }}>
               Partners
