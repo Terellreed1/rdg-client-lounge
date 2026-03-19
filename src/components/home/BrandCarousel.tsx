@@ -24,15 +24,33 @@ import theCandyShop from "@/assets/brands/the-candy-shop.png";
 import zourZop from "@/assets/brands/zour-zop.png";
 
 const LOGOS = [
-  alwaysFaded, backpackboyz, caliClouds, cupsStrainz, donMerfos,
-  friday, frutaz, fumi, grumpus, hb,
-  highMart, highMonkey, highTolerance, highflix, julatoNyc,
-  kandyDepo, kushFactory, mameys, painNetwork, superCandyBros,
-  theCandyShop, zourZop,
+  { src: alwaysFaded, alt: "Always Faded" },
+  { src: backpackboyz, alt: "BackPackBoyz" },
+  { src: caliClouds, alt: "Cali Clouds Club" },
+  { src: cupsStrainz, alt: "Cups Strainz" },
+  { src: donMerfos, alt: "Don Merfos" },
+  { src: friday, alt: "Friday" },
+  { src: frutaz, alt: "Frutaz" },
+  { src: fumi, alt: "Fumi" },
+  { src: grumpus, alt: "Grumpus" },
+  { src: hb, alt: "HB" },
+  { src: highMart, alt: "High Mart" },
+  { src: highMonkey, alt: "High Monkey" },
+  { src: highTolerance, alt: "High Tolerance" },
+  { src: highflix, alt: "Highflix" },
+  { src: julatoNyc, alt: "Julato NYC" },
+  { src: kandyDepo, alt: "Kandy Depo" },
+  { src: kushFactory, alt: "Kush Factory" },
+  { src: mameys, alt: "Mameys" },
+  { src: painNetwork, alt: "Pain Network" },
+  { src: superCandyBros, alt: "Super Candy Bros" },
+  { src: theCandyShop, alt: "The Candy Shop" },
+  { src: zourZop, alt: "Zour Zop" },
 ];
 
+export { LOGOS };
+
 const BrandCarousel = () => {
-  // Double the logos for seamless infinite scroll
   const doubled = [...LOGOS, ...LOGOS];
 
   return (
@@ -72,20 +90,18 @@ const BrandCarousel = () => {
 
       {/* Marquee */}
       <div className="relative w-full overflow-hidden">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #0A0D09, transparent)" }} />
         <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #0A0D09, transparent)" }} />
 
-        <div className="flex items-center gap-12 animate-marquee">
+        <div className="flex items-center gap-14 animate-marquee">
           {doubled.map((logo, i) => (
             <img
               key={i}
-              src={logo}
-              alt="Brand logo"
-              className="h-12 sm:h-14 w-auto object-contain shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300"
-              style={{ filter: "brightness(0) invert(1)" }}
+              src={logo.src}
+              alt={logo.alt}
+              className="h-16 sm:h-20 w-auto object-contain shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-300"
               loading="lazy"
             />
           ))}

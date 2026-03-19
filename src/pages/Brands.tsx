@@ -89,6 +89,26 @@ const Brands = () => {
             </p>
           </div>
 
+          {/* Logo marquee carousel */}
+          <div className="relative w-full overflow-hidden mb-16">
+            <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to right, #FFFFFF, transparent)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to left, #FFFFFF, transparent)" }} />
+            <div className="flex items-center gap-14 animate-marquee">
+              {[...brands, ...brands].map((brand, i) => (
+                <img
+                  key={i}
+                  src={brand.src}
+                  alt={brand.alt}
+                  className="h-16 sm:h-20 w-auto object-contain shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                  loading="lazy"
+                  onClick={() => setViewImage(brand)}
+                />
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-10">
             {brands.map((brand, i) => (
               <motion.div
