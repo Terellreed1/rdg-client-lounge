@@ -32,8 +32,29 @@ const VIDEO_SRC =
 const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio
+  useEffect(() => {
+    const audio = new Audio(JAZZ_SRC);
+    audio.loop = true;
+    audio.volume = 0.3;
+    audioRef.current = audio;
+    return () => { audio.pause(); audio.src = ""; };
+  }, []);
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   // Expose hero element for navbar transparency
   useEffect(() => {
