@@ -465,8 +465,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
           {products.map((p) => (
             <motion.div key={p.id} layout
               className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 border transition-all ${p.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-black/[0.03] border border-black/[0.06] overflow-hidden flex-shrink-0">
-                {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15 text-[10px]">—</div>}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-black/[0.03] border border-black/[0.06] rounded overflow-hidden flex-shrink-0">
+                {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15 text-[10px]">No img</div>}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
