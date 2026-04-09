@@ -1,12 +1,22 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import heroLogo from "@/assets/hero-logo.png";
 
 const NOISE_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
 const AgeGate = ({ children }: { children: React.ReactNode }) => {
   const isAdmin = typeof window !== "undefined" && window.location.pathname.startsWith("/admin");
+  const [verified, setVerified] = useState(() => {
+    if (isAdmin) return true;
+    return sessionStorage.getItem("age-verified") === "true";
+  });
 
-  if (isAdmin) return <>{children}</>;
+  const handleVerify = () => {
+    sessionStorage.setItem("age-verified", "true");
+    setVerified(true);
+  };
+
+  if (verified) return <>{children}</>;
 
   return (
     <>
@@ -53,7 +63,7 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
           <div className="my-8" />
 
           <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl uppercase mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl uppercase mb-4"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: 300,
@@ -64,11 +74,11 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Under Construction
+            Hold Up
           </motion.h1>
 
           <motion.p
-            className="text-xs sm:text-sm font-light mb-4 max-w-sm mx-auto"
+            className="text-xs sm:text-sm font-light mb-8 max-w-sm mx-auto"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 300,
@@ -80,10 +90,56 @@ const AgeGate = ({ children }: { children: React.ReactNode }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            THIS WEBSITE IS CURRENTLY BEING UPDATED.
+            YOU MUST BE 21 OR OLDER TO ENTER THIS SITE.
             <br />
-            WE WILL BE BACK SHORTLY.
+            ARE YOU OF LEGAL AGE?
           </motion.p>
+
+          <motion.div
+            className="flex gap-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
+            <button
+              onClick={handleVerify}
+              className="px-8 py-3 text-sm uppercase tracking-[0.15em] transition-all duration-300"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 400,
+                color: "#0a0a0a",
+                backgroundColor: "rgba(197,163,85,0.9)",
+                border: "1px solid rgba(197,163,85,0.4)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(197,163,85,1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(197,163,85,0.9)";
+              }}
+            >
+              Yes, I'm 21+
+            </button>
+            <button
+              onClick={() => window.location.href = "https://google.com"}
+              className="px-8 py-3 text-sm uppercase tracking-[0.15em] transition-all duration-300"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 400,
+                color: "rgba(160,144,112,0.6)",
+                backgroundColor: "transparent",
+                border: "1px solid rgba(160,144,112,0.2)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(160,144,112,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(160,144,112,0.2)";
+              }}
+            >
+              No
+            </button>
+          </motion.div>
         </div>
 
         <motion.p
