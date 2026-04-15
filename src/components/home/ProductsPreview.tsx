@@ -55,60 +55,14 @@ const ProductsPreview = () => {
             Shop Online
           </h2>
           <p
-            className="text-sm font-sans font-light max-w-lg mx-auto"
+            className="text-sm font-sans font-light max-w-lg mx-auto mb-10"
             style={{ color: "rgba(160,144,112,0.5)", letterSpacing: "0.04em" }}
           >
             Browse your favorite flower, vapes, edibles, and more. Place an order for delivery.
           </p>
-        </div>
-
-        {/* Category cards — typography only */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 mb-10">
-          {categories.map((cat, i) => (
-            <motion.div
-              key={cat.name}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.4 }}
-            >
-              <Link
-                to={cat.to}
-                className="flex items-center justify-center transition-all duration-300"
-                style={{
-                  height: 140,
-                  backgroundColor: "#141414",
-                  border: "1px solid rgba(197, 163, 85, 0.15)",
-                  borderRadius: 0,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#D4AF37";
-                  e.currentTarget.style.backgroundColor = "rgba(197, 163, 85, 0.05)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(212, 175, 55, 0.15)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(197, 163, 85, 0.15)";
-                  e.currentTarget.style.backgroundColor = "#141414";
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                <span
-                  className="uppercase font-sans"
-                  style={{ fontSize: 14, fontWeight: 500, letterSpacing: "0.15em", color: "#FFFFFF" }}
-                >
-                  {cat.name}
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="flex justify-center">
           <Link
             to="/shop"
-            className="text-[10px] uppercase px-10 py-3.5 font-sans font-semibold transition-all duration-300"
+            className="text-[10px] uppercase px-10 py-3.5 font-sans font-semibold transition-all duration-300 inline-block"
             style={{
               letterSpacing: "0.2em",
               background: "linear-gradient(135deg, #B8962E 0%, #D4AF37 100%)",
