@@ -480,10 +480,16 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
         </DndContext>
       ) : (
         <div className="space-y-1.5">
-          {products.map((p) => (
+          {products.map((p) => {
+            const [showLightbox, setShowLightbox] = React.useState(false);
+            return (
             <motion.div key={p.id} layout
               className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 border transition-all ${p.active ? "border-black/[0.06] hover:border-black/10 hover:shadow-sm" : "border-black/[0.04] opacity-40"}`}>
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-black/[0.03] border border-black/[0.06] rounded overflow-hidden flex-shrink-0">
+              {showLightbox && p.image_url && <ImageLightbox src={p.image_url} alt={p.name} onClose={() => setShowLightbox(false)} />}
+              <div
+                className={`w-16 h-16 sm:w-20 sm:h-20 bg-black/[0.03] border border-black/[0.06] rounded overflow-hidden flex-shrink-0 ${p.image_url ? "cursor-pointer hover:ring-2 hover:ring-black/20 hover:opacity-80 transition-all" : ""}`}
+                onClick={() => p.image_url && setShowLightbox(true)}
+              >
                 {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-black/15 text-[10px]">No img</div>}
               </div>
               <div className="flex-1 min-w-0">
@@ -502,7 +508,8 @@ const ProductsSection = ({ callAdmin }: { callAdmin: (r: string, m: "GET" | "POS
                 <button onClick={() => setDeleteId(p.id)} className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50/60 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center text-xs">Del</button>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       )}
 
