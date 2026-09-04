@@ -1,5 +1,5 @@
 // Legacy static product data - kept for type reference only
-// All product data is now managed via the database (Lovable Cloud)
+// All product data is now managed via the database
 
 export interface Product {
   id: number;
